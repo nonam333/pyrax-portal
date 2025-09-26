@@ -1,0 +1,127 @@
+Build a complete crypto news + markets portal website called Pyrax with the following specifications.
+
+1. Branding & Theme
+
+Color palette: only two colors → vivid orange gradient (primary accent) and black (background).
+
+No other colors allowed anywhere except:
+
+Images in articles.
+
+Cryptocurrency logos (kept in their official brand colors).
+
+Visual style: elegant, bold, futuristic, similar to theblock.co but with a stronger brand identity.
+
+All UI elements (buttons, widgets, highlights) must follow the orange + black rule.
+
+Smooth transitions and hover effects in orange gradient.
+
+2. Navigation & Footer
+
+Navbar: clean black background with the Pyrax logo only (no crypto logos, no text links).
+
+Footer:
+
+Pyrax logo.
+
+Newsletter signup block (black background, vivid orange CTA).
+
+Quick links (News, Markets, Community, About, Contact).
+
+Social media icons in orange gradient.
+
+No crypto logos in footer.
+
+3. Homepage (News Portal)
+
+Styled like a digital newspaper (inspired by theblock.co).
+
+Hero section: one featured article with large image + headline.
+
+News grid: below hero, show multiple articles (dense layout but elegant, newspaper-like).
+
+Sidebar: categories (Bitcoin, Ethereum, Altcoins, DeFi, NFTs, Web3, Regulations, Market).
+
+Infinite scroll or pagination for older news.
+
+Newsletter signup block styled in orange gradient.
+
+Ad/monetization slots (Google AdSense-ready).
+
+4. News Article Pages
+
+Large headline, featured image, author, publish date.
+
+Clean text layout (black background, orange gradient highlights).
+
+Related articles section below content.
+
+Comment/community section for discussions.
+
+Social sharing buttons in vivid orange gradient.
+
+5. Markets Page
+
+Crypto screener (similar to CoinMarketCap/Coingecko).
+
+Table with the following columns:
+
+crypto logo + name (side by side).
+
+price.
+
+% change.
+
+market cap.
+
+trading volume.
+
+circulating supply.
+
+Black table with orange hover highlights.
+
+Sorting + filtering options.
+
+Optimized for smooth, fast performance.
+
+6. Individual Coin Pages
+
+Header with large coin logo + name.
+
+Live price chart (TradingView or similar).
+
+Market data (price, market cap, volume, supply, % change).
+
+Overview/description of the coin.
+
+Below that → related news articles about that coin.
+
+Community comments/discussion section.
+
+7. Extra Pages & Features
+
+Community Page: general discussions, forums/comments.
+
+About Us Page: Pyrax mission, team intro, contact info.
+
+Contact Page: form + email link.
+
+Ticker tape: live crypto price ticker at the very top.
+
+Always dark theme only (no light mode).
+
+SEO optimized: meta tags, Open Graph, schema markup for crypto + news.
+
+Mobile-first responsive design.
+
+Ultra-efficient: lazy loading images, optimized bundles, fast load times.
+
+8. Technical Stack
+
+Use React (Next.js preferred) + TailwindCSS.
+
+Modular components: Navbar, Footer, HeroArticle, NewsGrid, ArticleCard, Sidebar, MarketsTable, CoinPage, NewsletterSignup, CommunitySection.
+
+Use placeholder JSON data for news + coins (so it can be replaced later with API or CMS).
+
+Code must be clean, modular, and production-ready.
