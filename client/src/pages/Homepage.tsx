@@ -8,7 +8,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { ChevronRight, TrendingUp, Clock, User } from 'lucide-react';
+import { ChevronRight, TrendingUp, Clock, User, Zap, AlertCircle, BarChart3, Globe, Shield, Eye } from 'lucide-react';
 import { Link } from 'wouter';
 import heroImage from '@assets/stock_images/cryptocurrency_bitco_dc2a9a3e.jpg';
 import cryptoImage1 from '@assets/stock_images/cryptocurrency_bitco_501fe450.jpg';
@@ -162,6 +162,124 @@ export default function Homepage() {
     }
   ];
 
+  const breakingNews: Article[] = [
+    {
+      id: '13',
+      title: 'Major Exchange Announces Zero-Fee Bitcoin Trading',
+      excerpt: 'Leading cryptocurrency exchange eliminates trading fees for BTC pairs.',
+      image: cryptoImage1,
+      category: 'Breaking',
+      author: 'Sarah Chen',
+      publishedAt: '30 min ago',
+      readTime: '3 min read'
+    },
+    {
+      id: '14',
+      title: 'Fed Chairman Discusses Digital Dollar Timeline',
+      excerpt: 'Central bank digital currency could launch within 5 years.',
+      image: cryptoImage2,
+      category: 'Policy',
+      author: 'Alex Rodriguez',
+      publishedAt: '45 min ago',
+      readTime: '4 min read'
+    },
+    {
+      id: '15',
+      title: 'Ethereum Layer 2 Adoption Hits Record High',
+      excerpt: 'L2 transactions now account for 60% of Ethereum activity.',
+      image: cryptoImage3,
+      category: 'Ethereum',
+      author: 'Emma Wilson',
+      publishedAt: '1 hour ago',
+      readTime: '3 min read'
+    }
+  ];
+
+  const researchArticles: Article[] = [
+    {
+      id: '16',
+      title: 'Institutional Bitcoin Accumulation Patterns Analysis',
+      excerpt: 'Deep dive into how corporations are building crypto treasury positions.',
+      image: dashboardImage,
+      category: 'Research',
+      author: 'David Kim',
+      publishedAt: '2 hours ago',
+      readTime: '12 min read'
+    },
+    {
+      id: '17',
+      title: 'DeFi Yield Farming: Risk vs Reward Assessment',
+      excerpt: 'Comprehensive analysis of current yield farming opportunities and risks.',
+      image: dashboardImage2,
+      category: 'Research',
+      author: 'Lisa Zhang',
+      publishedAt: '4 hours ago',
+      readTime: '15 min read'
+    },
+    {
+      id: '18',
+      title: 'NFT Market Cycles and Prediction Models',
+      excerpt: 'Using data science to understand NFT market movements.',
+      image: dashboardImage3,
+      category: 'Research',
+      author: 'James Parker',
+      publishedAt: '6 hours ago',
+      readTime: '10 min read'
+    }
+  ];
+
+  const popularArticles: Article[] = [
+    {
+      id: '19',
+      title: 'Complete Guide to Crypto Tax Reporting 2025',
+      excerpt: 'Everything you need to know about cryptocurrency taxes this year.',
+      image: cryptoImage4,
+      category: 'Education',
+      author: 'Maria Santos',
+      publishedAt: '1 day ago',
+      readTime: '18 min read'
+    },
+    {
+      id: '20',
+      title: 'How to Spot Crypto Scams: Red Flags Guide',
+      excerpt: 'Protect yourself from common cryptocurrency fraud schemes.',
+      image: cryptoImage1,
+      category: 'Security',
+      author: 'Robert Chen',
+      publishedAt: '2 days ago',
+      readTime: '8 min read'
+    },
+    {
+      id: '21',
+      title: 'Setting Up Your First Hardware Wallet',
+      excerpt: 'Step-by-step guide to securing your cryptocurrency holdings.',
+      image: cryptoImage2,
+      category: 'Education',
+      author: 'Sarah Chen',
+      publishedAt: '3 days ago',
+      readTime: '12 min read'
+    },
+    {
+      id: '22',
+      title: 'Understanding Blockchain Consensus Mechanisms',
+      excerpt: 'Comparing Proof of Work, Proof of Stake, and emerging alternatives.',
+      image: cryptoImage3,
+      category: 'Technology',
+      author: 'Alex Rodriguez',
+      publishedAt: '4 days ago',
+      readTime: '14 min read'
+    }
+  ];
+
+  // todo: remove mock functionality - replace with real market data
+  const marketOverview = {
+    totalMarketCap: '$2.35T',
+    totalVolume: '$45.6B',
+    btcDominance: '42.8%',
+    activeCoins: '13,245',
+    fearGreedIndex: 72
+  };
+
   return (
     <div className="min-h-screen bg-background" data-testid="page-homepage">
       <PriceTicker />
@@ -262,9 +380,133 @@ export default function Homepage() {
               </div>
             </section>
 
-            {/* Newsletter */}
-            <section className="py-8">
-              <NewsletterSignup />
+            {/* Breaking News */}
+            <section data-testid="breaking-news-section">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <h2 className="text-2xl font-bold text-foreground">Breaking News</h2>
+                  <Badge className="bg-destructive text-white animate-pulse">
+                    <Zap className="h-3 w-3 mr-1" />
+                    Live
+                  </Badge>
+                </div>
+                <Link href="/breaking">
+                  <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80">
+                    All Breaking <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {breakingNews.map((article) => (
+                  <ArticleCard key={article.id} article={article} variant="compact" />
+                ))}
+              </div>
+            </section>
+
+            {/* Market Overview Widget */}
+            <section data-testid="market-overview-section">
+              <Card className="p-6 bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-card-foreground">Market Overview</h2>
+                  <Badge variant="secondary">
+                    <BarChart3 className="h-3 w-3 mr-1" />
+                    Live Data
+                  </Badge>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-card-foreground mb-1">{marketOverview.totalMarketCap}</div>
+                    <div className="text-sm text-muted-foreground">Market Cap</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-card-foreground mb-1">{marketOverview.totalVolume}</div>
+                    <div className="text-sm text-muted-foreground">24h Volume</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-card-foreground mb-1">{marketOverview.btcDominance}</div>
+                    <div className="text-sm text-muted-foreground">BTC Dominance</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-card-foreground mb-1">{marketOverview.activeCoins}</div>
+                    <div className="text-sm text-muted-foreground">Active Coins</div>
+                  </div>
+                  <div className="text-center">
+                    <div className={`text-2xl font-bold mb-1 ${marketOverview.fearGreedIndex > 50 ? 'text-primary' : 'text-destructive'}`}>
+                      {marketOverview.fearGreedIndex}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Fear & Greed</div>
+                  </div>
+                </div>
+                <div className="mt-6 text-center">
+                  <Link href="/markets">
+                    <Button className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-black font-semibold">
+                      <Eye className="h-4 w-4 mr-2" />
+                      View Full Markets
+                    </Button>
+                  </Link>
+                </div>
+              </Card>
+            </section>
+
+            {/* Research & Analysis */}
+            <section data-testid="research-section">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-foreground">Research & Analysis</h2>
+                <Link href="/research">
+                  <Button variant="outline" size="sm">
+                    All Research <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {researchArticles.map((article) => (
+                  <ArticleCard key={article.id} article={article} />
+                ))}
+              </div>
+            </section>
+
+            {/* Newsletter CTA */}
+            <section className="py-8" data-testid="newsletter-cta-section">
+              <Card className="p-8 bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20 text-center">
+                <h2 className="text-3xl font-bold text-card-foreground mb-4">Stay Ahead of the Curve</h2>
+                <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  Join 250,000+ crypto enthusiasts who rely on Pyrax for the most accurate, 
+                  timely, and insightful cryptocurrency news and analysis.
+                </p>
+                <div className="max-w-md mx-auto">
+                  <NewsletterSignup variant="compact" />
+                </div>
+                <div className="flex items-center justify-center space-x-6 mt-6 text-sm text-muted-foreground">
+                  <div className="flex items-center space-x-1">
+                    <Shield className="h-4 w-4" />
+                    <span>No spam</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Globe className="h-4 w-4" />
+                    <span>Unsubscribe anytime</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <AlertCircle className="h-4 w-4" />
+                    <span>Weekly digest</span>
+                  </div>
+                </div>
+              </Card>
+            </section>
+
+            {/* Popular This Week */}
+            <section data-testid="popular-section">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-foreground">Popular This Week</h2>
+                <Badge variant="secondary">
+                  <TrendingUp className="h-3 w-3 mr-1" />
+                  Most Read
+                </Badge>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {popularArticles.map((article) => (
+                  <ArticleCard key={article.id} article={article} />
+                ))}
+              </div>
             </section>
           </div>
           

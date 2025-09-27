@@ -24,7 +24,7 @@ export default function Navbar() {
             <img 
               src={pyraxLogo} 
               alt="Pyrax" 
-              className="h-12 w-auto hover-elevate transition-transform duration-200"
+              className="h-16 w-auto hover-elevate transition-transform duration-200"
               data-testid="img-logo"
             />
           </Link>
