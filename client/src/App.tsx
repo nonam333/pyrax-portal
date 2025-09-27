@@ -6,6 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Homepage from "@/pages/Homepage";
 import MarketsPage from "@/pages/MarketsPage";
 import CoinPage from "@/pages/CoinPage";
+import AboutPage from "@/pages/AboutPage";
+import ArticlePage from "@/pages/ArticlePage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -14,10 +16,10 @@ function Router() {
       <Route path="/" component={Homepage} />
       <Route path="/markets" component={MarketsPage} />
       <Route path="/coin/:id" component={CoinPage} />
+      <Route path="/about" component={AboutPage} />
+      <Route path="/article/:id" component={ArticlePage} />
       <Route path="/category/:category" component={Homepage} />
-      <Route path="/article/:id" component={Homepage} />
       <Route path="/community" component={Homepage} />
-      <Route path="/about" component={Homepage} />
       <Route path="/contact" component={Homepage} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
