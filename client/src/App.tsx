@@ -8,7 +8,9 @@ import Homepage from "@/pages/Homepage";
 import MarketsPage from "@/pages/MarketsPage";
 import CoinDetailPage from "@/pages/CoinDetailPage";
 import AboutPage from "@/pages/AboutPage";
-import LearnPage from "@/pages/LearnPage";
+import ComprehensiveLearnPage from "@/pages/ComprehensiveLearnPage";
+import AnalysisPage from "@/pages/AnalysisPage";
+import RegulationPage from "@/pages/RegulationPage";
 import ArticlePage from "@/pages/ArticlePage";
 import BlogCMSPage from "@/pages/BlogCMSPage";
 import NotFound from "@/pages/not-found";
@@ -18,8 +20,10 @@ function Router() {
     <PageTransition>
       <Switch>
         <Route path="/" component={Homepage} />
-        <Route path="/learn" component={LearnPage} />
+        <Route path="/learn" component={ComprehensiveLearnPage} />
         <Route path="/markets" component={MarketsPage} />
+        <Route path="/analysis" component={AnalysisPage} />
+        <Route path="/regulation" component={RegulationPage} />
         <Route path="/cms" component={BlogCMSPage} />
         <Route path="/coin/:id" component={CoinDetailPage} />
         <Route path="/about" component={AboutPage} />

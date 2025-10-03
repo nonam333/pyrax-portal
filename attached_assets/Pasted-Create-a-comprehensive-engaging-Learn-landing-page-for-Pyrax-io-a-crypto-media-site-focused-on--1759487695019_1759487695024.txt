@@ -1,0 +1,254 @@
+Create a comprehensive, engaging "Learn" landing page for Pyrax.io - a crypto media site focused on educating users about cryptocurrency.
+
+DESIGN REQUIREMENTS:
+- Modern, clean, professional design with a dark theme (dark blue/purple gradient background)
+- Fully responsive (mobile, tablet, desktop)
+- Smooth scroll animations and hover effects
+- Interactive elements that feel premium
+- Use a contemporary tech/fintech aesthetic
+- Hero section with compelling headline and value proposition
+
+CONTENT STRUCTURE:
+
+1. HERO SECTION:
+- Headline: "Master Cryptocurrency - From First Bitcoin to Advanced DeFi"
+- Subheadline: "Your comprehensive learning hub for navigating the crypto revolution. No jargon. No fluff. Just clear, actionable education."
+- Primary CTA button: "Start Your Crypto Journey"
+- Secondary CTA: "Browse All Guides"
+- Background: Subtle animated crypto-themed graphics (Bitcoin symbols, blockchain network visualization)
+
+2. LEARNING PATHS SECTION:
+Create 3 distinct learning paths with custom icons:
+
+PATH 1 - BEGINNER (Green/Success color scheme)
+Icon: Graduation cap
+Title: "Crypto Fundamentals"
+Description: "Never touched crypto before? Start here. Learn the basics of blockchain, Bitcoin, and how to make your first purchase safely."
+Modules (display count): 12 Lessons | 6 Hours | Certificate
+Topics covered (bullet points):
+- What is Cryptocurrency & Blockchain
+- How Bitcoin Works
+- Setting Up Your First Wallet
+- Making Your First Purchase
+- Security Best Practices
+- Understanding Market Basics
+CTA: "Begin Fundamentals"
+
+PATH 2 - INTERMEDIATE (Blue/Primary color scheme)
+Icon: Chart line trending up
+Title: "Trading & Investment"
+Description: "Ready to go deeper? Master trading fundamentals, portfolio management, and advanced investment strategies."
+Modules: 18 Lessons | 10 Hours | Certificate
+Topics covered:
+- Technical Analysis Basics
+- Reading Crypto Charts
+- Risk Management Strategies
+- DeFi Platforms & Protocols
+- Staking & Yield Farming
+- Tax Implications (US Focus)
+CTA: "Level Up Your Skills"
+
+PATH 3 - ADVANCED (Purple/Premium color scheme)
+Icon: Code brackets
+Title: "Blockchain Technology"
+Description: "Become an expert. Dive into smart contracts, on-chain analysis, and building on blockchain."
+Modules: 24 Lessons | 15 Hours | Certificate
+Topics covered:
+- Smart Contract Development
+- On-Chain Data Analysis
+- Protocol Design Principles
+- Web3 Development
+- Advanced Trading Strategies
+- Building Crypto Projects
+CTA: "Master the Technology"
+
+3. FEATURED GUIDES SECTION:
+Display grid of 6 popular guides with thumbnails, estimated read time, and difficulty level:
+- "Complete Bitcoin Guide 2026" (Beginner | 15 min read)
+- "DeFi Explained: Ultimate Guide" (Intermediate | 20 min read)
+- "Crypto Security: Protect Your Assets" (Beginner | 10 min read)
+- "Technical Analysis Masterclass" (Advanced | 25 min read)
+- "US Crypto Tax Guide 2026" (Intermediate | 18 min read)
+- "NFTs & Web3: The Future" (Intermediate | 12 min read)
+
+Each card should have:
+- Compelling thumbnail image
+- Category badge
+- Title
+- Brief 2-line description
+- Difficulty badge
+- Read time
+- "Read Guide" button
+
+4. INTERACTIVE GLOSSARY TEASER:
+Create a sleek search box section:
+- Title: "Crypto Glossary: 500+ Terms Explained"
+- Search bar with placeholder: "Search any crypto term... (e.g., 'What is DeFi?')"
+- Display 8-10 popular terms in pill/badge format that are clickable:
+  "Blockchain" | "DeFi" | "Smart Contract" | "Gas Fees" | "Staking" | "NFT" | "Cold Wallet" | "Altcoin"
+- Subtext: "Can't find something? Our glossary has clear explanations for every crypto term."
+
+5. VIDEO TUTORIALS SECTION:
+Create a horizontal scrollable carousel of video tutorial cards:
+- Section title: "Video Learning Library"
+- 6-8 video cards with:
+  * Thumbnail with play button overlay
+  * Video title
+  * Duration badge
+  * View count
+  * Difficulty level
+
+Example videos:
+- "How to Buy Your First Bitcoin" (8:32 | Beginner)
+- "Setting Up MetaMask Wallet" (5:45 | Beginner)
+- "Understanding DeFi Protocols" (12:15 | Intermediate)
+- "Reading Crypto Charts" (10:20 | Intermediate)
+- "Crypto Security Essentials" (6:50 | Beginner)
+
+6. LEARNING STATS SECTION (Social Proof):
+Display impressive statistics in animated counter format:
+- "250,000+ Students Educated"
+- "1,500+ Comprehensive Guides"
+- "50,000+ Questions Answered"
+- "4.9/5 Average Rating"
+
+7. TOPICS GRID SECTION:
+Create a masonry-style grid of all learning categories:
+- Bitcoin & Basics
+- Ethereum & Smart Contracts
+- DeFi & Yield Farming
+- NFTs & Digital Assets
+- Trading & Investment
+- Security & Wallets
+- Regulations & Tax (US)
+- Blockchain Technology
+- Market Analysis
+- Altcoins & Projects
+- Web3 & Future Tech
+- Mining & Staking
+
+Each category card shows:
+- Icon
+- Title
+- Article count (e.g., "47 Articles")
+- Hover effect reveals description
+
+8. WHY LEARN WITH PYRAX SECTION:
+3-column grid highlighting unique value:
+
+COLUMN 1:
+Icon: Shield check
+Title: "No Jargon, Just Clarity"
+Description: "We explain complex crypto concepts in plain English. If a 12-year-old can't understand it, we rewrite it."
+
+COLUMN 2:
+Icon: Refresh/Update symbol
+Title: "Always Current"
+Description: "Crypto moves fast. Our content is updated weekly to reflect the latest developments, regulations, and best practices."
+
+COLUMN 3:
+Icon: USA flag or location pin
+Title: "US-Focused Guidance"
+Description: "Specific advice for American investors - from IRS tax rules to SEC regulations. Learn what matters for YOUR situation."
+
+9. NEWSLETTER SIGNUP SECTION:
+Attractive call-to-action box:
+- Title: "Get Weekly Crypto Education in Your Inbox"
+- Description: "Join 50,000+ subscribers getting our Sunday Crypto Digest - curated learning resources, market insights, and beginner tips."
+- Email input field with placeholder: "Enter your email"
+- Submit button: "Start Learning Free"
+- Privacy text: "No spam. Unsubscribe anytime. We respect your privacy."
+- Visual: Mockup of newsletter on tablet/phone
+
+10. FAQ SECTION:
+Accordion-style FAQ with 6-8 questions:
+- "Is Pyrax Learn completely free?"
+- "Do I need prior knowledge to start?"
+- "How long does it take to learn crypto basics?"
+- "Do you offer certificates?"
+- "Is the content suitable for US investors?"
+- "How often is content updated?"
+- "Can I suggest topics?"
+
+11. FOOTER CTA:
+Large prominent section:
+- Headline: "Ready to Start Your Crypto Education?"
+- Subheadline: "Join thousands of Americans learning to navigate cryptocurrency with confidence."
+- Large CTA button: "Begin Learning Now"
+- Secondary link: "Download Learning Roadmap (PDF)"
+
+DESIGN SPECIFICATIONS:
+- Color Palette: 
+  * Primary: Deep blue (#0A1F44)
+  * Secondary: Electric blue (#2E5BFF)
+  * Accent: Cyan (#00D9FF)
+  * Success: Green (#00C48C)
+  * Background: Dark gradient (navy to deep purple)
+  * Text: White/Light gray
+
+- Typography:
+  * Headings: Modern sans-serif (Inter, Poppins, or similar)
+  * Body: Clean readable font (Open Sans, Roboto)
+  * Code snippets: Monospace font
+
+- Interactive Elements:
+  * Smooth hover effects on all cards
+  * Parallax scrolling on hero
+  * Fade-in animations on scroll
+  * Interactive search bar with suggestions
+  * Smooth accordion animations
+  * Button hover states with color shifts
+
+- Icons: Use modern, consistent icon set (Lucide React or similar)
+
+- Images: Use placeholder images with descriptions like:
+  * Hero: Abstract blockchain network visualization
+  * Learning paths: Custom illustrated icons
+  * Guide thumbnails: Crypto-themed graphics
+  * Video thumbnails: Professional video preview frames
+
+TECHNICAL REQUIREMENTS:
+- HTML5 semantic markup
+- CSS3 with modern features (Grid, Flexbox, CSS Variables)
+- Vanilla JavaScript for interactions (no framework required)
+- Fully accessible (ARIA labels, keyboard navigation)
+- Mobile-first responsive design
+- Fast loading (optimized images, minimal dependencies)
+- SEO-friendly structure
+
+TONE & VOICE:
+- Confident but approachable
+- Educational without being condescending
+- Empowering and encouraging
+- Clear and direct
+- Avoiding crypto "bro" culture
+- Professional yet friendly
+- US-audience focused
+
+CRITICAL: The content should feel HUMAN-WRITTEN:
+- Use varied sentence structures
+- Include conversational phrases
+- Add personality to descriptions
+- Avoid robotic/repetitive phrasing
+- Use analogies and examples where helpful
+- Write like you're explaining to a smart friend
+- Include occasional rhetorical questions
+- Vary paragraph lengths naturally
+
+Do NOT use obvious AI phrases like:
+❌ "In today's digital age..."
+❌ "It's important to note that..."
+❌ "In conclusion..."
+❌ "Dive deep into..."
+❌ "Unlock the potential..."
+❌ "Comprehensive guide to..."
+❌ "Navigate the world of..."
+
+Instead use natural, confident language:
+✅ "Here's what you need to know"
+✅ "Let's break this down"
+✅ "Most people get this wrong"
+✅ "The truth is..."
+✅ "You've probably heard..."
+
+Create the complete HTML page with inline CSS and JavaScript. Make it production-ready and visually stunning.
