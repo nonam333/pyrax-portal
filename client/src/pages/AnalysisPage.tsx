@@ -53,9 +53,6 @@ export default function AnalysisPage() {
               <BarChart3 className="inline-block h-8 w-8 mr-3 text-primary" />
               Market Analysis
             </h2>
-            <Button variant="outline" asChild data-testid="button-view-all-analysis">
-              <Link href="/analysis/market">View All</Link>
-            </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {marketAnalysis.map((item, index) => (
@@ -83,9 +80,6 @@ export default function AnalysisPage() {
               <FileText className="inline-block h-8 w-8 mr-3 text-primary" />
               Research Reports
             </h2>
-            <Button variant="outline" asChild data-testid="button-view-all-research">
-              <Link href="/analysis/research">View All</Link>
-            </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {research.map((item, index) => (
@@ -111,9 +105,6 @@ export default function AnalysisPage() {
               <Users className="inline-block h-8 w-8 mr-3 text-primary" />
               Expert Opinion
             </h2>
-            <Button variant="outline" asChild data-testid="button-view-all-opinion">
-              <Link href="/analysis/opinion">View All</Link>
-            </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {expertOpinion.map((item, index) => (

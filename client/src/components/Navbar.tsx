@@ -10,8 +10,10 @@ export default function Navbar() {
 
   const navItems = [
     { href: '/', label: 'News' },
-    { href: '/learn', label: 'Learn' },
     { href: '/markets', label: 'Markets' },
+    { href: '/learn', label: 'Learn' },
+    { href: '/analysis', label: 'Analysis' },
+    { href: '/regulation', label: 'Regulation' },
     { href: '/about', label: 'About' }
   ];
 

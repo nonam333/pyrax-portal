@@ -59,10 +59,7 @@ export default function RegulationPage() {
           <div className="flex items-center gap-3" data-testid="alert-regulatory">
             <AlertTriangle className="h-5 w-5 text-destructive flex-shrink-0" />
             <p className="text-sm font-medium">
-              <span className="text-destructive">Breaking:</span> SEC Issues New Guidance on Crypto Custody Rules - 
-              <Button variant="link" className="p-0 h-auto ml-1 text-destructive underline" asChild>
-                <Link href="/regulation/sec-custody-guidance">Read More</Link>
-              </Button>
+              <span className="text-destructive">Breaking:</span> SEC Issues New Guidance on Crypto Custody Rules
             </p>
           </div>
         </div>
@@ -76,9 +73,6 @@ export default function RegulationPage() {
               <Scale className="inline-block h-8 w-8 mr-3 text-primary" />
               US Regulatory Updates
             </h2>
-            <Button variant="outline" asChild data-testid="button-view-all-regulatory">
-              <Link href="/regulation/us">View All</Link>
-            </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {usRegulatory.map((item, index) => (
@@ -110,9 +104,6 @@ export default function RegulationPage() {
               <FileCheck className="inline-block h-8 w-8 mr-3 text-primary" />
               Compliance Resources
             </h2>
-            <Button variant="outline" asChild data-testid="button-view-all-compliance">
-              <Link href="/regulation/compliance">View All</Link>
-            </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {compliance.map((item, index) => (
@@ -134,9 +125,6 @@ export default function RegulationPage() {
               <Globe className="inline-block h-8 w-8 mr-3 text-primary" />
               Global Regulations
             </h2>
-            <Button variant="outline" asChild data-testid="button-view-all-global">
-              <Link href="/regulation/global">View All</Link>
-            </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {globalNews.map((item, index) => (
@@ -158,9 +146,6 @@ export default function RegulationPage() {
               <MapPin className="inline-block h-8 w-8 mr-3 text-primary" />
               State-by-State Guide
             </h2>
-            <Button variant="outline" asChild data-testid="button-view-all-states">
-              <Link href="/regulation/states">View All States</Link>
-            </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {stateGuide.map((item, index) => (
