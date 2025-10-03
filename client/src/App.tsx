@@ -10,6 +10,7 @@ import CoinDetailPage from "@/pages/CoinDetailPage";
 import AboutPage from "@/pages/AboutPage";
 import LearnPage from "@/pages/LearnPage";
 import ArticlePage from "@/pages/ArticlePage";
+import BlogCMSPage from "@/pages/BlogCMSPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -19,6 +20,7 @@ function Router() {
         <Route path="/" component={Homepage} />
         <Route path="/learn" component={LearnPage} />
         <Route path="/markets" component={MarketsPage} />
+        <Route path="/cms" component={BlogCMSPage} />
         <Route path="/coin/:id" component={CoinDetailPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/article/:id" component={ArticlePage} />
