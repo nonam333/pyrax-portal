@@ -6,9 +6,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import PageTransition from "@/components/PageTransition";
 import Homepage from "@/pages/Homepage";
 import MarketsPage from "@/pages/MarketsPage";
-import CoinPage from "@/pages/CoinPage";
 import CoinDetailPage from "@/pages/CoinDetailPage";
 import AboutPage from "@/pages/AboutPage";
+import LearnPage from "@/pages/LearnPage";
 import ArticlePage from "@/pages/ArticlePage";
 import NotFound from "@/pages/not-found";
 
@@ -17,14 +17,12 @@ function Router() {
     <PageTransition>
       <Switch>
         <Route path="/" component={Homepage} />
+        <Route path="/learn" component={LearnPage} />
         <Route path="/markets" component={MarketsPage} />
-        <Route path="/coin/bitcoin" component={CoinDetailPage} />
-        <Route path="/coin/:id" component={CoinPage} />
+        <Route path="/coin/:id" component={CoinDetailPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/article/:id" component={ArticlePage} />
         <Route path="/category/:category" component={Homepage} />
-        <Route path="/community" component={Homepage} />
-        <Route path="/contact" component={Homepage} />
         {/* Fallback to 404 */}
         <Route component={NotFound} />
       </Switch>

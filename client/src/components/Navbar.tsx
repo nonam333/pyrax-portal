@@ -10,8 +10,8 @@ export default function Navbar() {
 
   const navItems = [
     { href: '/', label: 'News' },
+    { href: '/learn', label: 'Learn' },
     { href: '/markets', label: 'Markets' },
-    { href: '/community', label: 'Community' },
     { href: '/about', label: 'About' }
   ];
 
@@ -44,14 +44,6 @@ export default function Navbar() {
                 </span>
               </Link>
             ))}
-            <Button 
-              size="sm" 
-              className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
-              data-testid="button-newsletter"
-              onClick={() => console.log('Newsletter signup triggered')}
-            >
-              Newsletter
-            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -89,17 +81,6 @@ export default function Navbar() {
                   </div>
                 </Link>
               ))}
-              <Button 
-                size="sm" 
-                className="w-full mt-4 bg-gradient-to-r from-primary to-accent"
-                data-testid="button-mobile-newsletter"
-                onClick={() => {
-                  console.log('Mobile newsletter signup triggered');
-                  setMobileMenuOpen(false);
-                }}
-              >
-                Newsletter
-              </Button>
             </div>
           </div>
         )}
