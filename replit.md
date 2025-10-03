@@ -131,6 +131,26 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+### October 2025
+- **TradingView Chart Integration**: Replaced custom Recharts with professional TradingView widgets
+  - Integrated TradingView's advanced chart widget for interactive cryptocurrency price charts
+  - Charts display Binance USDT trading pairs with dark theme
+  - 600px height for optimal viewing experience
+  - Charts work dynamically for all cryptocurrencies
+- **Navigation Simplification**: Streamlined navbar to focus on core sections
+  - Updated navigation to show only: News, Learn, Markets, About
+  - Removed Community and Newsletter buttons for cleaner interface
+  - Created dedicated Learn page for educational content
+- **Learn Page Creation**: Added comprehensive educational resource center
+  - Learning Paths: Blockchain Basics, Trading & Investing, DeFi & Web3, Market Analysis
+  - Featured Guides: Complete Guide to Bitcoin, Understanding Smart Contracts, Crypto Security
+  - Difficulty levels: Beginner, Intermediate, Advanced
+  - Educational content structured for progressive learning
+- **Route Consolidation**: Unified all coin pages under single dynamic route
+  - All cryptocurrency pages now use `/coin/:id` route
+  - Removed separate Bitcoin route in favor of dynamic implementation
+  - Works seamlessly for any CoinGecko coin ID (bitcoin, ethereum, cardano, etc.)
+
 ### December 2024
 - **Live Cryptocurrency Data Integration**: Integrated CoinGecko API with backend proxy system
   - Implemented server-side caching with 30s-5min TTL based on data type
