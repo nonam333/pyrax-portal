@@ -28,11 +28,15 @@ Preferred communication style: Simple, everyday language.
 - Responsive design with mobile-first approach
 
 **Key Pages:**
-- Homepage: Featured articles with hero section and news grid
+- Homepage: Featured articles with hero section and news grid (synced from Notion CMS)
 - Markets Page: Real-time cryptocurrency price tables and market statistics
-- Coin Detail Pages: Individual cryptocurrency analysis with price charts
+- Learn Page: Comprehensive educational hub with learning paths, guides, glossary, and video tutorials
+- Analysis Page: Market analysis, research reports, and expert opinion
+- Regulation Page: US and global regulatory updates, compliance resources, state-by-state guide
+- Coin Detail Pages: Individual cryptocurrency analysis with TradingView charts
 - Article Pages: Full article view with related content
 - About Page: Team and mission information
+- Blog CMS Page: Admin interface for syncing blog posts from Notion databases
 
 ### Backend Architecture
 
@@ -131,21 +135,38 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+### January 2026
+- **Navigation Expansion**: Added Analysis and Regulation pages to complete the site structure
+  - Created comprehensive Analysis page with market analysis, research reports, and expert opinion sections
+  - Created Regulation page covering US regulatory updates, compliance resources, global regulations, and state-by-state guide
+  - Updated navigation bar to include: News, Markets, Learn, Analysis, Regulation, About
+  - All navigation links now point to existing pages with no broken links
+- **Comprehensive Learn Page**: Enhanced Learn page with full educational content
+  - Hero section with main CTAs
+  - Three learning paths: Crypto Fundamentals (Beginner), Trading & Investment (Intermediate), Blockchain Technology (Advanced)
+  - Featured guides section with 6 popular articles
+  - Interactive glossary teaser with search functionality
+  - Video tutorials library showcase
+  - Learning statistics display (250K+ students, 1,500+ guides)
+  - Topics grid covering 12 educational categories
+  - "Why Learn With Pyrax" value propositions
+  - Newsletter signup section
+  - FAQ accordion
+  - Footer CTA section
+- **Notion Blog CMS Integration**: Connected blog content management to Notion
+  - Built CMS admin page at /cms for managing blog posts
+  - Database selector to choose Notion database
+  - One-click sync from Notion to local storage
+  - Post management with view, refresh, and delete capabilities
+  - Homepage now displays real blog posts synced from Notion
+  - Blog posts table stores Notion page mapping and metadata
+
 ### October 2025
 - **TradingView Chart Integration**: Replaced custom Recharts with professional TradingView widgets
   - Integrated TradingView's advanced chart widget for interactive cryptocurrency price charts
   - Charts display Binance USDT trading pairs with dark theme
   - 600px height for optimal viewing experience
   - Charts work dynamically for all cryptocurrencies
-- **Navigation Simplification**: Streamlined navbar to focus on core sections
-  - Updated navigation to show only: News, Learn, Markets, About
-  - Removed Community and Newsletter buttons for cleaner interface
-  - Created dedicated Learn page for educational content
-- **Learn Page Creation**: Added comprehensive educational resource center
-  - Learning Paths: Blockchain Basics, Trading & Investing, DeFi & Web3, Market Analysis
-  - Featured Guides: Complete Guide to Bitcoin, Understanding Smart Contracts, Crypto Security
-  - Difficulty levels: Beginner, Intermediate, Advanced
-  - Educational content structured for progressive learning
 - **Route Consolidation**: Unified all coin pages under single dynamic route
   - All cryptocurrency pages now use `/coin/:id` route
   - Removed separate Bitcoin route in favor of dynamic implementation
