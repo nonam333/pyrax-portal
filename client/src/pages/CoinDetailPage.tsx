@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import ArticleCard from '@/components/ArticleCard';
 import AdSlot from '@/components/AdSlot';
 import Footer from '@/components/Footer';
-import PriceChart from '@/components/PriceChart';
+import TradingViewChart from '@/components/TradingViewChart';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
@@ -33,7 +33,6 @@ export default function CoinDetailPage() {
   const [coinData, setCoinData] = useState<CoinDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [isWatchlisted, setIsWatchlisted] = useState(false);
-  const [activeTimeframe, setActiveTimeframe] = useState<number>(30);
 
   useEffect(() => {
     const fetchCoinData = async () => {
@@ -145,14 +144,6 @@ export default function CoinDetailPage() {
     { icon: <Zap className="h-5 w-5" />, label: '24h Change', value: `${Math.abs(coinData.market_data.price_change_percentage_24h).toFixed(2)}%`, change: coinData.market_data.price_change_percentage_24h >= 0 ? 'Up' : 'Down', positive: coinData.market_data.price_change_percentage_24h >= 0 }
   ];
 
-  const timeframeMap: Record<string, number> = {
-    '1D': 1,
-    '7D': 7,
-    '30D': 30,
-    '1Y': 365,
-    'ALL': 'max' as any
-  };
-
   return (
     <div className="min-h-screen bg-background" data-testid="page-coin-detail">
       <PriceTicker />
@@ -248,22 +239,10 @@ export default function CoinDetailPage() {
                 <h2 className="text-2xl font-semibold text-card-foreground" data-testid="text-chart-title">
                   {coinData.name} Price Chart
                 </h2>
-                <div className="flex items-center space-x-2">
-                  {Object.keys(timeframeMap).map((tf) => (
-                    <Button 
-                      key={tf}
-                      variant={activeTimeframe === timeframeMap[tf] ? 'default' : 'outline'} 
-                      size="sm"
-                      onClick={() => setActiveTimeframe(timeframeMap[tf])}
-                      className={activeTimeframe === timeframeMap[tf] ? 'bg-primary text-black' : ''}
-                      data-testid={`button-chart-${tf.toLowerCase()}`}
-                    >
-                      {tf}
-                    </Button>
-                  ))}
-                </div>
               </div>
-              <PriceChart coinId={coinId} days={activeTimeframe} />
+              <div className="h-[600px]">
+                <TradingViewChart symbol={coinData.symbol} coinName={coinData.name} />
+              </div>
             </Card>
             
             <Card className="p-6">
