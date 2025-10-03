@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import ArticleCard from '@/components/ArticleCard';
@@ -19,6 +20,19 @@ import dashboardImage from '@assets/stock_images/modern_financial_das_c45b57bc.j
 import dashboardImage2 from '@assets/stock_images/modern_financial_das_e2b2a0f5.jpg';
 import dashboardImage3 from '@assets/stock_images/modern_financial_das_aff5d616.jpg';
 
+interface BlogPost {
+  id: string;
+  notionPageId?: string;
+  title: string;
+  excerpt?: string;
+  content?: string;
+  category?: string;
+  coverImage?: string;
+  author: string;
+  readTime: string;
+  publishedAt: string;
+}
+
 interface Article {
   id: string;
   title: string;
@@ -31,169 +45,113 @@ interface Article {
 }
 
 export default function Homepage() {
-  // todo: remove mock functionality - replace with real article data  
-  const featuredArticle: Article = {
+  const { data: blogPosts, isLoading } = useQuery<BlogPost[]>({
+    queryKey: ['/api/blog-posts'],
+  });
+
+  const stockImages = [heroImage, cryptoImage1, cryptoImage2, cryptoImage3, cryptoImage4, dashboardImage, dashboardImage2, dashboardImage3];
+  
+  const postsWithImages = (blogPosts || []).map((post, index) => ({
+    ...post,
+    image: post.coverImage || stockImages[index % stockImages.length],
+  }));
+
+  const featuredArticle: Article = postsWithImages[0] ? {
+    id: postsWithImages[0].id,
+    title: postsWithImages[0].title,
+    excerpt: postsWithImages[0].excerpt || '',
+    image: postsWithImages[0].image,
+    category: postsWithImages[0].category || 'News',
+    author: postsWithImages[0].author,
+    publishedAt: new Date(postsWithImages[0].publishedAt).toLocaleDateString(),
+    readTime: postsWithImages[0].readTime,
+  } : {
     id: '1',
-    title: 'Bitcoin Surges Past $45,000 as Institutional Adoption Accelerates',
-    excerpt: 'Major financial institutions continue to embrace cryptocurrency, driving unprecedented market growth and mainstream acceptance. This latest surge marks a significant milestone in Bitcoin\'s journey toward becoming a store of value.',
+    title: 'Welcome to Pyrax',
+    excerpt: 'Your source for cryptocurrency news and market analysis.',
     image: heroImage,
-    category: 'Bitcoin',
-    author: 'Sarah Chen',
-    publishedAt: '2 hours ago',
-    readTime: '8 min read'
+    category: 'News',
+    author: 'Pyrax Editorial',
+    publishedAt: 'Today',
+    readTime: '5 min read'
   };
 
-  const latestNews: Article[] = [
-    {
-      id: '2',
-      title: 'SEC Commissioner Peirce Urges Quick Progress on Crypto Regulation',
-      excerpt: 'As regulatory landscape softens, industry leaders push for clear guidelines.',
-      image: cryptoImage1,
-      category: 'Regulation',
-      author: 'Alex Rodriguez',
-      publishedAt: '4 hours ago',
-      readTime: '4 min read'
-    },
-    {
-      id: '3',
-      title: 'Kraken Considers $20 Billion Valuation Ahead of Planned IPO',
-      excerpt: 'Exchange giant mulls potential investor as public offering approaches.',
-      image: cryptoImage2,
-      category: 'Business',
-      author: 'Emma Wilson',
-      publishedAt: '6 hours ago',
-      readTime: '3 min read'
-    },
-    {
-      id: '4',
-      title: 'Tether\'s $20 Billion Funding Round Draws Major Investors',
-      excerpt: 'SoftBank and Ark reportedly among potential backers for stablecoin issuer.',
-      image: cryptoImage3,
-      category: 'DeFi',
-      author: 'David Kim',
-      publishedAt: '8 hours ago',
-      readTime: '5 min read'
-    },
-    {
-      id: '5',
-      title: 'Swift Experiments with Ethereum Layer 2 Integration',
-      excerpt: 'Global payments network tests onchain migration using Linea protocol.',
-      image: cryptoImage4,
-      category: 'Technology',
-      author: 'Lisa Zhang',
-      publishedAt: '10 hours ago',
-      readTime: '6 min read'
-    }
-  ];
+  const latestNews: Article[] = postsWithImages.slice(1, 5).map(post => ({
+    id: post.id,
+    title: post.title,
+    excerpt: post.excerpt || '',
+    image: post.image,
+    category: post.category || 'News',
+    author: post.author,
+    publishedAt: new Date(post.publishedAt).toLocaleDateString(),
+    readTime: post.readTime,
+  }));
 
-  const marketNews: Article[] = [
-    {
-      id: '6',
-      title: 'DeFi Protocols See Record TVL Growth',
-      excerpt: 'Total Value Locked reaches $100B milestone as institutions embrace DeFi.',
-      image: dashboardImage,
-      category: 'DeFi',
-      author: 'James Parker',
-      publishedAt: '12 hours ago',
-      readTime: '4 min read'
-    },
-    {
-      id: '7',
-      title: 'NFT Market Shows Recovery Signs',
-      excerpt: 'Trading volumes surge as utility-focused projects gain traction.',
-      image: dashboardImage2,
-      category: 'NFTs',
-      author: 'Maria Santos',
-      publishedAt: '14 hours ago',
-      readTime: '3 min read'
-    },
-    {
-      id: '8',
-      title: 'Central Bank Digital Currencies Gain Momentum',
-      excerpt: 'Major economies accelerate CBDC development amid digital payment growth.',
-      image: dashboardImage3,
-      category: 'CBDC',
-      author: 'Robert Chen',
-      publishedAt: '16 hours ago',
-      readTime: '5 min read'
-    }
-  ];
+  const marketNews: Article[] = postsWithImages.slice(5, 8).map(post => ({
+    id: post.id,
+    title: post.title,
+    excerpt: post.excerpt || '',
+    image: post.image,
+    category: post.category || 'Markets',
+    author: post.author,
+    publishedAt: new Date(post.publishedAt).toLocaleDateString(),
+    readTime: post.readTime,
+  }));
 
-  const quickReads: Article[] = [
-    {
-      id: '9',
-      title: 'Solana Network Upgrade Promises Faster Transactions',
-      excerpt: 'Latest improvements aim to reduce costs while increasing throughput.',
-      image: cryptoImage1,
-      category: 'Altcoins',
-      author: 'Alex Rodriguez',
-      publishedAt: '1 day ago',
-      readTime: '2 min read'
-    },
-    {
-      id: '10',
-      title: 'Crypto Derivatives Hit Record Volumes',
-      excerpt: 'Institutional trading drives sophisticated market growth.',
-      image: cryptoImage2,
-      category: 'Markets',
-      author: 'Emma Wilson',
-      publishedAt: '1 day ago',
-      readTime: '2 min read'
-    },
-    {
-      id: '11',
-      title: 'Web3 Gaming Revenue Surges 200%',
-      excerpt: 'Blockchain games see unprecedented adoption and investment.',
-      image: cryptoImage3,
-      category: 'Gaming',
-      author: 'David Kim',
-      publishedAt: '1 day ago',
-      readTime: '3 min read'
-    },
-    {
-      id: '12',
-      title: 'Ethereum Staking Rewards Hit New High',
-      excerpt: 'Network participation reaches record levels as rewards climb.',
-      image: cryptoImage4,
-      category: 'Ethereum',
-      author: 'Lisa Zhang',
-      publishedAt: '1 day ago',
-      readTime: '2 min read'
-    }
-  ];
+  const quickReads: Article[] = postsWithImages.slice(8, 12).map(post => ({
+    id: post.id,
+    title: post.title,
+    excerpt: post.excerpt || '',
+    image: post.image,
+    category: post.category || 'Quick Reads',
+    author: post.author,
+    publishedAt: new Date(post.publishedAt).toLocaleDateString(),
+    readTime: post.readTime,
+  }));
 
-  const breakingNews: Article[] = [
-    {
-      id: '13',
-      title: 'Major Exchange Announces Zero-Fee Bitcoin Trading',
-      excerpt: 'Leading cryptocurrency exchange eliminates trading fees for BTC pairs.',
-      image: cryptoImage1,
-      category: 'Breaking',
-      author: 'Sarah Chen',
-      publishedAt: '30 min ago',
-      readTime: '3 min read'
-    },
-    {
-      id: '14',
-      title: 'Fed Chairman Discusses Digital Dollar Timeline',
-      excerpt: 'Central bank digital currency could launch within 5 years.',
-      image: cryptoImage2,
-      category: 'Policy',
-      author: 'Alex Rodriguez',
-      publishedAt: '45 min ago',
-      readTime: '4 min read'
-    },
-    {
-      id: '15',
-      title: 'Ethereum Layer 2 Adoption Hits Record High',
-      excerpt: 'L2 transactions now account for 60% of Ethereum activity.',
-      image: cryptoImage3,
-      category: 'Ethereum',
-      author: 'Emma Wilson',
-      publishedAt: '1 hour ago',
-      readTime: '3 min read'
-    }
-  ];
+  const breakingNews: Article[] = postsWithImages.slice(0, 3).length > 0 
+    ? postsWithImages.slice(0, 3).map(post => ({
+        id: post.id,
+        title: post.title,
+        excerpt: post.excerpt || '',
+        image: post.image,
+        category: post.category || 'Breaking',
+        author: post.author,
+        publishedAt: new Date(post.publishedAt).toLocaleDateString(),
+        readTime: post.readTime,
+      }))
+    : [
+        {
+          id: '13',
+          title: 'Major Exchange Announces Zero-Fee Bitcoin Trading',
+          excerpt: 'Leading cryptocurrency exchange eliminates trading fees for BTC pairs.',
+          image: cryptoImage1,
+          category: 'Breaking',
+          author: 'Sarah Chen',
+          publishedAt: '30 min ago',
+          readTime: '3 min read'
+        },
+        {
+          id: '14',
+          title: 'Fed Chairman Discusses Digital Dollar Timeline',
+          excerpt: 'Central bank digital currency could launch within 5 years.',
+          image: cryptoImage2,
+          category: 'Policy',
+          author: 'Alex Rodriguez',
+          publishedAt: '45 min ago',
+          readTime: '4 min read'
+        },
+        {
+          id: '15',
+          title: 'Ethereum Layer 2 Adoption Hits Record High',
+          excerpt: 'L2 transactions now account for 60% of Ethereum activity.',
+          image: cryptoImage3,
+          category: 'Ethereum',
+          author: 'Emma Wilson',
+          publishedAt: '1 hour ago',
+          readTime: '3 min read'
+        }
+      ];
 
   const researchArticles: Article[] = [
     {
