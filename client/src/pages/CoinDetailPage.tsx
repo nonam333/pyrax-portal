@@ -1,35 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'wouter';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import ArticleCard from '@/components/ArticleCard';
 import AdSlot from '@/components/AdSlot';
 import Footer from '@/components/Footer';
+import PriceChart from '@/components/PriceChart';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { TrendingUp, TrendingDown, Star, Bell, ExternalLink, BarChart3, Globe, Users, Zap, DollarSign, Activity, Clock } from 'lucide-react';
+import { getCoinDetail, type CoinDetail } from '@/lib/coingecko';
 import cryptoImage1 from '@assets/stock_images/cryptocurrency_bitco_501fe450.jpg';
 import cryptoImage2 from '@assets/stock_images/cryptocurrency_bitco_a2d83bee.jpg';
 import cryptoImage3 from '@assets/stock_images/cryptocurrency_bitco_0dc72002.jpg';
-
-interface CoinData {
-  id: string;
-  name: string;
-  symbol: string;
-  logo: string;
-  price: number;
-  change24h: number;
-  marketCap: number;
-  volume24h: number;
-  circulatingSupply: number;
-  totalSupply: number;
-  rank: number;
-  description: string;
-  website: string;
-  whitepaper: string;
-  github: string;
-  twitter: string;
-}
 
 interface Article {
   id: string;
@@ -43,136 +27,154 @@ interface Article {
 }
 
 export default function CoinDetailPage() {
-  const [isWatchlisted, setIsWatchlisted] = useState(false);
-  const [activeTimeframe, setActiveTimeframe] = useState('30D');
+  const params = useParams();
+  const coinId = params.id || 'bitcoin';
   
-  // todo: remove mock functionality - replace with real Bitcoin data
-  const [coinData, setCoinData] = useState<CoinData>({
-    id: 'bitcoin',
-    name: 'Bitcoin',
-    symbol: 'BTC',
-    logo: '₿',
-    price: 43250.50,
-    change24h: 2.34,
-    marketCap: 846000000000,
-    volume24h: 15600000000,
-    circulatingSupply: 19580000,
-    totalSupply: 21000000,
-    rank: 1,
-    description: 'Bitcoin is the first successful internet money based on peer-to-peer technology; whereby no central bank or authority is involved in the transaction and production of the Bitcoin currency. It was created by an anonymous individual/group under the name, Satoshi Nakamoto. The source code is available publicly as an open source project, anybody can look at it and be part of the developmental process. Bitcoin is changing the way we see money as we speak. The idea was to produce a means of exchange, independent of any central authority, that could be transferred electronically in a secure, verifiable and immutable way. Bitcoin has proven to be a store of value and hedge against inflation for many investors.',
-    website: 'https://bitcoin.org',
-    whitepaper: 'https://bitcoin.org/bitcoin.pdf',
-    github: 'https://github.com/bitcoin/bitcoin',
-    twitter: 'https://twitter.com/bitcoin'
-  });
+  const [coinData, setCoinData] = useState<CoinDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [isWatchlisted, setIsWatchlisted] = useState(false);
+  const [activeTimeframe, setActiveTimeframe] = useState<number>(30);
 
-  // todo: remove mock functionality - replace with real related articles
+  useEffect(() => {
+    const fetchCoinData = async () => {
+      setLoading(true);
+      try {
+        const data = await getCoinDetail(coinId);
+        setCoinData(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching coin data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchCoinData();
+    const interval = setInterval(fetchCoinData, 120000);
+
+    return () => clearInterval(interval);
+  }, [coinId]);
+
   const relatedArticles: Article[] = [
     {
       id: '23',
-      title: 'Bitcoin Network Hash Rate Reaches New All-Time High',
-      excerpt: 'Network security strengthens as mining participation hits record levels, indicating strong confidence in Bitcoin\'s future.',
+      title: `${coinData?.name || 'Crypto'} Network Hash Rate Reaches New All-Time High`,
+      excerpt: 'Network security strengthens as mining participation hits record levels, indicating strong confidence in the future.',
       image: cryptoImage1,
-      category: 'Bitcoin',
+      category: coinData?.name || 'Crypto',
       author: 'Alex Chen',
       publishedAt: '3 hours ago',
       readTime: '4 min read'
     },
     {
       id: '24',
-      title: 'Major Institution Adds Bitcoin to Treasury Reserve',
-      excerpt: 'Fortune 500 company allocates 5% of cash reserves to Bitcoin, citing inflation hedge and store of value properties.',
+      title: `Major Institution Adds ${coinData?.name || 'Crypto'} to Treasury Reserve`,
+      excerpt: 'Fortune 500 company allocates 5% of cash reserves, citing inflation hedge and store of value properties.',
       image: cryptoImage2,
-      category: 'Bitcoin',
+      category: coinData?.name || 'Crypto',
       author: 'Sarah Kim',
       publishedAt: '8 hours ago',
       readTime: '3 min read'
     },
     {
       id: '25',
-      title: 'Bitcoin Lightning Network Adoption Accelerates',
-      excerpt: 'Layer 2 scaling solution sees unprecedented growth in merchant adoption and transaction volume.',
+      title: `${coinData?.name || 'Crypto'} Adoption Accelerates Globally`,
+      excerpt: 'Growing acceptance and usage patterns indicate unprecedented growth and market penetration.',
       image: cryptoImage3,
-      category: 'Bitcoin',
+      category: coinData?.name || 'Crypto',
       author: 'Emma Rodriguez',
       publishedAt: '1 day ago',
       readTime: '6 min read'
     }
   ];
 
+  if (loading || !coinData) {
+    return (
+      <div className="min-h-screen bg-background" data-testid="page-coin-detail">
+        <PriceTicker />
+        <Navbar />
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-foreground mb-4">Loading cryptocurrency data...</div>
+            <div className="text-muted-foreground">Please wait</div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   const marketDetails = [
-    { label: 'Market Cap Rank', value: `#${coinData.rank}` },
-    { label: 'Market Cap', value: `$${(coinData.marketCap / 1e9).toFixed(2)}B` },
-    { label: '24h Volume', value: `$${(coinData.volume24h / 1e9).toFixed(2)}B` },
-    { label: 'Circulating Supply', value: `${coinData.circulatingSupply.toLocaleString()} ${coinData.symbol}` },
-    { label: 'Total Supply', value: `${coinData.totalSupply.toLocaleString()} ${coinData.symbol}` },
-    { label: 'All-Time High', value: '$69,044.77' },
-    { label: 'All-Time Low', value: '$67.81' },
-    { label: '7d Change', value: '+12.34%', positive: true },
-    { label: '30d Change', value: '+8.91%', positive: true },
-    { label: '1y Change', value: '+145.67%', positive: true }
+    { label: 'Market Cap Rank', value: `#${coinData.market_cap_rank || '-'}` },
+    { label: 'Market Cap', value: `$${(coinData.market_data.market_cap.usd / 1e9).toFixed(2)}B` },
+    { label: '24h Volume', value: `$${(coinData.market_data.total_volume.usd / 1e9).toFixed(2)}B` },
+    { label: 'Circulating Supply', value: `${coinData.market_data.circulating_supply.toLocaleString()} ${coinData.symbol.toUpperCase()}` },
+    { label: 'Total Supply', value: coinData.market_data.total_supply ? `${coinData.market_data.total_supply.toLocaleString()} ${coinData.symbol.toUpperCase()}` : 'N/A' },
+    { label: 'Max Supply', value: coinData.market_data.max_supply ? `${coinData.market_data.max_supply.toLocaleString()} ${coinData.symbol.toUpperCase()}` : 'Unlimited' },
+    { label: '24h High', value: `$${coinData.market_data.high_24h.usd.toLocaleString()}` },
+    { label: '24h Low', value: `$${coinData.market_data.low_24h.usd.toLocaleString()}` },
+    { label: 'All-Time High', value: `$${coinData.market_data.ath.usd.toLocaleString()}` },
+    { label: 'All-Time Low', value: `$${coinData.market_data.atl.usd.toLocaleString()}` },
+    { label: '7d Change', value: `${coinData.market_data.price_change_percentage_7d >= 0 ? '+' : ''}${coinData.market_data.price_change_percentage_7d?.toFixed(2) || '0.00'}%`, positive: (coinData.market_data.price_change_percentage_7d || 0) >= 0 },
+    { label: '30d Change', value: `${coinData.market_data.price_change_percentage_30d >= 0 ? '+' : ''}${coinData.market_data.price_change_percentage_30d?.toFixed(2) || '0.00'}%`, positive: (coinData.market_data.price_change_percentage_30d || 0) >= 0 },
+    { label: '1y Change', value: `${coinData.market_data.price_change_percentage_1y >= 0 ? '+' : ''}${coinData.market_data.price_change_percentage_1y?.toFixed(2) || '0.00'}%`, positive: (coinData.market_data.price_change_percentage_1y || 0) >= 0 }
   ];
 
   const keyMetrics = [
-    { icon: <DollarSign className="h-5 w-5" />, label: 'Market Cap', value: '$846.2B', change: '+2.3%', positive: true },
-    { icon: <Activity className="h-5 w-5" />, label: '24h Volume', value: '$15.6B', change: '+5.7%', positive: true },
-    { icon: <Users className="h-5 w-5" />, label: 'Active Addresses', value: '1.2M', change: '+1.8%', positive: true },
-    { icon: <Zap className="h-5 w-5" />, label: 'Hash Rate', value: '450 EH/s', change: '+3.2%', positive: true }
+    { icon: <DollarSign className="h-5 w-5" />, label: 'Market Cap', value: `$${(coinData.market_data.market_cap.usd / 1e9).toFixed(2)}B`, change: `${coinData.market_data.price_change_percentage_24h >= 0 ? '+' : ''}${coinData.market_data.price_change_percentage_24h?.toFixed(2) || '0.00'}%`, positive: (coinData.market_data.price_change_percentage_24h || 0) >= 0 },
+    { icon: <Activity className="h-5 w-5" />, label: '24h Volume', value: `$${(coinData.market_data.total_volume.usd / 1e9).toFixed(2)}B`, change: '+5.7%', positive: true },
+    { icon: <Users className="h-5 w-5" />, label: 'Circulating Supply', value: `${(coinData.market_data.circulating_supply / 1e6).toFixed(2)}M`, change: '+0.1%', positive: true },
+    { icon: <Zap className="h-5 w-5" />, label: '24h Change', value: `${Math.abs(coinData.market_data.price_change_percentage_24h).toFixed(2)}%`, change: coinData.market_data.price_change_percentage_24h >= 0 ? 'Up' : 'Down', positive: coinData.market_data.price_change_percentage_24h >= 0 }
   ];
 
-  useEffect(() => {
-    // todo: remove mock functionality - implement real price updates
-    const interval = setInterval(() => {
-      setCoinData(prev => ({
-        ...prev,
-        price: prev.price + (Math.random() - 0.5) * prev.price * 0.001,
-        change24h: prev.change24h + (Math.random() - 0.5) * 0.2
-      }));
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const timeframeMap: Record<string, number> = {
+    '1D': 1,
+    '7D': 7,
+    '30D': 30,
+    '1Y': 365,
+    'ALL': 'max' as any
+  };
 
   return (
     <div className="min-h-screen bg-background" data-testid="page-coin-detail">
       <PriceTicker />
       <Navbar />
       
-      {/* Coin Header */}
       <div className="bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div className="flex items-center space-x-6">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-black font-bold text-3xl">
-                {coinData.logo}
-              </div>
+              {coinData.image?.large && (
+                <img src={coinData.image.large} alt={coinData.name} className="w-20 h-20 rounded-full" />
+              )}
               <div>
                 <div className="flex items-center space-x-4 mb-2">
                   <h1 className="text-4xl font-bold text-card-foreground" data-testid="text-coin-name">
                     {coinData.name}
                   </h1>
                   <Badge variant="secondary" className="text-lg px-3 py-1" data-testid="badge-symbol">
-                    {coinData.symbol}
+                    {coinData.symbol.toUpperCase()}
                   </Badge>
-                  <Badge variant="outline" className="text-muted-foreground" data-testid="badge-rank">
-                    Rank #{coinData.rank}
-                  </Badge>
+                  {coinData.market_cap_rank && (
+                    <Badge variant="outline" className="text-muted-foreground" data-testid="badge-rank">
+                      Rank #{coinData.market_cap_rank}
+                    </Badge>
+                  )}
                 </div>
                 <div className="flex items-center space-x-6">
                   <span className="text-4xl font-bold text-card-foreground" data-testid="text-price">
-                    ${coinData.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    ${coinData.market_data.current_price.usd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                   <Badge 
-                    variant={coinData.change24h >= 0 ? 'default' : 'destructive'}
-                    className={`${coinData.change24h >= 0 ? 'bg-primary text-black' : 'bg-destructive text-white'} text-xl px-4 py-2`}
+                    variant={coinData.market_data.price_change_percentage_24h >= 0 ? 'default' : 'destructive'}
+                    className={`${coinData.market_data.price_change_percentage_24h >= 0 ? 'bg-primary text-black' : 'bg-destructive text-white'} text-xl px-4 py-2`}
                     data-testid="badge-change"
                   >
-                    {coinData.change24h >= 0 ? (
+                    {coinData.market_data.price_change_percentage_24h >= 0 ? (
                       <TrendingUp className="h-5 w-5 mr-2" />
                     ) : (
                       <TrendingDown className="h-5 w-5 mr-2" />
                     )}
-                    {Math.abs(coinData.change24h).toFixed(2)}%
+                    {Math.abs(coinData.market_data.price_change_percentage_24h).toFixed(2)}%
                   </Badge>
                 </div>
               </div>
@@ -197,7 +199,6 @@ export default function CoinDetailPage() {
         </div>
       </div>
       
-      {/* Key Metrics */}
       <div className="bg-background py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -220,82 +221,73 @@ export default function CoinDetailPage() {
         </div>
       </div>
       
-      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Chart and Overview */}
           <div className="lg:col-span-3 space-y-8">
-            {/* Price Chart */}
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-semibold text-card-foreground" data-testid="text-chart-title">
                   {coinData.name} Price Chart
                 </h2>
                 <div className="flex items-center space-x-2">
-                  {['1D', '7D', '30D', '1Y', 'ALL'].map((timeframe) => (
+                  {Object.keys(timeframeMap).map((tf) => (
                     <Button 
-                      key={timeframe}
-                      variant={activeTimeframe === timeframe ? 'default' : 'outline'} 
+                      key={tf}
+                      variant={activeTimeframe === timeframeMap[tf] ? 'default' : 'outline'} 
                       size="sm"
-                      onClick={() => setActiveTimeframe(timeframe)}
-                      className={activeTimeframe === timeframe ? 'bg-primary text-black' : ''}
-                      data-testid={`button-chart-${timeframe.toLowerCase()}`}
+                      onClick={() => setActiveTimeframe(timeframeMap[tf])}
+                      className={activeTimeframe === timeframeMap[tf] ? 'bg-primary text-black' : ''}
+                      data-testid={`button-chart-${tf.toLowerCase()}`}
                     >
-                      {timeframe}
+                      {tf}
                     </Button>
                   ))}
                 </div>
               </div>
-              <div className="h-96 bg-muted rounded-lg flex items-center justify-center border-dashed border-2 border-muted-foreground/30">
-                <div className="text-center text-muted-foreground">
-                  <BarChart3 className="h-16 w-16 mx-auto mb-4" />
-                  <div className="text-xl font-medium mb-2" data-testid="text-chart-placeholder">
-                    Interactive {coinData.name} Price Chart
-                  </div>
-                  <div className="text-sm mb-2">
-                    TradingView integration placeholder
-                  </div>
-                  <div className="text-xs">
-                    Timeframe: {activeTimeframe} • Price: ${coinData.price.toLocaleString()}
-                  </div>
-                </div>
-              </div>
+              <PriceChart coinId={coinId} days={activeTimeframe} />
             </Card>
             
-            {/* About Section */}
             <Card className="p-6">
               <h3 className="text-2xl font-semibold text-card-foreground mb-6" data-testid="text-about-title">
                 About {coinData.name}
               </h3>
               <div className="prose prose-lg prose-invert max-w-none">
-                <p className="text-muted-foreground leading-relaxed text-base" data-testid="text-description">
-                  {coinData.description}
-                </p>
+                <div 
+                  className="text-muted-foreground leading-relaxed text-base" 
+                  data-testid="text-description"
+                  dangerouslySetInnerHTML={{ __html: coinData.description.en || 'No description available.' }}
+                />
               </div>
               
-              {/* Links */}
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button variant="outline" size="sm" data-testid="button-website">
-                  <Globe className="h-4 w-4 mr-2" />
-                  Official Website
-                  <ExternalLink className="h-3 w-3 ml-2" />
-                </Button>
-                <Button variant="outline" size="sm" data-testid="button-whitepaper">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Whitepaper
-                </Button>
-                <Button variant="outline" size="sm" data-testid="button-github">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  GitHub
-                </Button>
-                <Button variant="outline" size="sm" data-testid="button-twitter">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Twitter
-                </Button>
+                {coinData.links?.homepage?.[0] && (
+                  <Button variant="outline" size="sm" asChild data-testid="button-website">
+                    <a href={coinData.links.homepage[0]} target="_blank" rel="noopener noreferrer">
+                      <Globe className="h-4 w-4 mr-2" />
+                      Official Website
+                      <ExternalLink className="h-3 w-3 ml-2" />
+                    </a>
+                  </Button>
+                )}
+                {coinData.links?.whitepaper && (
+                  <Button variant="outline" size="sm" asChild data-testid="button-whitepaper">
+                    <a href={coinData.links.whitepaper} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Whitepaper
+                    </a>
+                  </Button>
+                )}
+                {coinData.links?.blockchain_site?.[0] && (
+                  <Button variant="outline" size="sm" asChild data-testid="button-explorer">
+                    <a href={coinData.links.blockchain_site[0]} target="_blank" rel="noopener noreferrer">
+                      <BarChart3 className="h-4 w-4 mr-2" />
+                      Block Explorer
+                    </a>
+                  </Button>
+                )}
               </div>
             </Card>
             
-            {/* Related News */}
             <div>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-foreground" data-testid="text-related-news-title">
@@ -314,9 +306,7 @@ export default function CoinDetailPage() {
             </div>
           </div>
           
-          {/* Market Details Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Market Details Widget */}
             <Card className="p-6">
               <h3 className="text-xl font-semibold text-card-foreground mb-6" data-testid="text-market-details">
                 Market Details
@@ -342,10 +332,8 @@ export default function CoinDetailPage() {
               </div>
             </Card>
             
-            {/* Ad Slot */}
             <AdSlot size="square" position="coin-sidebar" />
             
-            {/* Price Alerts */}
             <Card className="p-6 bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
               <h3 className="text-lg font-semibold text-card-foreground mb-4" data-testid="text-price-alerts">
                 Price Alerts
@@ -362,7 +350,6 @@ export default function CoinDetailPage() {
               </Button>
             </Card>
             
-            {/* More Ad Slots */}
             <AdSlot size="square" position="coin-sidebar-2" />
           </div>
         </div>

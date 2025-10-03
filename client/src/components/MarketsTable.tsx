@@ -5,101 +5,36 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Search, TrendingUp, TrendingDown, ChevronUp, ChevronDown } from 'lucide-react';
 import { Link } from 'wouter';
+import { getTopCoins, type CoinPrice } from '@/lib/coingecko';
 
-interface CryptoData {
-  id: string;
-  name: string;
-  symbol: string;
-  logo: string;
-  price: number;
-  change24h: number;
-  marketCap: number;
-  volume24h: number;
-  circulatingSupply: number;
-  rank: number;
-}
-
-type SortField = 'rank' | 'name' | 'price' | 'change24h' | 'marketCap' | 'volume24h';
+type SortField = 'market_cap_rank' | 'name' | 'current_price' | 'price_change_percentage_24h' | 'market_cap' | 'total_volume';
 type SortDirection = 'asc' | 'desc';
 
 export default function MarketsTable() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortField, setSortField] = useState<SortField>('rank');
+  const [sortField, setSortField] = useState<SortField>('market_cap_rank');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-
-  // todo: remove mock functionality - replace with real crypto data
-  const [cryptoData, setCryptoData] = useState<CryptoData[]>([
-    {
-      id: 'bitcoin',
-      name: 'Bitcoin',
-      symbol: 'BTC',
-      logo: '₿',
-      price: 43250.50,
-      change24h: 2.34,
-      marketCap: 846000000000,
-      volume24h: 15600000000,
-      circulatingSupply: 19580000,
-      rank: 1
-    },
-    {
-      id: 'ethereum',
-      name: 'Ethereum',
-      symbol: 'ETH',
-      logo: 'Ξ',
-      price: 2650.25,
-      change24h: -1.25,
-      marketCap: 318000000000,
-      volume24h: 8900000000,
-      circulatingSupply: 120000000,
-      rank: 2
-    },
-    {
-      id: 'binancecoin',
-      name: 'BNB',
-      symbol: 'BNB',
-      logo: 'B',
-      price: 310.75,
-      change24h: 0.85,
-      marketCap: 47500000000,
-      volume24h: 890000000,
-      circulatingSupply: 153000000,
-      rank: 3
-    },
-    {
-      id: 'solana',
-      name: 'Solana',
-      symbol: 'SOL',
-      logo: 'S',
-      price: 105.80,
-      change24h: 4.15,
-      marketCap: 45200000000,
-      volume24h: 1200000000,
-      circulatingSupply: 427000000,
-      rank: 4
-    },
-    {
-      id: 'cardano',
-      name: 'Cardano',
-      symbol: 'ADA',
-      logo: 'A',
-      price: 0.485,
-      change24h: 3.42,
-      marketCap: 17100000000,
-      volume24h: 245000000,
-      circulatingSupply: 35300000000,
-      rank: 5
-    }
-  ]);
+  const [coins, setCoins] = useState<CoinPrice[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // todo: remove mock functionality - implement real price updates
-    const interval = setInterval(() => {
-      setCryptoData(prev => prev.map(coin => ({
-        ...coin,
-        price: coin.price + (Math.random() - 0.5) * coin.price * 0.002,
-        change24h: coin.change24h + (Math.random() - 0.5) * 0.5
-      })));
-    }, 5000);
+    const fetchCoins = async () => {
+      try {
+        const data = await getTopCoins(100);
+        const formattedData = data.map((coin: any) => ({
+          ...coin,
+          market_cap_rank: coin.market_cap_rank || 0
+        }));
+        setCoins(formattedData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching coins:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchCoins();
+    const interval = setInterval(fetchCoins, 120000);
 
     return () => clearInterval(interval);
   }, []);
@@ -113,14 +48,14 @@ export default function MarketsTable() {
     }
   };
 
-  const filteredAndSortedData = cryptoData
+  const filteredAndSortedData = coins
     .filter(coin => 
       coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
-      const aValue = a[sortField];
-      const bValue = b[sortField];
+      const aValue = a[sortField as keyof CoinPrice];
+      const bValue = b[sortField as keyof CoinPrice];
       const multiplier = sortDirection === 'asc' ? 1 : -1;
       
       if (typeof aValue === 'string' && typeof bValue === 'string') {
@@ -144,9 +79,18 @@ export default function MarketsTable() {
       <ChevronDown className="h-4 w-4" />;
   };
 
+  if (loading) {
+    return (
+      <Card className="p-6" data-testid="markets-table">
+        <div className="text-center py-12">
+          <div className="text-lg text-muted-foreground">Loading cryptocurrency data...</div>
+        </div>
+      </Card>
+    );
+  }
+
   return (
     <Card className="p-6" data-testid="markets-table">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <h2 className="text-2xl font-bold text-card-foreground" data-testid="text-markets-title">
           Cryptocurrency Prices
@@ -165,7 +109,6 @@ export default function MarketsTable() {
         </div>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full" data-testid="table-crypto">
           <thead>
@@ -174,12 +117,12 @@ export default function MarketsTable() {
                 <Button 
                   variant="ghost" 
                   size="sm"
-                  onClick={() => handleSort('rank')}
+                  onClick={() => handleSort('market_cap_rank')}
                   className="font-semibold text-muted-foreground hover:text-foreground"
                   data-testid="button-sort-rank"
                 >
                   #
-                  <SortIcon field="rank" />
+                  <SortIcon field="market_cap_rank" />
                 </Button>
               </th>
               <th className="text-left py-3 px-2">
@@ -198,48 +141,48 @@ export default function MarketsTable() {
                 <Button 
                   variant="ghost" 
                   size="sm"
-                  onClick={() => handleSort('price')}
+                  onClick={() => handleSort('current_price')}
                   className="font-semibold text-muted-foreground hover:text-foreground"
                   data-testid="button-sort-price"
                 >
                   Price
-                  <SortIcon field="price" />
+                  <SortIcon field="current_price" />
                 </Button>
               </th>
               <th className="text-right py-3 px-2">
                 <Button 
                   variant="ghost" 
                   size="sm"
-                  onClick={() => handleSort('change24h')}
+                  onClick={() => handleSort('price_change_percentage_24h')}
                   className="font-semibold text-muted-foreground hover:text-foreground"
                   data-testid="button-sort-change"
                 >
                   24h %
-                  <SortIcon field="change24h" />
+                  <SortIcon field="price_change_percentage_24h" />
                 </Button>
               </th>
               <th className="text-right py-3 px-2 hidden md:table-cell">
                 <Button 
                   variant="ghost" 
                   size="sm"
-                  onClick={() => handleSort('marketCap')}
+                  onClick={() => handleSort('market_cap')}
                   className="font-semibold text-muted-foreground hover:text-foreground"
                   data-testid="button-sort-marketcap"
                 >
                   Market Cap
-                  <SortIcon field="marketCap" />
+                  <SortIcon field="market_cap" />
                 </Button>
               </th>
               <th className="text-right py-3 px-2 hidden lg:table-cell">
                 <Button 
                   variant="ghost" 
                   size="sm"
-                  onClick={() => handleSort('volume24h')}
+                  onClick={() => handleSort('total_volume')}
                   className="font-semibold text-muted-foreground hover:text-foreground"
                   data-testid="button-sort-volume"
                 >
                   Volume (24h)
-                  <SortIcon field="volume24h" />
+                  <SortIcon field="total_volume" />
                 </Button>
               </th>
             </tr>
@@ -253,15 +196,19 @@ export default function MarketsTable() {
               >
                 <td className="py-4 px-2">
                   <span className="text-sm text-muted-foreground" data-testid={`text-rank-${coin.symbol.toLowerCase()}`}>
-                    {coin.rank}
+                    {(coin as any).market_cap_rank || '-'}
                   </span>
                 </td>
                 <td className="py-4 px-2">
                   <Link href={`/coin/${coin.id}`}>
                     <div className="flex items-center space-x-3 hover:text-primary transition-colors cursor-pointer">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-black font-bold text-sm">
-                        {coin.logo}
-                      </div>
+                      {coin.image ? (
+                        <img src={coin.image} alt={coin.name} className="w-8 h-8 rounded-full" />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center text-black font-bold text-sm">
+                          {coin.symbol.charAt(0).toUpperCase()}
+                        </div>
+                      )}
                       <div>
                         <div 
                           className="font-semibold text-card-foreground"
@@ -273,7 +220,7 @@ export default function MarketsTable() {
                           className="text-sm text-muted-foreground"
                           data-testid={`text-symbol-${coin.symbol.toLowerCase()}`}
                         >
-                          {coin.symbol}
+                          {coin.symbol.toUpperCase()}
                         </div>
                       </div>
                     </div>
@@ -284,21 +231,23 @@ export default function MarketsTable() {
                     className="font-semibold text-card-foreground"
                     data-testid={`text-price-${coin.symbol.toLowerCase()}`}
                   >
-                    ${coin.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    ${coin.current_price >= 1 
+                      ? coin.current_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                      : coin.current_price.toFixed(6)}
                   </span>
                 </td>
                 <td className="py-4 px-2 text-right">
                   <Badge 
-                    variant={coin.change24h >= 0 ? 'default' : 'destructive'}
-                    className={`${coin.change24h >= 0 ? 'bg-primary text-black' : 'bg-destructive text-white'}`}
+                    variant={coin.price_change_percentage_24h >= 0 ? 'default' : 'destructive'}
+                    className={`${coin.price_change_percentage_24h >= 0 ? 'bg-primary text-black' : 'bg-destructive text-white'}`}
                     data-testid={`badge-change-${coin.symbol.toLowerCase()}`}
                   >
-                    {coin.change24h >= 0 ? (
+                    {coin.price_change_percentage_24h >= 0 ? (
                       <TrendingUp className="h-3 w-3 mr-1" />
                     ) : (
                       <TrendingDown className="h-3 w-3 mr-1" />
                     )}
-                    {Math.abs(coin.change24h).toFixed(2)}%
+                    {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
                   </Badge>
                 </td>
                 <td className="py-4 px-2 text-right hidden md:table-cell">
@@ -306,7 +255,7 @@ export default function MarketsTable() {
                     className="text-card-foreground"
                     data-testid={`text-marketcap-${coin.symbol.toLowerCase()}`}
                   >
-                    {formatNumber(coin.marketCap)}
+                    {formatNumber(coin.market_cap)}
                   </span>
                 </td>
                 <td className="py-4 px-2 text-right hidden lg:table-cell">
@@ -314,7 +263,7 @@ export default function MarketsTable() {
                     className="text-card-foreground"
                     data-testid={`text-volume-${coin.symbol.toLowerCase()}`}
                   >
-                    {formatNumber(coin.volume24h)}
+                    {formatNumber(coin.total_volume)}
                   </span>
                 </td>
               </tr>
