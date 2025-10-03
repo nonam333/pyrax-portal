@@ -87,7 +87,7 @@ export default function CoinDetailPage() {
     }
   ];
 
-  if (loading || !coinData) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-background" data-testid="page-coin-detail">
         <PriceTicker />
@@ -95,7 +95,26 @@ export default function CoinDetailPage() {
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <div className="text-2xl font-bold text-foreground mb-4">Loading cryptocurrency data...</div>
-            <div className="text-muted-foreground">Please wait</div>
+            <div className="text-muted-foreground">This may take a moment due to API caching</div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!coinData) {
+    return (
+      <div className="min-h-screen bg-background" data-testid="page-coin-detail">
+        <PriceTicker />
+        <Navbar />
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-foreground mb-4">Unable to load data</div>
+            <div className="text-muted-foreground mb-6">The API may be temporarily rate limited. Please try again in a moment.</div>
+            <Button variant="outline" onClick={() => window.location.reload()} data-testid="button-retry">
+              Retry
+            </Button>
           </div>
         </div>
         <Footer />

@@ -10,14 +10,73 @@ interface CacheEntry {
 }
 
 const cache = new Map<string, CacheEntry>();
-const CACHE_DURATION = 30000; // 30 seconds
+const CACHE_DURATION = 30000; // 30 seconds for most data
+const CHART_CACHE_DURATION = 300000; // 5 minutes for chart data (changes less frequently)
 
-function getCached(key: string): any | null {
+// Pre-warm cache with initial data
+async function prewarmCache() {
+  try {
+    console.log('Prewarming cryptocurrency data cache...');
+    
+    // Fetch markets data
+    const marketsResponse = await fetch(
+      `${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`
+    );
+    if (marketsResponse.ok) {
+      const marketsData = await marketsResponse.json();
+      setCache('markets_usd_market_cap_desc_100_1', marketsData);
+      console.log('Cached markets data');
+    }
+    
+    // Wait to avoid rate limit
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Fetch global data
+    const globalResponse = await fetch(`${COINGECKO_API_BASE}/global`);
+    if (globalResponse.ok) {
+      const globalData = await globalResponse.json();
+      setCache('global', globalData.data);
+      console.log('Cached global data');
+    }
+    
+    // Wait to avoid rate limit
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Fetch bitcoin details for the most common coin
+    const bitcoinResponse = await fetch(
+      `${COINGECKO_API_BASE}/coins/bitcoin?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`
+    );
+    if (bitcoinResponse.ok) {
+      const bitcoinData = await bitcoinResponse.json();
+      setCache('coin_bitcoin', bitcoinData);
+      console.log('Cached Bitcoin details');
+    }
+    
+    console.log('Cache prewarming complete');
+  } catch (error) {
+    console.error('Error prewarming cache:', error);
+  }
+}
+
+// Start cache prewarming
+prewarmCache();
+
+function getCached(key: string, allowStale: boolean = false): any | null {
   const entry = cache.get(key);
-  if (entry && Date.now() - entry.timestamp < CACHE_DURATION) {
+  if (!entry) return null;
+  
+  const isChart = key.startsWith('chart_');
+  const duration = isChart ? CHART_CACHE_DURATION : CACHE_DURATION;
+  
+  if (Date.now() - entry.timestamp < duration) {
     return entry.data;
   }
-  cache.delete(key);
+  
+  // Return stale data if requested (better than error)
+  if (allowStale) {
+    return entry.data;
+  }
+  
   return null;
 }
 
@@ -40,6 +99,10 @@ router.get('/coins/markets', async (req, res) => {
     );
     
     if (!response.ok) {
+      const staleData = getCached(cacheKey, true);
+      if (staleData) {
+        return res.json(staleData);
+      }
       throw new Error(`CoinGecko API error: ${response.status}`);
     }
     
@@ -48,6 +111,13 @@ router.get('/coins/markets', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error fetching markets:', error);
+    
+    const cacheKey = `markets_${req.query.vs_currency || 'usd'}_${req.query.order || 'market_cap_desc'}_${req.query.per_page || 100}_${req.query.page || 1}`;
+    const staleData = getCached(cacheKey, true);
+    if (staleData) {
+      return res.json(staleData);
+    }
+    
     res.status(500).json({ error: 'Failed to fetch market data' });
   }
 });
@@ -67,6 +137,10 @@ router.get('/coins/:id', async (req, res) => {
     );
     
     if (!response.ok) {
+      const staleData = getCached(cacheKey, true);
+      if (staleData) {
+        return res.json(staleData);
+      }
       throw new Error(`CoinGecko API error: ${response.status}`);
     }
     
@@ -75,6 +149,13 @@ router.get('/coins/:id', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error fetching coin detail:', error);
+    
+    const cacheKey = `coin_${req.params.id}`;
+    const staleData = getCached(cacheKey, true);
+    if (staleData) {
+      return res.json(staleData);
+    }
+    
     res.status(500).json({ error: 'Failed to fetch coin data' });
   }
 });
@@ -96,6 +177,11 @@ router.get('/coins/:id/market_chart', async (req, res) => {
     );
     
     if (!response.ok) {
+      // If rate limited, try to return stale cache data
+      const staleData = getCached(cacheKey, true);
+      if (staleData) {
+        return res.json(staleData);
+      }
       throw new Error(`CoinGecko API error: ${response.status}`);
     }
     
@@ -104,6 +190,14 @@ router.get('/coins/:id/market_chart', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error fetching chart data:', error);
+    
+    // Last resort: try to return any cached data, even if very stale
+    const cacheKey = `chart_${req.params.id}_${req.query.vs_currency || 'usd'}_${req.query.days || 30}`;
+    const staleData = getCached(cacheKey, true);
+    if (staleData) {
+      return res.json(staleData);
+    }
+    
     res.status(500).json({ error: 'Failed to fetch chart data' });
   }
 });
@@ -120,6 +214,10 @@ router.get('/global', async (req, res) => {
     const response = await fetch(`${COINGECKO_API_BASE}/global`);
     
     if (!response.ok) {
+      const staleData = getCached(cacheKey, true);
+      if (staleData) {
+        return res.json(staleData);
+      }
       throw new Error(`CoinGecko API error: ${response.status}`);
     }
     
@@ -129,6 +227,12 @@ router.get('/global', async (req, res) => {
     res.json(globalData);
   } catch (error) {
     console.error('Error fetching global data:', error);
+    
+    const staleData = getCached('global', true);
+    if (staleData) {
+      return res.json(staleData);
+    }
+    
     res.status(500).json({ error: 'Failed to fetch global data' });
   }
 });
