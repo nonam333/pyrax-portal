@@ -237,4 +237,16 @@ router.get('/global', async (req, res) => {
   }
 });
 
+// Export function to access cached markets data for sitemap generation
+export function getCachedMarkets(limit: number = 50): Array<{ id: string }> {
+  const cacheKey = 'markets_usd_market_cap_desc_100_1';
+  const cached = getCached(cacheKey, true); // Allow stale for sitemap
+  
+  if (!cached || !Array.isArray(cached)) {
+    return [];
+  }
+  
+  return cached.slice(0, limit).map((coin: any) => ({ id: coin.id }));
+}
+
 export default router;

@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import cryptoRoutes from "./crypto";
+import cryptoRoutes, { getCachedMarkets } from "./crypto";
 import { searchNotionDatabases, listNotionPages, getNotionPageContent } from "./notion";
 import { insertBlogPostSchema } from "@shared/schema";
 
@@ -140,6 +140,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
+    }
+  });
+
+  // XML Sitemap
+  app.get('/sitemap.xml', async (req, res) => {
+    try {
+      const baseUrl = 'https://pyrax.io';
+      const currentDate = new Date().toISOString();
+      
+      // Static pages
+      const staticPages = [
+        { url: '/', priority: '1.0', changefreq: 'daily', lastmod: currentDate },
+        { url: '/markets', priority: '0.9', changefreq: 'hourly', lastmod: currentDate },
+        { url: '/learn', priority: '0.9', changefreq: 'weekly', lastmod: currentDate },
+        { url: '/analysis', priority: '0.8', changefreq: 'daily', lastmod: currentDate },
+        { url: '/regulation', priority: '0.8', changefreq: 'weekly', lastmod: currentDate },
+        { url: '/about', priority: '0.7', changefreq: 'monthly', lastmod: currentDate },
+        { url: '/cms', priority: '0.3', changefreq: 'monthly', lastmod: currentDate },
+      ];
+
+      // Top cryptocurrency pages from cached markets data
+      let topCoins = getCachedMarkets(50); // Get top 50 coins by market cap
+      
+      // Fallback to essential coins if cache is empty (before prewarm completes)
+      if (topCoins.length === 0) {
+        topCoins = [
+          { id: 'bitcoin' }, { id: 'ethereum' }, { id: 'tether' }, { id: 'binancecoin' },
+          { id: 'solana' }, { id: 'ripple' }, { id: 'usd-coin' }, { id: 'cardano' },
+          { id: 'dogecoin' }, { id: 'avalanche-2' }
+        ];
+      }
+      
+      const coinPages = topCoins.map(coin => ({
+        url: `/coin/${coin.id}`,
+        priority: '0.7',
+        changefreq: 'hourly',
+        lastmod: currentDate
+      }));
+
+      // Get blog posts
+      const blogPosts = await storage.getBlogPosts();
+      const blogPages = blogPosts.slice(0, 50).map(post => ({
+        url: `/article/${post.id}`,
+        priority: '0.6',
+        changefreq: 'weekly',
+        lastmod: post.lastSyncedAt || post.publishedAt || currentDate
+      }));
+
+      const allPages = [...staticPages, ...coinPages, ...blogPages];
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${allPages.map(page => `  <url>
+    <loc>${baseUrl}${page.url}</loc>
+    <lastmod>${page.lastmod || currentDate}</lastmod>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+      res.header('Content-Type', 'application/xml');
+      res.send(xml);
+    } catch (error: any) {
+      res.status(500).send('Error generating sitemap');
     }
   });
 
