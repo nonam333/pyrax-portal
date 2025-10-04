@@ -53,6 +53,14 @@ export default function AboutPage() {
     {
       title: 'Innovation Leadership',
       description: 'We stay ahead of trends to provide insights on the future of digital assets.'
+    },
+    {
+      title: 'Transparency',
+      description: 'We clearly disclose our sources, methodologies, and any potential conflicts of interest.'
+    },
+    {
+      title: 'Education-Driven',
+      description: 'Beyond news, we empower readers with educational resources to understand crypto fundamentals.'
     }
   ];
 
@@ -221,11 +229,75 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Newsletter CTA */}
+      {/* Editorial Standards Section */}
       <section className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-4" data-testid="text-editorial-title">
+              Editorial Standards
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-editorial-subtitle">
+              Our commitment to journalistic integrity and quality
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold text-card-foreground mb-3" data-testid="text-standard-1-title">
+                Multi-Source Verification
+              </h3>
+              <p className="text-muted-foreground" data-testid="text-standard-1-description">
+                Every claim is verified against multiple credible sources. We never publish single-source stories without clear disclosure.
+              </p>
+            </Card>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold text-card-foreground mb-3" data-testid="text-standard-2-title">
+                Independence
+              </h3>
+              <p className="text-muted-foreground" data-testid="text-standard-2-description">
+                Our editorial team maintains complete independence from advertisers, projects, and external influences.
+              </p>
+            </Card>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold text-card-foreground mb-3" data-testid="text-standard-3-title">
+                Correction Policy
+              </h3>
+              <p className="text-muted-foreground" data-testid="text-standard-3-description">
+                We promptly correct any errors and clearly mark all corrections and updates to published articles.
+              </p>
+            </Card>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold text-card-foreground mb-3" data-testid="text-standard-4-title">
+                Expert Review
+              </h3>
+              <p className="text-muted-foreground" data-testid="text-standard-4-description">
+                Technical articles undergo peer review by blockchain experts before publication to ensure accuracy.
+              </p>
+            </Card>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold text-card-foreground mb-3" data-testid="text-standard-5-title">
+                Conflict Disclosure
+              </h3>
+              <p className="text-muted-foreground" data-testid="text-standard-5-description">
+                We fully disclose any financial interests, partnerships, or potential conflicts related to our coverage.
+              </p>
+            </Card>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold text-card-foreground mb-3" data-testid="text-standard-6-title">
+                Clear Attribution
+              </h3>
+              <p className="text-muted-foreground" data-testid="text-standard-6-description">
+                All sources, data providers, and third-party content are clearly attributed and properly cited.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter CTA */}
+      <section className="py-16 bg-card">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-foreground mb-4" data-testid="text-newsletter-title">
+            <h2 className="text-3xl font-bold text-card-foreground mb-4" data-testid="text-newsletter-title">
               Stay Connected
             </h2>
             <p className="text-lg text-muted-foreground" data-testid="text-newsletter-subtitle">
