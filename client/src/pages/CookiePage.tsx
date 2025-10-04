@@ -1,12 +1,20 @@
 import LegalPageLayout from '@/components/LegalPageLayout';
+import SEO from '@/components/SEO';
 
 export default function CookiePage() {
   return (
-    <LegalPageLayout 
-      title="Cookie Policy" 
-      lastUpdated="January 2025"
-      badge="Legal"
-    >
+    <>
+      <SEO 
+        title="Cookie Policy - Pyrax"
+        description="Understand how Pyrax uses cookies and tracking technologies. Learn about essential cookies, analytics cookies, functionality cookies, and how to manage your cookie preferences."
+        keywords="cookie policy, cookies, tracking, analytics cookies, website cookies, cookie preferences"
+        noindex={true}
+      />
+      <LegalPageLayout 
+        title="Cookie Policy" 
+        lastUpdated="January 2025"
+        badge="Legal"
+      >
       <div className="space-y-6 text-card-foreground">
         <section>
           <h2 className="text-2xl font-bold mb-4">What Are Cookies?</h2>
@@ -137,5 +145,6 @@ export default function CookiePage() {
         </section>
       </div>
     </LegalPageLayout>
+    </>
   );
 }

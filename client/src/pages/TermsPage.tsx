@@ -1,12 +1,20 @@
 import LegalPageLayout from '@/components/LegalPageLayout';
+import SEO from '@/components/SEO';
 
 export default function TermsPage() {
   return (
-    <LegalPageLayout 
-      title="Terms of Service" 
-      lastUpdated="January 2025"
-      badge="Legal"
-    >
+    <>
+      <SEO 
+        title="Terms of Service - Pyrax"
+        description="Review Pyrax's terms of service including user agreement, permitted use, intellectual property rights, disclaimers, and limitations of liability for our cryptocurrency news platform."
+        keywords="terms of service, user agreement, terms and conditions, legal terms, service agreement"
+        noindex={true}
+      />
+      <LegalPageLayout 
+        title="Terms of Service" 
+        lastUpdated="January 2025"
+        badge="Legal"
+      >
       <div className="space-y-6 text-card-foreground">
         <section>
           <h2 className="text-2xl font-bold mb-4">Agreement to Terms</h2>
@@ -120,5 +128,6 @@ export default function TermsPage() {
         </section>
       </div>
     </LegalPageLayout>
+    </>
   );
 }

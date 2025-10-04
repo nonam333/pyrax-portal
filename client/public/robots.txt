@@ -3,18 +3,12 @@
 
 User-agent: *
 Allow: /
+Disallow: /cms
 
 # Sitemap
 Sitemap: https://pyrax.com/sitemap.xml
 
-# Block CMS admin pages
-Disallow: /cms
-
-# Crawl-delay for all bots
-Crawl-delay: 1
-
 # Allow all content pages
-Allow: /
 Allow: /markets
 Allow: /learn
 Allow: /analysis
@@ -23,15 +17,15 @@ Allow: /about
 Allow: /article/
 Allow: /coin/
 
-# Popular search engines get special treatment
+# Popular search engines - full speed crawling
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
+Disallow: /cms
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 0
+Disallow: /cms
 
 User-agent: Slurp
 Allow: /
-Crawl-delay: 0
+Disallow: /cms

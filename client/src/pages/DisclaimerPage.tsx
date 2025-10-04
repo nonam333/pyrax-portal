@@ -1,12 +1,20 @@
 import LegalPageLayout from '@/components/LegalPageLayout';
+import SEO from '@/components/SEO';
 
 export default function DisclaimerPage() {
   return (
-    <LegalPageLayout 
-      title="Disclaimer" 
-      lastUpdated="January 2025"
-      badge="Important"
-    >
+    <>
+      <SEO 
+        title="Investment Disclaimer - Pyrax"
+        description="Important disclaimer about cryptocurrency investment risks. Pyrax provides information for educational purposes only and is not financial advice. Understand market risks before investing."
+        keywords="investment disclaimer, financial disclaimer, crypto risks, market risk warning, not financial advice"
+        noindex={true}
+      />
+      <LegalPageLayout 
+        title="Disclaimer" 
+        lastUpdated="January 2025"
+        badge="Important"
+      >
       <div className="space-y-6 text-card-foreground">
         <section className="bg-destructive/10 border border-destructive/30 p-4 rounded-md">
           <h2 className="text-2xl font-bold mb-3 text-destructive">Important Notice</h2>
@@ -134,5 +142,6 @@ export default function DisclaimerPage() {
         </section>
       </div>
     </LegalPageLayout>
+    </>
   );
 }

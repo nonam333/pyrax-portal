@@ -24,7 +24,6 @@ export default function PriceTicker() {
         setPrices(formattedPrices);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching ticker prices:', error);
         setLoading(false);
       }
     };

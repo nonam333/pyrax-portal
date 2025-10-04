@@ -136,11 +136,11 @@ export default function SEO({
       <meta property="og:site_name" content={siteName} />
       
       {/* Twitter */}
-      <meta property="twitter:card" content={twitterCard} />
-      <meta property="twitter:url" content={canonical} />
-      <meta property="twitter:title" content={fullTitle} />
-      <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={fullOgImage} />
+      <meta name="twitter:card" content={twitterCard} />
+      <meta name="twitter:url" content={canonical} />
+      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={fullOgImage} />
       
       {/* JSON-LD Schema */}
       {jsonLd && (

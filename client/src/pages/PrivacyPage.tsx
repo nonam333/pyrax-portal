@@ -1,12 +1,20 @@
 import LegalPageLayout from '@/components/LegalPageLayout';
+import SEO from '@/components/SEO';
 
 export default function PrivacyPage() {
   return (
-    <LegalPageLayout 
-      title="Privacy Policy" 
-      lastUpdated="January 2025"
-      badge="Legal"
-    >
+    <>
+      <SEO 
+        title="Privacy Policy - Pyrax"
+        description="Learn how Pyrax collects, uses, and protects your personal information. Read our comprehensive privacy policy covering data collection, cookies, security measures, and your privacy rights."
+        keywords="privacy policy, data protection, personal information, cookies, user privacy, data security"
+        noindex={true}
+      />
+      <LegalPageLayout 
+        title="Privacy Policy" 
+        lastUpdated="January 2025"
+        badge="Legal"
+      >
       <div className="space-y-6 text-card-foreground">
         <section>
           <h2 className="text-2xl font-bold mb-4">Introduction</h2>
@@ -125,5 +133,6 @@ export default function PrivacyPage() {
         </section>
       </div>
     </LegalPageLayout>
+    </>
   );
 }

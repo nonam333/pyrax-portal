@@ -69,94 +69,64 @@ export interface ChartData {
 }
 
 export async function getTopCoins(limit = 100): Promise<CoinPrice[]> {
-  try {
-    const response = await fetch(
-      `${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${limit}&page=1&sparkline=false&price_change_percentage=24h`
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching top coins:', error);
-    throw error;
+  const response = await fetch(
+    `${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${limit}&page=1&sparkline=false&price_change_percentage=24h`
+  );
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+  return await response.json();
 }
 
 export async function getTickerCoins(limit = 10): Promise<CoinPrice[]> {
-  try {
-    const response = await fetch(
-      `${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${limit}&page=1&sparkline=false&price_change_percentage=24h`
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching ticker coins:', error);
-    throw error;
+  const response = await fetch(
+    `${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${limit}&page=1&sparkline=false&price_change_percentage=24h`
+  );
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+  return await response.json();
 }
 
 export async function getCoinDetail(coinId: string): Promise<CoinDetail> {
-  try {
-    const response = await fetch(
-      `${COINGECKO_API_BASE}/coins/${coinId}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error(`Error fetching coin detail for ${coinId}:`, error);
-    throw error;
+  const response = await fetch(
+    `${COINGECKO_API_BASE}/coins/${coinId}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`
+  );
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+  return await response.json();
 }
 
 export async function getCoinChartData(
   coinId: string,
   days: number = 30
 ): Promise<ChartData> {
-  try {
-    const response = await fetch(
-      `${COINGECKO_API_BASE}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}&interval=${days === 1 ? 'hourly' : 'daily'}`
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error(`Error fetching chart data for ${coinId}:`, error);
-    throw error;
+  const response = await fetch(
+    `${COINGECKO_API_BASE}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}&interval=${days === 1 ? 'hourly' : 'daily'}`
+  );
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+  return await response.json();
 }
 
 export async function searchCoins(query: string): Promise<any[]> {
-  try {
-    const response = await fetch(
-      `${COINGECKO_API_BASE}/search?query=${encodeURIComponent(query)}`
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data.coins || [];
-  } catch (error) {
-    console.error('Error searching coins:', error);
-    throw error;
+  const response = await fetch(
+    `${COINGECKO_API_BASE}/search?query=${encodeURIComponent(query)}`
+  );
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+  const data = await response.json();
+  return data.coins || [];
 }
 
 export async function getGlobalData(): Promise<any> {
-  try {
-    const response = await fetch(`${COINGECKO_API_BASE}/global`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching global data:', error);
-    throw error;
+  const response = await fetch(`${COINGECKO_API_BASE}/global`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+  const data = await response.json();
+  return data;
 }

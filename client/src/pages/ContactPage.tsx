@@ -1,6 +1,7 @@
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,11 @@ import { Mail, MapPin, Phone, MessageSquare, Send } from 'lucide-react';
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Contact Us - Pyrax"
+        description="Get in touch with the Pyrax team. Contact us for editorial inquiries, advertising opportunities, partnership proposals, or technical support. We're here to help."
+        keywords="contact pyrax, get in touch, customer support, editorial inquiries, advertising, partnerships"
+      />
       <PriceTicker />
       <Navbar />
       
