@@ -123,18 +123,18 @@ export default function ComprehensiveLearnPage() {
   ];
 
   const topicsGrid = [
-    { title: 'Bitcoin & Basics', icon: <BookOpen className="h-6 w-6" />, articles: 47 },
-    { title: 'Ethereum & Smart Contracts', icon: <Code className="h-6 w-6" />, articles: 38 },
-    { title: 'DeFi & Yield Farming', icon: <TrendingUp className="h-6 w-6" />, articles: 52 },
-    { title: 'NFTs & Digital Assets', icon: <Star className="h-6 w-6" />, articles: 29 },
-    { title: 'Trading & Investment', icon: <TrendingUp className="h-6 w-6" />, articles: 64 },
-    { title: 'Security & Wallets', icon: <Shield className="h-6 w-6" />, articles: 31 },
-    { title: 'Regulations & Tax (US)', icon: <MapPin className="h-6 w-6" />, articles: 42 },
-    { title: 'Blockchain Technology', icon: <Code className="h-6 w-6" />, articles: 56 },
-    { title: 'Market Analysis', icon: <TrendingUp className="h-6 w-6" />, articles: 48 },
-    { title: 'Altcoins & Projects', icon: <Star className="h-6 w-6" />, articles: 73 },
-    { title: 'Web3 & Future Tech', icon: <Code className="h-6 w-6" />, articles: 35 },
-    { title: 'Mining & Staking', icon: <BookOpen className="h-6 w-6" />, articles: 26 }
+    { title: 'Bitcoin & Basics', slug: 'bitcoin', icon: <BookOpen className="h-6 w-6" />, articles: 47 },
+    { title: 'Ethereum & Smart Contracts', slug: 'ethereum', icon: <Code className="h-6 w-6" />, articles: 38 },
+    { title: 'DeFi & Yield Farming', slug: 'defi', icon: <TrendingUp className="h-6 w-6" />, articles: 52 },
+    { title: 'NFTs & Digital Assets', slug: 'nfts', icon: <Star className="h-6 w-6" />, articles: 29 },
+    { title: 'Trading & Investment', slug: 'trading', icon: <TrendingUp className="h-6 w-6" />, articles: 64 },
+    { title: 'Security & Wallets', slug: 'security', icon: <Shield className="h-6 w-6" />, articles: 31 },
+    { title: 'Regulations & Tax (US)', slug: 'regulation', icon: <MapPin className="h-6 w-6" />, articles: 42 },
+    { title: 'Blockchain Technology', slug: 'blockchain', icon: <Code className="h-6 w-6" />, articles: 56 },
+    { title: 'Market Analysis', slug: 'trading', icon: <TrendingUp className="h-6 w-6" />, articles: 48 },
+    { title: 'Altcoins & Projects', slug: 'altcoins', icon: <Star className="h-6 w-6" />, articles: 73 },
+    { title: 'Web3 & Future Tech', slug: 'ethereum', icon: <Code className="h-6 w-6" />, articles: 35 },
+    { title: 'Mining & Staking', slug: 'blockchain', icon: <BookOpen className="h-6 w-6" />, articles: 26 }
   ];
 
   const faqs = [
@@ -390,11 +390,13 @@ export default function ComprehensiveLearnPage() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {topicsGrid.map((topic, index) => (
-              <Card key={index} className="p-6 hover-elevate active-elevate-2 transition-all cursor-pointer text-center" data-testid={`card-topic-${index}`}>
-                <div className="text-primary mb-3 flex justify-center">{topic.icon}</div>
-                <h3 className="font-semibold text-card-foreground mb-2" data-testid={`text-topic-title-${index}`}>{topic.title}</h3>
-                <p className="text-sm text-muted-foreground" data-testid={`text-articles-${index}`}>{topic.articles} Articles</p>
-              </Card>
+              <Link key={index} href={`/learn/${topic.slug}`}>
+                <Card className="p-6 hover-elevate active-elevate-2 transition-all cursor-pointer text-center" data-testid={`card-topic-${index}`}>
+                  <div className="text-primary mb-3 flex justify-center">{topic.icon}</div>
+                  <h3 className="font-semibold text-card-foreground mb-2" data-testid={`text-topic-title-${index}`}>{topic.title}</h3>
+                  <p className="text-sm text-muted-foreground" data-testid={`text-articles-${index}`}>{topic.articles} Articles</p>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

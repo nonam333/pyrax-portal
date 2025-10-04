@@ -18,6 +18,7 @@ import TermsPage from "@/pages/TermsPage";
 import CookiePage from "@/pages/CookiePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
 import ContactPage from "@/pages/ContactPage";
+import LearnTopicPage from "@/pages/LearnTopicPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -26,6 +27,16 @@ function Router() {
       <Switch>
         <Route path="/" component={Homepage} />
         <Route path="/learn" component={ComprehensiveLearnPage} />
+        {/* Learn Topic Pages */}
+        <Route path="/learn/bitcoin">{() => <LearnTopicPage topic="bitcoin" />}</Route>
+        <Route path="/learn/ethereum">{() => <LearnTopicPage topic="ethereum" />}</Route>
+        <Route path="/learn/defi">{() => <LearnTopicPage topic="defi" />}</Route>
+        <Route path="/learn/nfts">{() => <LearnTopicPage topic="nfts" />}</Route>
+        <Route path="/learn/trading">{() => <LearnTopicPage topic="trading" />}</Route>
+        <Route path="/learn/security">{() => <LearnTopicPage topic="security" />}</Route>
+        <Route path="/learn/blockchain">{() => <LearnTopicPage topic="blockchain" />}</Route>
+        <Route path="/learn/altcoins">{() => <LearnTopicPage topic="altcoins" />}</Route>
+        <Route path="/learn/regulation">{() => <LearnTopicPage topic="regulation" />}</Route>
         <Route path="/markets" component={MarketsPage} />
         <Route path="/analysis" component={AnalysisPage} />
         <Route path="/regulation" component={RegulationPage} />
