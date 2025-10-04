@@ -13,6 +13,11 @@ import AnalysisPage from "@/pages/AnalysisPage";
 import RegulationPage from "@/pages/RegulationPage";
 import ArticlePage from "@/pages/ArticlePage";
 import BlogCMSPage from "@/pages/BlogCMSPage";
+import PrivacyPage from "@/pages/PrivacyPage";
+import TermsPage from "@/pages/TermsPage";
+import CookiePage from "@/pages/CookiePage";
+import DisclaimerPage from "@/pages/DisclaimerPage";
+import ContactPage from "@/pages/ContactPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -29,6 +34,12 @@ function Router() {
         <Route path="/about" component={AboutPage} />
         <Route path="/article/:id" component={ArticlePage} />
         <Route path="/category/:category" component={Homepage} />
+        {/* Footer Pages */}
+        <Route path="/privacy" component={PrivacyPage} />
+        <Route path="/terms" component={TermsPage} />
+        <Route path="/cookies" component={CookiePage} />
+        <Route path="/disclaimer" component={DisclaimerPage} />
+        <Route path="/contact" component={ContactPage} />
         {/* Fallback to 404 */}
         <Route component={NotFound} />
       </Switch>
