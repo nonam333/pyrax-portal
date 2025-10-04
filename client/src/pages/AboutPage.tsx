@@ -1,6 +1,7 @@
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -66,6 +67,20 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background" data-testid="page-about">
+      <SEO 
+        title="About Pyrax - Your Trusted Cryptocurrency News Source"
+        description="Learn about Pyrax, the leading cryptocurrency news and markets portal. Meet our editorial team, discover our values, and understand our commitment to accurate, unbiased crypto journalism."
+        keywords="about pyrax, cryptocurrency news, crypto journalism, editorial team, crypto media, blockchain news source"
+        schema={{
+          type: 'organization',
+          name: 'Pyrax',
+          description: 'Leading cryptocurrency news and markets portal with expert analysis and educational resources',
+          sameAs: [
+            'https://twitter.com/pyrax',
+            'https://linkedin.com/company/pyrax'
+          ]
+        }}
+      />
       <PriceTicker />
       <Navbar />
       

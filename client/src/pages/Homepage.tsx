@@ -7,6 +7,7 @@ import NewsletterSignup from '@/components/NewsletterSignup';
 import AdSlot from '@/components/AdSlot';
 import Footer from '@/components/Footer';
 import MarketWidgets from '@/components/MarketWidgets';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
@@ -233,6 +234,20 @@ export default function Homepage() {
 
   return (
     <div className="min-h-screen bg-background" data-testid="page-homepage">
+      <SEO 
+        title="Pyrax - Cryptocurrency News & Markets Portal"
+        description="Stay informed with the latest cryptocurrency news, real-time market data, expert analysis, and educational resources. Your trusted source for Bitcoin, Ethereum, DeFi, and crypto markets."
+        keywords="cryptocurrency news, bitcoin, ethereum, crypto markets, blockchain, defi, nfts, crypto analysis, cryptocurrency prices"
+        schema={{
+          type: 'organization',
+          name: 'Pyrax',
+          description: 'Leading cryptocurrency news and markets portal providing real-time data, expert analysis, and educational resources',
+          sameAs: [
+            'https://twitter.com/pyrax',
+            'https://linkedin.com/company/pyrax'
+          ]
+        }}
+      />
       <PriceTicker />
       <Navbar />
       

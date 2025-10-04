@@ -5,6 +5,7 @@ import MarketsTable from '@/components/MarketsTable';
 import AdSlot from '@/components/AdSlot';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, BarChart3, DollarSign, Activity } from 'lucide-react';
@@ -94,6 +95,11 @@ export default function MarketsPage() {
 
   return (
     <div className="min-h-screen bg-background" data-testid="page-markets">
+      <SEO 
+        title="Cryptocurrency Markets - Live Prices & Market Data"
+        description="Track real-time cryptocurrency prices for 14,000+ coins. Get live market data, 24h volume, market cap, price charts, and detailed market statistics for Bitcoin, Ethereum, and all altcoins."
+        keywords="cryptocurrency prices, crypto markets, bitcoin price, ethereum price, live crypto data, market cap, trading volume, coin prices"
+      />
       <PriceTicker />
       <Navbar />
       

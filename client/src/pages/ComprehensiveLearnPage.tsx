@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -148,6 +149,11 @@ export default function ComprehensiveLearnPage() {
 
   return (
     <div className="min-h-screen bg-background" data-testid="page-comprehensive-learn">
+      <SEO 
+        title="Learn Cryptocurrency - Complete Crypto Education Hub"
+        description="Master cryptocurrency from basics to advanced topics. Free courses on Bitcoin, Ethereum, DeFi, NFTs, trading strategies, blockchain technology, and crypto security. Beginner to expert guides."
+        keywords="learn cryptocurrency, crypto education, bitcoin tutorial, ethereum guide, defi courses, blockchain learning, crypto trading, nft guide, crypto security"
+      />
       <PriceTicker />
       <Navbar />
 

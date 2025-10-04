@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -179,6 +180,11 @@ export default function LearnTopicPage({ topic }: LearnTopicPageProps) {
 
   return (
     <div className="min-h-screen bg-background" data-testid={`page-learn-${topic}`}>
+      <SEO 
+        title={`${config.title} - Crypto Education`}
+        description={config.description}
+        keywords={config.keywords.join(', ')}
+      />
       <PriceTicker />
       <Navbar />
 

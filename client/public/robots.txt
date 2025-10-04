@@ -1,0 +1,37 @@
+# Pyrax Cryptocurrency News & Markets Portal
+# Robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://pyrax.com/sitemap.xml
+
+# Block CMS admin pages
+Disallow: /cms
+
+# Crawl-delay for all bots
+Crawl-delay: 1
+
+# Allow all content pages
+Allow: /
+Allow: /markets
+Allow: /learn
+Allow: /analysis
+Allow: /regulation
+Allow: /about
+Allow: /article/
+Allow: /coin/
+
+# Popular search engines get special treatment
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 0
