@@ -237,6 +237,63 @@ router.get('/global', async (req, res) => {
   }
 });
 
+// Trending coins endpoint
+router.get('/trending', async (req, res) => {
+  try {
+    const cacheKey = 'trending';
+    
+    const cached = getCached(cacheKey);
+    if (cached) {
+      return res.json(cached);
+    }
+    
+    const response = await fetch(`${COINGECKO_API_BASE}/search/trending`);
+    
+    if (!response.ok) {
+      const staleData = getCached(cacheKey, true);
+      if (staleData) {
+        return res.json(staleData);
+      }
+      throw new Error(`CoinGecko API error: ${response.status}`);
+    }
+    
+    // Validate response content type
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      console.error('Invalid content type from CoinGecko:', contentType);
+      const staleData = getCached(cacheKey, true);
+      if (staleData) {
+        return res.json(staleData);
+      }
+      return res.status(502).json({ error: 'Invalid response from CoinGecko API' });
+    }
+    
+    const data = await response.json();
+    
+    // Validate response shape
+    if (!data || !Array.isArray(data.coins)) {
+      console.error('Invalid trending data shape:', data);
+      const staleData = getCached(cacheKey, true);
+      if (staleData) {
+        return res.json(staleData);
+      }
+      return res.status(502).json({ error: 'Invalid trending data format' });
+    }
+    
+    setCache(cacheKey, data);
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching trending data:', error);
+    
+    const staleData = getCached('trending', true);
+    if (staleData) {
+      return res.json(staleData);
+    }
+    
+    res.status(500).json({ error: 'Failed to fetch trending data' });
+  }
+});
+
 // Export function to access cached markets data for sitemap generation
 export function getCachedMarkets(limit: number = 50): Array<{ id: string }> {
   const cacheKey = 'markets_usd_market_cap_desc_100_1';
