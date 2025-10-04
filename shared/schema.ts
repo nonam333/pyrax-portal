@@ -17,6 +17,9 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
+export const contentTypeEnum = z.enum(['News', 'Learn', 'Analysis', 'Regulation']);
+export type ContentType = z.infer<typeof contentTypeEnum>;
+
 export const blogPosts = pgTable("blog_posts", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   notionPageId: text("notion_page_id").unique(),
@@ -24,6 +27,7 @@ export const blogPosts = pgTable("blog_posts", {
   excerpt: text("excerpt"),
   content: text("content"),
   category: text("category"),
+  contentType: text("content_type").notNull().default('News'),
   coverImage: text("cover_image"),
   author: text("author").notNull().default('Pyrax Editorial'),
   readTime: text("read_time").default('5 min read'),
@@ -33,8 +37,8 @@ export const blogPosts = pgTable("blog_posts", {
 
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
-  publishedAt: true,
-  lastSyncedAt: true,
+}).extend({
+  contentType: contentTypeEnum.default('News'),
 });
 
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;

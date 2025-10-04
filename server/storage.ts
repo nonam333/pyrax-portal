@@ -7,6 +7,7 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   
   getBlogPosts(): Promise<BlogPost[]>;
+  getBlogPostsByContentType(contentType: string): Promise<BlogPost[]>;
   getBlogPost(id: string): Promise<BlogPost | undefined>;
   getBlogPostByNotionId(notionPageId: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
@@ -46,6 +47,12 @@ export class MemStorage implements IStorage {
     );
   }
 
+  async getBlogPostsByContentType(contentType: string): Promise<BlogPost[]> {
+    return Array.from(this.blogPosts.values())
+      .filter(post => post.contentType === contentType)
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  }
+
   async getBlogPost(id: string): Promise<BlogPost | undefined> {
     return this.blogPosts.get(id);
   }
@@ -58,11 +65,20 @@ export class MemStorage implements IStorage {
 
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
     const id = randomUUID();
+    const now = new Date();
     const post: BlogPost = {
-      ...insertPost,
       id,
-      publishedAt: new Date(),
-      lastSyncedAt: new Date(),
+      title: insertPost.title,
+      notionPageId: insertPost.notionPageId ?? null,
+      excerpt: insertPost.excerpt ?? null,
+      content: insertPost.content ?? null,
+      category: insertPost.category ?? null,
+      contentType: insertPost.contentType || 'News',
+      coverImage: insertPost.coverImage ?? null,
+      author: insertPost.author ?? 'Pyrax Editorial',
+      readTime: insertPost.readTime ?? '5 min read',
+      publishedAt: insertPost.publishedAt instanceof Date ? insertPost.publishedAt : now,
+      lastSyncedAt: insertPost.lastSyncedAt instanceof Date ? insertPost.lastSyncedAt : now,
     };
     this.blogPosts.set(id, post);
     return post;

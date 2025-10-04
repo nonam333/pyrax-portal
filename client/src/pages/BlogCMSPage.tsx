@@ -43,11 +43,7 @@ export default function BlogCMSPage() {
 
   const syncMutation = useMutation({
     mutationFn: async (databaseId: string) => {
-      const response = await apiRequest('/api/blog-posts/sync-notion', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ databaseId }),
-      });
+      const response = await apiRequest('POST', '/api/blog-posts/sync-notion', { databaseId });
       return response.json();
     },
     onSuccess: (data) => {
@@ -68,9 +64,7 @@ export default function BlogCMSPage() {
 
   const deleteMutation = useMutation({
     mutationFn: async (postId: string) => {
-      const response = await apiRequest(`/api/blog-posts/${postId}`, {
-        method: 'DELETE',
-      });
+      const response = await apiRequest('DELETE', `/api/blog-posts/${postId}`);
       return response.json();
     },
     onSuccess: () => {

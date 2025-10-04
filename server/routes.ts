@@ -12,7 +12,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Blog posts routes
   app.get('/api/blog-posts', async (req, res) => {
     try {
-      const posts = await storage.getBlogPosts();
+      const { contentType } = req.query;
+      
+      let posts;
+      if (contentType && typeof contentType === 'string') {
+        const validTypes = ['News', 'Learn', 'Analysis', 'Regulation'];
+        if (!validTypes.includes(contentType)) {
+          return res.status(400).json({ error: 'Invalid content type' });
+        }
+        posts = await storage.getBlogPostsByContentType(contentType);
+      } else {
+        posts = await storage.getBlogPosts();
+      }
+      
       res.json(posts);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -65,12 +77,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const existingPost = await storage.getBlogPostByNotionId(page.id);
         const content = await getNotionPageContent(page.id);
 
+        // Map category to content type with normalization
+        const category = page.category || 'News';
+        const normalizedCategory = category.toLowerCase().trim();
+        let contentType: 'News' | 'Learn' | 'Analysis' | 'Regulation' = 'News';
+        
+        const learnKeywords = ['learn', 'education', 'educational', 'tutorial', 'guide', 'course', 'lesson'];
+        const analysisKeywords = ['analysis', 'analyses', 'research', 'report', 'insight', 'study'];
+        const regulationKeywords = ['regulation', 'regulations', 'policy', 'policies', 'legal', 'compliance', 'law'];
+        
+        if (learnKeywords.some(k => normalizedCategory.includes(k))) {
+          contentType = 'Learn';
+        } else if (analysisKeywords.some(k => normalizedCategory.includes(k))) {
+          contentType = 'Analysis';
+        } else if (regulationKeywords.some(k => normalizedCategory.includes(k))) {
+          contentType = 'Regulation';
+        }
+
         const blogPostData = {
           notionPageId: page.id,
           title: page.title,
           excerpt: page.excerpt || content.substring(0, 200) + '...',
           content,
-          category: page.category || 'News',
+          category,
+          contentType,
           coverImage: page.coverImage,
           author: 'Pyrax Editorial',
           readTime: Math.ceil(content.split(' ').length / 200) + ' min read',
