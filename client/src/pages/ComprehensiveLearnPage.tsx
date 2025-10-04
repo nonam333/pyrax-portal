@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -12,8 +13,31 @@ import {
 } from 'lucide-react';
 import { Link } from 'wouter';
 
+interface BlogPost {
+  id: string;
+  notionPageId?: string;
+  title: string;
+  excerpt?: string;
+  content?: string;
+  category?: string;
+  contentType?: string;
+  coverImage?: string;
+  author: string;
+  readTime: string;
+  publishedAt: string;
+}
+
 export default function ComprehensiveLearnPage() {
   const [searchTerm, setSearchTerm] = useState('');
+
+  const { data: learnPosts, isLoading: isLoadingPosts } = useQuery<BlogPost[]>({
+    queryKey: ['/api/blog-posts', { contentType: 'Learn' }],
+    queryFn: async () => {
+      const res = await fetch('/api/blog-posts?contentType=Learn');
+      if (!res.ok) throw new Error('Failed to fetch');
+      return res.json();
+    },
+  });
 
   const learningPaths = [
     {
@@ -157,8 +181,65 @@ export default function ComprehensiveLearnPage() {
         </div>
       </section>
 
-      {/* Learning Paths */}
+      {/* Latest Guides */}
       <section className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-card-foreground mb-8" data-testid="text-latest-guides-title">
+            <BookOpen className="inline-block h-8 w-8 mr-3 text-primary" />
+            Latest Guides
+          </h2>
+          
+          {isLoadingPosts ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Loading latest guides...</p>
+            </div>
+          ) : !learnPosts || learnPosts.length === 0 ? (
+            <Card className="p-12 text-center" data-testid="card-empty-state">
+              <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-card-foreground mb-2">No Guides Available Yet</h3>
+              <p className="text-muted-foreground">
+                Check back soon for the latest educational guides and tutorials.
+              </p>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {learnPosts.slice(0, 6).map((post) => (
+                <Card 
+                  key={post.id} 
+                  className="p-6 hover-elevate active-elevate-2 transition-all cursor-pointer" 
+                  data-testid={`card-learn-post-${post.id}`}
+                >
+                  {post.category && (
+                    <Badge className="mb-3" data-testid={`badge-category-${post.id}`}>
+                      {post.category}
+                    </Badge>
+                  )}
+                  <h3 className="text-xl font-bold text-card-foreground mb-3" data-testid={`text-post-title-${post.id}`}>
+                    {post.title}
+                  </h3>
+                  {post.excerpt && (
+                    <p className="text-muted-foreground mb-4 line-clamp-2" data-testid={`text-post-excerpt-${post.id}`}>
+                      {post.excerpt}
+                    </p>
+                  )}
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span data-testid={`text-author-${post.id}`}>{post.author}</span>
+                    <span>•</span>
+                    <span data-testid={`text-read-time-${post.id}`}>{post.readTime}</span>
+                    <span>•</span>
+                    <span data-testid={`text-published-${post.id}`}>
+                      {new Date(post.publishedAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Learning Paths */}
+      <section className="py-16 bg-card border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-card-foreground mb-4" data-testid="text-paths-title">
