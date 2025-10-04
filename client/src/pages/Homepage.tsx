@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import AdSlot from '@/components/AdSlot';
 import Footer from '@/components/Footer';
+import MarketWidgets from '@/components/MarketWidgets';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
@@ -229,14 +230,6 @@ export default function Homepage() {
     }
   ];
 
-  // todo: remove mock functionality - replace with real market data
-  const marketOverview = {
-    totalMarketCap: '$2.35T',
-    totalVolume: '$45.6B',
-    btcDominance: '42.8%',
-    activeCoins: '13,245',
-    fearGreedIndex: 72
-  };
 
   return (
     <div className="min-h-screen bg-background" data-testid="page-homepage">
@@ -361,50 +354,8 @@ export default function Homepage() {
               </div>
             </section>
 
-            {/* Market Overview Widget */}
-            <section data-testid="market-overview-section">
-              <Card className="p-6 bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-card-foreground">Market Overview</h2>
-                  <Badge variant="secondary">
-                    <BarChart3 className="h-3 w-3 mr-1" />
-                    Live Data
-                  </Badge>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-card-foreground mb-1">{marketOverview.totalMarketCap}</div>
-                    <div className="text-sm text-muted-foreground">Market Cap</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-card-foreground mb-1">{marketOverview.totalVolume}</div>
-                    <div className="text-sm text-muted-foreground">24h Volume</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-card-foreground mb-1">{marketOverview.btcDominance}</div>
-                    <div className="text-sm text-muted-foreground">BTC Dominance</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-card-foreground mb-1">{marketOverview.activeCoins}</div>
-                    <div className="text-sm text-muted-foreground">Active Coins</div>
-                  </div>
-                  <div className="text-center">
-                    <div className={`text-2xl font-bold mb-1 ${marketOverview.fearGreedIndex > 50 ? 'text-primary' : 'text-destructive'}`}>
-                      {marketOverview.fearGreedIndex}
-                    </div>
-                    <div className="text-sm text-muted-foreground">Fear & Greed</div>
-                  </div>
-                </div>
-                <div className="mt-6 text-center">
-                  <Link href="/markets">
-                    <Button className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-black font-semibold">
-                      <Eye className="h-4 w-4 mr-2" />
-                      View Full Markets
-                    </Button>
-                  </Link>
-                </div>
-              </Card>
-            </section>
+            {/* Market Widgets - Live CoinGecko Data */}
+            <MarketWidgets />
 
             {/* Research & Analysis */}
             <section data-testid="research-section">
