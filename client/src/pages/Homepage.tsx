@@ -236,6 +236,11 @@ export default function Homepage() {
       <PriceTicker />
       <Navbar />
       
+      {/* Header Banner Ad */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <AdSlot size="banner" position="header" />
+      </div>
+      
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -354,6 +359,11 @@ export default function Homepage() {
               </div>
             </section>
 
+            {/* In-Feed Native Ad */}
+            <div className="flex justify-center py-4">
+              <AdSlot size="banner" position="content-native" />
+            </div>
+
             {/* Market Widgets - Live CoinGecko Data */}
             <MarketWidgets />
 
@@ -422,7 +432,9 @@ export default function Homepage() {
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             <Sidebar />
-            <AdSlot size="square" position="sidebar" />
+            <AdSlot size="square" position="sidebar-top" />
+            <AdSlot size="skyscraper" position="sidebar-middle" />
+            <AdSlot size="square" position="sidebar-bottom" />
           </div>
         </div>
       </div>
