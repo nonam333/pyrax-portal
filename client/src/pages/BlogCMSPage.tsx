@@ -8,8 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { apiRequest, queryClient } from '@/lib/queryClient';
-import { Database, RefreshCw, Trash2, ExternalLink, CheckCircle, AlertCircle, Newspaper, GraduationCap, TrendingUp, Scale } from 'lucide-react';
+import { Database, RefreshCw, Trash2, ExternalLink, CheckCircle, AlertCircle, Newspaper, GraduationCap, TrendingUp, Scale, Link2 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 
 interface NotionDatabase {
@@ -173,8 +174,27 @@ function ContentTypeTab({ contentType }: { contentType: ContentType }) {
   );
 }
 
+// Extract database ID from Notion URL
+function extractDatabaseId(url: string): string | null {
+  try {
+    // Trim whitespace
+    const trimmed = url.trim();
+    
+    // Handle various Notion URL formats:
+    // https://www.notion.so/2823393c0f9e809da82ecd57e5166e9e?v=...
+    // https://www.notion.so/My-Database-2823393c0f9e809da82ecd57e5166e9e?v=...
+    // https://www.notion.so/workspace/My-Database-2823393c0f9e809da82ecd57e5166e9e?v=...
+    // Find any 32-character hex string in the URL
+    const match = trimmed.match(/([a-f0-9]{32})/i);
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function BlogCMSPage() {
   const [selectedDatabase, setSelectedDatabase] = useState<string>('');
+  const [pastedUrl, setPastedUrl] = useState<string>('');
   const [activeTab, setActiveTab] = useState<ContentType>('News');
   const { toast } = useToast();
 
@@ -204,15 +224,29 @@ export default function BlogCMSPage() {
   });
 
   const handleSync = () => {
-    if (!selectedDatabase) {
+    // Try to get database ID from pasted URL first
+    const urlDatabaseId = pastedUrl ? extractDatabaseId(pastedUrl) : null;
+    const databaseId = urlDatabaseId || selectedDatabase;
+    
+    if (!databaseId) {
       toast({
         title: 'No Database Selected',
-        description: 'Please select a Notion database first',
+        description: 'Please select a database from the dropdown or paste a Notion database URL',
         variant: 'destructive',
       });
       return;
     }
-    syncMutation.mutate(selectedDatabase);
+    
+    if (pastedUrl && !urlDatabaseId) {
+      toast({
+        title: 'Invalid URL',
+        description: 'Could not extract database ID from the URL. Please check the format.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    
+    syncMutation.mutate(databaseId);
   };
 
   return (
@@ -239,33 +273,74 @@ export default function BlogCMSPage() {
             Select a Notion database to sync your content. Add a "Category" property with values like: News, Learn, Analysis, Regulation, Education, Tutorial, Research, Policy, etc.
           </p>
 
-          <div className="flex gap-4 items-end">
-            <div className="flex-1">
-              <label className="text-sm font-medium text-card-foreground mb-2 block">
-                Select Notion Database
-              </label>
-              <Select value={selectedDatabase} onValueChange={setSelectedDatabase}>
-                <SelectTrigger className="w-full" data-testid="select-database">
-                  <SelectValue placeholder={loadingDatabases ? "Loading databases..." : "Choose a database"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {databases?.map((db) => (
-                    <SelectItem key={db.id} value={db.id} data-testid={`option-database-${db.id}`}>
-                      {db.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <div className="space-y-4">
+            {/* Option 1: Select from dropdown */}
+            <div className="flex gap-4 items-end">
+              <div className="flex-1">
+                <label className="text-sm font-medium text-card-foreground mb-2 block">
+                  Select Notion Database
+                </label>
+                <Select 
+                  value={selectedDatabase} 
+                  onValueChange={(val) => {
+                    setSelectedDatabase(val);
+                    setPastedUrl(''); // Clear URL when selecting from dropdown
+                  }}
+                >
+                  <SelectTrigger className="w-full" data-testid="select-database">
+                    <SelectValue placeholder={loadingDatabases ? "Loading databases..." : "Choose a database"} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {databases?.map((db) => (
+                      <SelectItem key={db.id} value={db.id} data-testid={`option-database-${db.id}`}>
+                        {db.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-            <Button
-              onClick={handleSync}
-              disabled={!selectedDatabase || syncMutation.isPending}
-              className="bg-gradient-to-r from-primary to-accent text-black font-semibold"
-              data-testid="button-sync"
-            >
-              <RefreshCw className={`h-4 w-4 mr-2 ${syncMutation.isPending ? 'animate-spin' : ''}`} />
-              {syncMutation.isPending ? 'Syncing...' : 'Sync Posts'}
-            </Button>
+
+            {/* OR Separator */}
+            <div className="flex items-center gap-4">
+              <div className="flex-1 border-t border-border"></div>
+              <span className="text-sm font-medium text-muted-foreground">OR</span>
+              <div className="flex-1 border-t border-border"></div>
+            </div>
+
+            {/* Option 2: Paste URL */}
+            <div className="flex gap-4 items-end">
+              <div className="flex-1">
+                <label className="text-sm font-medium text-card-foreground mb-2 block flex items-center gap-2">
+                  <Link2 className="h-4 w-4 text-primary" />
+                  Paste Notion Database URL
+                </label>
+                <Input
+                  type="text"
+                  placeholder="https://www.notion.so/2823393c0f9e809da82ecd57e5166e9e?v=..."
+                  value={pastedUrl}
+                  onChange={(e) => {
+                    setPastedUrl(e.target.value);
+                    setSelectedDatabase(''); // Clear dropdown when pasting URL
+                  }}
+                  data-testid="input-database-url"
+                  className="font-mono text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Sync Button */}
+            <div className="flex justify-end">
+              <Button
+                onClick={handleSync}
+                disabled={(!selectedDatabase && !pastedUrl) || syncMutation.isPending}
+                className="bg-gradient-to-r from-primary to-accent text-black font-semibold"
+                data-testid="button-sync"
+              >
+                <RefreshCw className={`h-4 w-4 mr-2 ${syncMutation.isPending ? 'animate-spin' : ''}`} />
+                {syncMutation.isPending ? 'Syncing...' : 'Sync Posts'}
+              </Button>
+            </div>
           </div>
 
           {selectedDatabase && databases?.find(db => db.id === selectedDatabase) && (
