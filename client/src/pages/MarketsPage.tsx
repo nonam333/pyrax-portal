@@ -137,6 +137,11 @@ export default function MarketsPage() {
         </div>
       </div>
       
+      {/* Header Banner Ad */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <AdSlot size="banner" position="markets-header" />
+      </div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
@@ -144,8 +149,9 @@ export default function MarketsPage() {
           </div>
           
           <div className="lg:col-span-1 space-y-6">
-            <AdSlot size="square" position="markets-sidebar" />
+            <AdSlot size="square" position="markets-sidebar-top" />
             <NewsletterSignup variant="compact" />
+            <AdSlot size="skyscraper" position="markets-sidebar-middle" />
             
             <div className="bg-card p-6 rounded-lg border border-card-border">
               <h3 className="text-lg font-semibold text-card-foreground mb-4" data-testid="text-quick-actions">
@@ -178,6 +184,8 @@ export default function MarketsPage() {
                 </Button>
               </div>
             </div>
+            
+            <AdSlot size="square" position="markets-sidebar-bottom" />
           </div>
         </div>
       </div>
