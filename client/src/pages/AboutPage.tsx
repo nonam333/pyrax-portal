@@ -5,16 +5,10 @@ import SEO from '@/components/SEO';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Users, Target, Award, Shield, Eye, Globe, Mail, Linkedin, Twitter, MessageCircle, Youtube, Send, ExternalLink } from 'lucide-react';
+import { Users, Target, Award, Shield, Eye, Globe, Mail, Linkedin, Twitter, MessageCircle, Youtube, Send } from 'lucide-react';
 import NewsletterSignup from '@/components/NewsletterSignup';
 
 export default function AboutPage() {
-  const stats = [
-    { label: '2.4M Readers', value: '2.4M' },
-    { label: '250K Subscribers', value: '250K' },
-    { label: '99.7% Accuracy', value: '99.7%' }
-  ];
-
   const coreValues = [
     {
       icon: <Target className="h-8 w-8" />,
@@ -38,8 +32,8 @@ export default function AboutPage() {
     },
     {
       icon: <Globe className="h-8 w-8" />,
-      title: 'US-Focused',
-      description: 'Specific guidance for American investors, covering IRS tax rules and SEC regulations.'
+      title: 'Global Perspective',
+      description: 'Serving the worldwide crypto community with insights that matter across all markets and jurisdictions.'
     },
     {
       icon: <Users className="h-8 w-8" />,
@@ -79,13 +73,13 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background" data-testid="page-about">
       <SEO 
-        title="About Pyrax - America's Independent Voice in Cryptocurrency"
-        description="Pyrax delivers verified crypto intelligence for American investors. Triple-source verification. No sponsored content. Complete editorial independence."
+        title="About Pyrax - The Pulse of the Decentralized Future"
+        description="Pyrax is a forward-thinking crypto media platform bridging the gap between complex crypto developments and the global community. Where knowledge is power, and access is universal."
         keywords="about pyrax, cryptocurrency news, crypto journalism, editorial team, crypto media, blockchain news source"
         schema={{
           type: 'organization',
           name: 'Pyrax',
-          description: "America's independent cryptocurrency news and markets portal with verified analysis",
+          description: "Global cryptocurrency news and markets portal illuminating the world of blockchain and digital assets",
           sameAs: [
             'https://twitter.com/pyrax',
             'https://linkedin.com/company/pyrax'
@@ -100,25 +94,11 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold text-card-foreground mb-6" data-testid="text-hero-title">
-              America's Independent Voice in Cryptocurrency
+              The Pulse of the Decentralized Future
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-10" data-testid="text-hero-description">
-              Verified news, analysis, and education. No sponsored content. No hidden agendas.
+              Illuminating the world of blockchain and digital assets. Where knowledge is power, and access is universal.
             </p>
-            
-            {/* Stats Row */}
-            <div className="flex flex-wrap justify-center gap-8 mb-10">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center" data-testid={`stat-${index}`}>
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -145,36 +125,27 @@ export default function AboutPage() {
       {/* Section 2: Mission */}
       <section id="mission" className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold text-foreground mb-6" data-testid="text-mission-title">
-                Our Mission
-              </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed" data-testid="text-mission-description">
-                Pyrax delivers verified crypto intelligence for American investors. Every story requires triple-source verification. No pay-for-play. Complete editorial independence. Built on transparency, not hype.
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl font-bold text-foreground mb-8 text-center" data-testid="text-mission-title">
+              Our Mission
+            </h2>
+            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed" data-testid="text-mission-description">
+              <p>
+                At Pyrax, our mission is to shape the future of digital awareness by becoming the heartbeat of the global crypto conversation. We believe that blockchain technology and decentralization are more than innovations — they are catalysts for a new era of transparency, freedom, and financial inclusion. Yet, as the space evolves at lightning speed, access to trustworthy, well-explained, and forward-thinking information remains a critical challenge.
+              </p>
+              <p>
+                <strong>That's where we come in.</strong>
+              </p>
+              <p>
+                Pyrax exists to bridge the gap between complexity and clarity. We are building more than a media platform — we are building a movement. A space where curious minds, bold thinkers, and future-shapers can come together to explore, understand, and challenge the boundaries of what's possible in the crypto and Web3 universe.
+              </p>
+              <p>
+                Through in-depth journalism, real-time news, educational content, and expert insights, we empower individuals across all experience levels to make informed decisions, spark innovation, and take part in the decentralized revolution.
+              </p>
+              <p>
+                <strong>We are not just reporting on the future — we are helping build it.</strong>
               </p>
             </div>
-            
-            {/* Animated Timeline */}
-            <Card className="p-8">
-              <h3 className="text-xl font-semibold text-card-foreground mb-6" data-testid="text-timeline-title">
-                Our Journey
-              </h3>
-              <div className="space-y-6">
-                <div className="flex gap-4" data-testid="milestone-2024">
-                  <div className="flex-shrink-0 w-20 font-bold text-primary">2024</div>
-                  <div className="text-muted-foreground">Platform launch with focus on verified crypto news</div>
-                </div>
-                <div className="flex gap-4" data-testid="milestone-2025">
-                  <div className="flex-shrink-0 w-20 font-bold text-primary">2025</div>
-                  <div className="text-muted-foreground">Reached 2.4M readers, launched education hub</div>
-                </div>
-                <div className="flex gap-4" data-testid="milestone-2026">
-                  <div className="flex-shrink-0 w-20 font-bold text-primary">2026</div>
-                  <div className="text-muted-foreground">Expanding investigative journalism team</div>
-                </div>
-              </div>
-            </Card>
           </div>
         </div>
       </section>
@@ -214,7 +185,7 @@ export default function AboutPage() {
             </h2>
           </div>
           <Card className="p-8">
-            <ul className="space-y-4 mb-6">
+            <ul className="space-y-4">
               {editorialStandards.map((standard, index) => (
                 <li key={index} className="flex items-start gap-3" data-testid={`standard-${index}`}>
                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mt-0.5">
@@ -224,10 +195,6 @@ export default function AboutPage() {
                 </li>
               ))}
             </ul>
-            <Button variant="outline" className="w-full sm:w-auto" data-testid="button-download-policy">
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Download Full Policy PDF
-            </Button>
           </Card>
         </div>
       </section>
@@ -245,18 +212,15 @@ export default function AboutPage() {
             <Card className="p-8 hover-elevate" data-testid="card-founder">
               <div className="flex items-start gap-6 mb-6">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-r from-primary to-accent flex-shrink-0 flex items-center justify-center text-black font-bold text-3xl">
-                  SC
+                  UP
                 </div>
                 <div className="flex-1">
                   <h3 className="text-2xl font-bold text-card-foreground mb-1">
-                    Sarah Chen
+                    Udayan Papney
                   </h3>
-                  <Badge className="mb-3">Founder & Editor-in-Chief</Badge>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-3">
-                    Former Bloomberg crypto reporter with 10+ years covering financial markets. Led investigative coverage of major crypto scandals. Graduate of Columbia Journalism School.
-                  </p>
-                  <p className="text-xs text-muted-foreground mb-4">
-                    Holdings: BTC, ETH (disclosed quarterly)
+                  <Badge className="mb-3">Founder & CEO</Badge>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                    Udayan Papney is the visionary Founder and CEO of Pyrax, a forward-thinking crypto media platform created to illuminate the ever-evolving world of blockchain and digital assets. Driven by the belief that information fuels innovation, Udayan built Pyrax to bridge the gap between complex crypto developments and the global community. His mission is to make Pyrax the pulse of the decentralized future—where knowledge is power, and access is universal.
                   </p>
                   <div className="flex gap-2">
                     <Button variant="ghost" size="icon" data-testid="button-founder-twitter">
@@ -285,7 +249,7 @@ export default function AboutPage() {
                 </p>
                 <Button data-testid="button-careers">
                   <Mail className="h-4 w-4 mr-2" />
-                  careers@pyrax.io
+                  contact@pyrax.io
                 </Button>
               </div>
             </Card>
@@ -367,7 +331,7 @@ export default function AboutPage() {
               Stay Informed
             </h2>
             <p className="text-lg text-muted-foreground" data-testid="text-newsletter-subtitle">
-              Join 250K subscribers who trust Pyrax for verified crypto intelligence
+              Join our community and get the latest crypto insights delivered to your inbox
             </p>
           </div>
           <NewsletterSignup />
