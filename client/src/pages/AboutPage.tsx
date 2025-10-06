@@ -5,7 +5,8 @@ import SEO from '@/components/SEO';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Users, Target, Award, Shield, Eye, Globe, Mail, Linkedin, Twitter, MessageCircle, Youtube, Send } from 'lucide-react';
+import { Users, Target, Award, Shield, Eye, Globe, Mail, Linkedin, MessageCircle, Youtube, Send } from 'lucide-react';
+import { SiX } from 'react-icons/si';
 import NewsletterSignup from '@/components/NewsletterSignup';
 
 export default function AboutPage() {
@@ -50,16 +51,16 @@ export default function AboutPage() {
   ];
 
   const socialLinks = [
-    { platform: 'Twitter', icon: <Twitter className="h-5 w-5" />, followers: '245K', link: 'https://twitter.com/pyrax' },
-    { platform: 'Discord', icon: <MessageCircle className="h-5 w-5" />, followers: '89K', link: 'https://discord.gg/pyrax' },
-    { platform: 'YouTube', icon: <Youtube className="h-5 w-5" />, followers: '156K', link: 'https://youtube.com/pyrax' },
-    { platform: 'Telegram', icon: <Send className="h-5 w-5" />, followers: '102K', link: 'https://t.me/pyrax' },
-    { platform: 'LinkedIn', icon: <Linkedin className="h-5 w-5" />, followers: '67K', link: 'https://linkedin.com/company/pyrax' }
+    { platform: 'X', icon: <SiX className="h-5 w-5" />, link: 'https://twitter.com/pyrax' },
+    { platform: 'Discord', icon: <MessageCircle className="h-5 w-5" />, link: 'https://discord.gg/pyrax' },
+    { platform: 'YouTube', icon: <Youtube className="h-5 w-5" />, link: 'https://youtube.com/pyrax' },
+    { platform: 'Telegram', icon: <Send className="h-5 w-5" />, link: 'https://t.me/pyrax' },
+    { platform: 'LinkedIn', icon: <Linkedin className="h-5 w-5" />, link: 'https://linkedin.com/company/pyrax' }
   ];
 
   const contactEmails = [
     { label: 'News Tips', email: 'tips@pyrax.io' },
-    { label: 'General Inquiries', email: 'hello@pyrax.io' },
+    { label: 'General Inquiries', email: 'contact@pyrax.io' },
     { label: 'Corrections', email: 'corrections@pyrax.io' }
   ];
 
@@ -222,16 +223,15 @@ export default function AboutPage() {
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                     Udayan Papney is the visionary Founder and CEO of Pyrax, a forward-thinking crypto media platform created to illuminate the ever-evolving world of blockchain and digital assets. Driven by the belief that information fuels innovation, Udayan built Pyrax to bridge the gap between complex crypto developments and the global community. His mission is to make Pyrax the pulse of the decentralized future—where knowledge is power, and access is universal.
                   </p>
-                  <div className="flex gap-2">
-                    <Button variant="ghost" size="icon" data-testid="button-founder-twitter">
-                      <Twitter className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" data-testid="button-founder-linkedin">
-                      <Linkedin className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" data-testid="button-founder-email">
-                      <Mail className="h-4 w-4" />
-                    </Button>
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-muted-foreground" />
+                    <a 
+                      href="mailto:udayan@pyrax.io"
+                      className="text-primary hover:underline"
+                      data-testid="link-founder-email"
+                    >
+                      udayan@pyrax.io
+                    </a>
                   </div>
                 </div>
               </div>
@@ -269,16 +269,11 @@ export default function AboutPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {socialLinks.map((social, index) => (
                   <Card key={index} className="p-6 hover-elevate" data-testid={`card-social-${index}`}>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="text-primary">
-                          {social.icon}
-                        </div>
-                        <div>
-                          <div className="font-semibold text-card-foreground">{social.platform}</div>
-                          <div className="text-sm text-muted-foreground">{social.followers} followers</div>
-                        </div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="text-primary">
+                        {social.icon}
                       </div>
+                      <div className="font-semibold text-card-foreground">{social.platform}</div>
                     </div>
                     <Button 
                       size="sm" 
