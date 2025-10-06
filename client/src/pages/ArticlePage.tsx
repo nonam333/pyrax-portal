@@ -1,8 +1,6 @@
-import { useParams } from 'wouter';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
-import ArticleCard from '@/components/ArticleCard';
 import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -27,81 +25,38 @@ interface Article {
 }
 
 export default function ArticlePage() {
-  const params = useParams();
-  const articleId = params.id || '1';
+  const [article] = useState<Article | null>(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  // todo: remove mock functionality - replace with real article data
-  const [article, setArticle] = useState<Article>({
-    id: '1',
-    title: 'Bitcoin Surges Past $45,000 as Institutional Adoption Accelerates',
-    excerpt: 'Major financial institutions continue to embrace cryptocurrency, driving unprecedented market growth and mainstream acceptance.',
-    content: `
-      <p>Bitcoin has reached a significant milestone, surging past the $45,000 mark as institutional adoption continues to accelerate across global markets. This latest price movement represents more than just market speculation—it signals a fundamental shift in how traditional finance views cryptocurrency.</p>
+  if (!article) {
+    return (
+      <div className="min-h-screen bg-background" data-testid="page-article">
+        <PriceTicker />
+        <Navbar />
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <Card className="p-12 text-center">
+            <h1 className="text-3xl font-bold text-card-foreground mb-4">
+              Article Not Found
+            </h1>
+            <p className="text-lg text-muted-foreground mb-8">
+              This article is not available. Please sync content from your Notion CMS to see articles.
+            </p>
+            <Link href="/">
+              <Button>
+                <ChevronLeft className="h-4 w-4 mr-2" />
+                Back to Homepage
+              </Button>
+            </Link>
+          </Card>
+        </div>
+        
+        <Footer />
+      </div>
+    );
+  }
 
-      <h2>Institutional Investment Surge</h2>
-      <p>The current rally has been primarily driven by increased institutional investment, with several Fortune 500 companies announcing significant Bitcoin purchases for their treasury reserves. Major financial institutions, including prominent investment banks and asset management firms, have been quietly accumulating Bitcoin positions throughout the past quarter.</p>
-
-      <blockquote>"We're witnessing a paradigm shift where Bitcoin is no longer seen as speculative digital asset, but as a legitimate store of value," said Maria Santos, Chief Investment Officer at Global Asset Management.</blockquote>
-
-      <h2>Market Dynamics</h2>
-      <p>The surge comes amid several positive developments in the cryptocurrency space:</p>
-      <ul>
-        <li>Regulatory clarity in major jurisdictions</li>
-        <li>Increased corporate adoption</li>
-        <li>Growing institutional infrastructure</li>
-        <li>Enhanced security measures</li>
-      </ul>
-
-      <p>Trading volumes have increased by over 200% in the past week, with institutional trading accounting for approximately 65% of all Bitcoin transactions. This shift towards institutional participation has provided additional market stability and reduced volatility compared to previous bull runs.</p>
-
-      <h2>Technical Analysis</h2>
-      <p>From a technical perspective, Bitcoin has broken through several key resistance levels, with analysts pointing to strong support at the $42,000 level. The relative strength index (RSI) indicates continued bullish momentum, though some caution against potential short-term corrections.</p>
-
-      <p>The current price action has also been supported by decreased selling pressure from long-term holders, indicating confidence in Bitcoin's long-term trajectory. On-chain metrics show that Bitcoin addresses holding coins for more than one year have reached all-time highs.</p>
-
-      <h2>Global Impact</h2>
-      <p>This latest surge has had ripple effects across the broader cryptocurrency market, with major altcoins following Bitcoin's lead. Ethereum has gained 15% in the past 24 hours, while other top-tier cryptocurrencies have seen similar gains.</p>
-
-      <p>The institutional adoption trend is expected to continue, with several major banks announcing plans to offer cryptocurrency services to their clients in the coming months. This growing acceptance by traditional financial institutions represents a significant validation of cryptocurrency as an asset class.</p>
-
-      <h2>Looking Forward</h2>
-      <p>While the current momentum appears strong, experts caution that cryptocurrency markets remain volatile and investors should conduct thorough research before making investment decisions. The long-term outlook for Bitcoin remains positive, with many analysts predicting continued growth as institutional adoption accelerates.</p>
-
-      <p>As the cryptocurrency market matures, we can expect to see continued integration with traditional financial systems, potentially leading to greater stability and broader adoption across various sectors of the economy.</p>
-    `,
-    image: heroImage,
-    category: 'Bitcoin',
-    author: 'Sarah Chen',
-    publishedAt: '2 hours ago',
-    readTime: '8 min read'
-  });
-
-  // todo: remove mock functionality - replace with real related articles
-  const relatedArticles = [
-    {
-      id: '2',
-      title: 'DeFi Protocols See Record-Breaking TVL Growth',
-      excerpt: 'Total Value Locked in DeFi protocols reaches $100 billion as institutional investors embrace decentralized finance.',
-      image: cryptoImage1,
-      category: 'DeFi',
-      author: 'Alex Rodriguez',
-      publishedAt: '4 hours ago',
-      readTime: '5 min read'
-    },
-    {
-      id: '3',
-      title: 'NFT Market Shows Signs of Recovery',
-      excerpt: 'After months of decline, NFT trading volumes surge as new utility-focused projects gain traction.',
-      image: cryptoImage2,
-      category: 'NFTs',
-      author: 'Emma Wilson',
-      publishedAt: '6 hours ago',
-      readTime: '4 min read'
-    }
-  ];
-
-  const shareUrl = `${window.location.origin}/article/${articleId}`;
+  const shareUrl = `${window.location.origin}/article/${article.id}`;
 
   const handleShare = (platform: string) => {
     const text = `${article.title} - ${article.excerpt}`;
@@ -113,8 +68,7 @@ export default function ArticlePage() {
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`
     };
     
-    console.log(`Sharing on ${platform}:`, urls[platform as keyof typeof urls]);
-    // todo: remove mock functionality - implement real social sharing
+    window.open(urls[platform as keyof typeof urls], '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -251,18 +205,6 @@ export default function ArticlePage() {
                   </div>
                 </div>
               </Card>
-              
-              {/* Related Articles */}
-              <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6" data-testid="text-related-title">
-                  Related Articles
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {relatedArticles.map((relatedArticle) => (
-                    <ArticleCard key={relatedArticle.id} article={relatedArticle} />
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
           

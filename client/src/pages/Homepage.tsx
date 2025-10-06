@@ -111,125 +111,16 @@ export default function Homepage() {
     readTime: post.readTime,
   }));
 
-  const breakingNews: Article[] = postsWithImages.slice(0, 3).length > 0 
-    ? postsWithImages.slice(0, 3).map(post => ({
-        id: post.id,
-        title: post.title,
-        excerpt: post.excerpt || '',
-        image: post.image,
-        category: post.category || 'Breaking',
-        author: post.author,
-        publishedAt: new Date(post.publishedAt).toLocaleDateString(),
-        readTime: post.readTime,
-      }))
-    : [
-        {
-          id: '13',
-          title: 'Major Exchange Announces Zero-Fee Bitcoin Trading',
-          excerpt: 'Leading cryptocurrency exchange eliminates trading fees for BTC pairs.',
-          image: cryptoImage1,
-          category: 'Breaking',
-          author: 'Sarah Chen',
-          publishedAt: '30 min ago',
-          readTime: '3 min read'
-        },
-        {
-          id: '14',
-          title: 'Fed Chairman Discusses Digital Dollar Timeline',
-          excerpt: 'Central bank digital currency could launch within 5 years.',
-          image: cryptoImage2,
-          category: 'Policy',
-          author: 'Alex Rodriguez',
-          publishedAt: '45 min ago',
-          readTime: '4 min read'
-        },
-        {
-          id: '15',
-          title: 'Ethereum Layer 2 Adoption Hits Record High',
-          excerpt: 'L2 transactions now account for 60% of Ethereum activity.',
-          image: cryptoImage3,
-          category: 'Ethereum',
-          author: 'Emma Wilson',
-          publishedAt: '1 hour ago',
-          readTime: '3 min read'
-        }
-      ];
-
-  const researchArticles: Article[] = [
-    {
-      id: '16',
-      title: 'Institutional Bitcoin Accumulation Patterns Analysis',
-      excerpt: 'Deep dive into how corporations are building crypto treasury positions.',
-      image: dashboardImage,
-      category: 'Research',
-      author: 'David Kim',
-      publishedAt: '2 hours ago',
-      readTime: '12 min read'
-    },
-    {
-      id: '17',
-      title: 'DeFi Yield Farming: Risk vs Reward Assessment',
-      excerpt: 'Comprehensive analysis of current yield farming opportunities and risks.',
-      image: dashboardImage2,
-      category: 'Research',
-      author: 'Lisa Zhang',
-      publishedAt: '4 hours ago',
-      readTime: '15 min read'
-    },
-    {
-      id: '18',
-      title: 'NFT Market Cycles and Prediction Models',
-      excerpt: 'Using data science to understand NFT market movements.',
-      image: dashboardImage3,
-      category: 'Research',
-      author: 'James Parker',
-      publishedAt: '6 hours ago',
-      readTime: '10 min read'
-    }
-  ];
-
-  const popularArticles: Article[] = [
-    {
-      id: '19',
-      title: 'Complete Guide to Crypto Tax Reporting 2025',
-      excerpt: 'Everything you need to know about cryptocurrency taxes this year.',
-      image: cryptoImage4,
-      category: 'Education',
-      author: 'Maria Santos',
-      publishedAt: '1 day ago',
-      readTime: '18 min read'
-    },
-    {
-      id: '20',
-      title: 'How to Spot Crypto Scams: Red Flags Guide',
-      excerpt: 'Protect yourself from common cryptocurrency fraud schemes.',
-      image: cryptoImage1,
-      category: 'Security',
-      author: 'Robert Chen',
-      publishedAt: '2 days ago',
-      readTime: '8 min read'
-    },
-    {
-      id: '21',
-      title: 'Setting Up Your First Hardware Wallet',
-      excerpt: 'Step-by-step guide to securing your cryptocurrency holdings.',
-      image: cryptoImage2,
-      category: 'Education',
-      author: 'Sarah Chen',
-      publishedAt: '3 days ago',
-      readTime: '12 min read'
-    },
-    {
-      id: '22',
-      title: 'Understanding Blockchain Consensus Mechanisms',
-      excerpt: 'Comparing Proof of Work, Proof of Stake, and emerging alternatives.',
-      image: cryptoImage3,
-      category: 'Technology',
-      author: 'Alex Rodriguez',
-      publishedAt: '4 days ago',
-      readTime: '14 min read'
-    }
-  ];
+  const breakingNews: Article[] = postsWithImages.slice(0, 3).map(post => ({
+    id: post.id,
+    title: post.title,
+    excerpt: post.excerpt || '',
+    image: post.image,
+    category: post.category || 'Breaking',
+    author: post.author,
+    publishedAt: new Date(post.publishedAt).toLocaleDateString(),
+    readTime: post.readTime,
+  }));
 
 
   return (
@@ -382,23 +273,6 @@ export default function Homepage() {
             {/* Market Widgets - Live CoinGecko Data */}
             <MarketWidgets />
 
-            {/* Research & Analysis */}
-            <section data-testid="research-section">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-foreground">Research & Analysis</h2>
-                <Link href="/research">
-                  <Button variant="outline" size="sm">
-                    All Research <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
-                </Link>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {researchArticles.map((article) => (
-                  <ArticleCard key={article.id} article={article} />
-                ))}
-              </div>
-            </section>
-
             {/* Newsletter CTA */}
             <section className="py-8" data-testid="newsletter-cta-section">
               <Card className="p-8 bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20 text-center">
@@ -425,22 +299,6 @@ export default function Homepage() {
                   </div>
                 </div>
               </Card>
-            </section>
-
-            {/* Popular This Week */}
-            <section data-testid="popular-section">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-foreground">Popular This Week</h2>
-                <Badge variant="secondary">
-                  <TrendingUp className="h-3 w-3 mr-1" />
-                  Most Read
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {popularArticles.map((article) => (
-                  <ArticleCard key={article.id} article={article} />
-                ))}
-              </div>
             </section>
           </div>
           
