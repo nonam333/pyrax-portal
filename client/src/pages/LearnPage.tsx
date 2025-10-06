@@ -1,204 +1,427 @@
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen, GraduationCap, Lightbulb, TrendingUp, ArrowRight } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { 
+  Coins, 
+  Link2, 
+  TrendingUp, 
+  Network, 
+  Shield, 
+  Image, 
+  Pickaxe, 
+  Gavel, 
+  Rocket,
+  ArrowRight,
+  Search,
+  Lightbulb,
+  RefreshCw,
+  Target,
+  ChevronDown,
+  Mail
+} from 'lucide-react';
+import { useState } from 'react';
+import { Link } from 'wouter';
 
 export default function LearnPage() {
-  const categories = [
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [email, setEmail] = useState('');
+
+  const topics = [
     {
-      icon: <BookOpen className="h-8 w-8" />,
-      title: 'Blockchain Basics',
-      description: 'Understand the fundamentals of blockchain technology and how it powers cryptocurrencies.',
-      articles: 12,
-      difficulty: 'Beginner'
+      icon: <Coins className="h-16 w-16" />,
+      badge: "52 Articles",
+      title: "Cryptocurrency Basics",
+      description: "Introductory content covering what crypto is, how it works, and fundamental concepts for complete beginners.",
+      link: "/learn/cryptocurrency-basics"
     },
     {
-      icon: <GraduationCap className="h-8 w-8" />,
-      title: 'Trading & Investing',
-      description: 'Learn strategies for trading cryptocurrencies and building a diversified portfolio.',
-      articles: 18,
-      difficulty: 'Intermediate'
+      icon: <Link2 className="h-16 w-16" />,
+      badge: "38 Articles",
+      title: "Blockchain Technology",
+      description: "Deep dives into blockchain mechanics, consensus algorithms, smart contracts, and technical innovations.",
+      link: "/learn/blockchain-technology"
     },
     {
-      icon: <Lightbulb className="h-8 w-8" />,
-      title: 'DeFi & Web3',
-      description: 'Explore decentralized finance protocols and the future of the internet.',
-      articles: 15,
-      difficulty: 'Advanced'
+      icon: <TrendingUp className="h-16 w-16" />,
+      badge: "64 Articles",
+      title: "Crypto Trading & Investment",
+      description: "Everything about buying, selling, trading strategies, market analysis, portfolio management, and risk assessment.",
+      link: "/learn/trading-investment"
     },
     {
-      icon: <TrendingUp className="h-8 w-8" />,
-      title: 'Market Analysis',
-      description: 'Master technical and fundamental analysis for cryptocurrency markets.',
-      articles: 20,
-      difficulty: 'Intermediate'
+      icon: <Network className="h-16 w-16" />,
+      badge: "45 Articles",
+      title: "Decentralized Finance (DeFi)",
+      description: "Exploring DeFi protocols, lending, borrowing, yield farming, staking, and decentralized exchanges.",
+      link: "/learn/defi"
+    },
+    {
+      icon: <Shield className="h-16 w-16" />,
+      badge: "41 Articles",
+      title: "Crypto Security & Wallets",
+      description: "Best practices for securing crypto assets, wallet types, hardware wallets, and scam prevention strategies.",
+      link: "/learn/security-wallets"
+    },
+    {
+      icon: <Image className="h-16 w-16" />,
+      badge: "29 Articles",
+      title: "Non-Fungible Tokens (NFTs)",
+      description: "NFT basics, creation process, marketplaces, use cases beyond art, and cultural impact of digital ownership.",
+      link: "/learn/nfts"
+    },
+    {
+      icon: <Pickaxe className="h-16 w-16" />,
+      badge: "33 Articles",
+      title: "Crypto Mining & Staking",
+      description: "Mining principles, proof of work vs proof of stake, energy considerations, rewards mechanisms, and setup guides.",
+      link: "/learn/mining-staking"
+    },
+    {
+      icon: <Gavel className="h-16 w-16" />,
+      badge: "56 Articles",
+      title: "Regulation & Legal Issues",
+      description: "Crypto laws worldwide, US tax implications, compliance requirements, and future regulatory trends affecting investors.",
+      link: "/learn/regulation-legal"
+    },
+    {
+      icon: <Rocket className="h-16 w-16" />,
+      badge: "37 Articles",
+      title: "Emerging Trends & Innovations",
+      description: "Latest developments, Layer 2 solutions, blockchain interoperability, Web3 applications, and upcoming groundbreaking projects.",
+      link: "/learn/emerging-trends"
     }
   ];
 
-  const featuredGuides = [
+  const popularTerms = [
+    "Blockchain", "DeFi", "Smart Contract", "Gas Fees", "Staking",
+    "NFT", "Cold Wallet", "Altcoin", "HODL", "Satoshi"
+  ];
+
+  const benefits = [
     {
-      title: 'Complete Guide to Bitcoin',
-      description: 'Everything you need to know about Bitcoin, from basics to advanced concepts.',
-      duration: '45 min read',
-      level: 'All Levels'
+      icon: <Lightbulb className="h-16 w-16" />,
+      title: "No Jargon, Just Clarity",
+      description: "We explain complex crypto concepts in plain English. If a 12-year-old can't understand it, we rewrite it. Accessible knowledge for everyone."
     },
     {
-      title: 'Understanding Smart Contracts',
-      description: 'Learn how smart contracts work and their role in the blockchain ecosystem.',
-      duration: '30 min read',
-      level: 'Intermediate'
+      icon: <RefreshCw className="h-16 w-16" />,
+      title: "Always Current",
+      description: "Crypto moves fast. Our content is updated weekly to reflect the latest developments, regulations, and best practices. Never outdated information."
     },
     {
-      title: 'Crypto Security Best Practices',
-      description: 'Protect your digital assets with essential security measures and strategies.',
-      duration: '25 min read',
-      level: 'Beginner'
+      icon: <Target className="h-16 w-16" />,
+      title: "US-Focused Guidance",
+      description: "Specific advice for American investors—from IRS tax rules to SEC regulations. Learn what matters for YOUR situation, not generic global advice."
     }
   ];
+
+  const faqs = [
+    {
+      question: "Is learning content on Pyrax completely free?",
+      answer: "Yes. All learning content, guides, and tutorials are 100% free and always will be. Our mission is educating crypto investors, not gatekeeping knowledge."
+    },
+    {
+      question: "Do I need prior knowledge to start learning?",
+      answer: "No. Our Cryptocurrency Basics section starts from absolute zero. We explain everything from 'what is blockchain' to advanced trading strategies."
+    },
+    {
+      question: "How often is learning content updated?",
+      answer: "Educational guides are updated quarterly or whenever significant changes occur. Breaking developments get immediate coverage in our news section."
+    },
+    {
+      question: "Can I download guides for offline reading?",
+      answer: "Coming soon. We're developing PDF versions of major guides for premium subscribers. Core content remains free online."
+    },
+    {
+      question: "Do you offer certificates?",
+      answer: "Not currently. We focus on practical knowledge over credentials. However, completion tracking and learning paths are in development."
+    },
+    {
+      question: "Is the content suitable for US investors specifically?",
+      answer: "Yes. While blockchain technology is universal, we emphasize US regulations, IRS tax implications, and SEC compliance throughout our content."
+    }
+  ];
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Newsletter signup:', email);
+    setEmail('');
+  };
+
+  const scrollToTopics = () => {
+    const element = document.getElementById('topics');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background" data-testid="page-learn">
+      <SEO 
+        title="Learn Crypto | Free Cryptocurrency Education | Pyrax"
+        description="Master cryptocurrency with Pyrax's free learning hub. Comprehensive guides on blockchain, DeFi, trading, NFTs, and more. Start from basics to advanced."
+        keywords="learn cryptocurrency, crypto education, blockchain tutorial, bitcoin guide, defi explained, crypto for beginners"
+      />
       <PriceTicker />
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="relative bg-card border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center max-w-3xl mx-auto">
+      {/* Section 1: Hero */}
+      <section className="relative bg-gradient-to-b from-card to-background border-b border-border py-20 md:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
             <Badge 
-              className="mb-6 bg-gradient-to-r from-primary to-accent text-black font-semibold text-lg px-6 py-2"
+              className="mb-6 text-xs uppercase tracking-widest"
               data-testid="badge-learn"
             >
-              Education Center
+              Crypto Education Hub
             </Badge>
-            <h1 className="text-5xl font-bold text-card-foreground mb-6" data-testid="text-hero-title">
-              Master Cryptocurrency
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight" data-testid="text-hero-title">
+              Master Cryptocurrency<br />
+              <span className="text-primary">From First Bitcoin to Advanced DeFi</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8" data-testid="text-hero-description">
-              From beginner guides to advanced trading strategies, expand your crypto knowledge with our comprehensive educational resources.
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed max-w-3xl mx-auto" data-testid="text-hero-description">
+              Your comprehensive learning hub for navigating the crypto revolution. 
+              No jargon. No fluff. Just clear, actionable education.
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <Button 
+                size="lg"
+                onClick={scrollToTopics}
+                data-testid="button-start-learning"
+              >
+                Start Learning
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={scrollToTopics}
+                data-testid="button-browse-guides"
+              >
+                Browse All Guides
+              </Button>
+            </div>
+            <button 
+              onClick={scrollToTopics}
+              className="text-sm text-primary animate-bounce inline-flex items-center gap-2"
+              data-testid="button-explore-topics"
+            >
+              <span>↓ Explore Topics</span>
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Learning Categories */}
-      <section className="py-16 bg-background">
+      {/* Section 2: Learning Topics Grid */}
+      <section id="topics" className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-card-foreground mb-4" data-testid="text-categories-title">
-              Learning Paths
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4" data-testid="text-topics-title">
+              Choose Your Learning Path
             </h2>
-            <p className="text-lg text-muted-foreground" data-testid="text-categories-description">
-              Choose your path and start learning at your own pace
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-topics-description">
+              Select a topic to explore comprehensive guides, tutorials, and analysis
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {categories.map((category, index) => (
-              <Card 
-                key={index} 
-                className="p-8 hover-elevate active-elevate-2 transition-all cursor-pointer border-border"
-                data-testid={`card-category-${index}`}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="text-primary">
-                    {category.icon}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-bold text-card-foreground" data-testid={`text-category-title-${index}`}>
-                        {category.title}
-                      </h3>
-                      <Badge 
-                        variant="outline" 
-                        className="text-xs"
-                        data-testid={`badge-difficulty-${index}`}
-                      >
-                        {category.difficulty}
-                      </Badge>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {topics.map((topic, index) => (
+              <Link key={index} href={topic.link} data-testid={`link-topic-${index}`}>
+                <Card 
+                  className="p-8 hover-elevate active-elevate-2 cursor-pointer h-full transition-all group"
+                  data-testid={`card-topic-${index}`}
+                >
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="text-primary group-hover:scale-110 transition-transform">
+                      {topic.icon}
                     </div>
-                    <p className="text-muted-foreground mb-4" data-testid={`text-category-description-${index}`}>
-                      {category.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground" data-testid={`text-articles-count-${index}`}>
-                        {category.articles} articles
-                      </span>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-primary hover:text-primary"
-                        data-testid={`button-explore-${index}`}
-                      >
-                        Explore <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
+                    <Badge variant="outline" className="text-xs" data-testid={`badge-articles-${index}`}>
+                      {topic.badge}
+                    </Badge>
                   </div>
-                </div>
-              </Card>
+                  <h3 className="text-xl md:text-2xl font-bold text-card-foreground mb-4" data-testid={`text-topic-title-${index}`}>
+                    {topic.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-6 leading-relaxed" data-testid={`text-topic-description-${index}`}>
+                    {topic.description}
+                  </p>
+                  <div className="flex items-center justify-between text-primary font-semibold">
+                    <span>Explore Topic</span>
+                    <ArrowRight className="h-5 w-5 group-hover:translate-x-2 transition-transform" />
+                  </div>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Guides */}
-      <section className="py-16 bg-card border-y border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-card-foreground mb-4" data-testid="text-guides-title">
-              Featured Guides
+      {/* Section 3: Glossary Search */}
+      <section className="py-20 bg-card border-y border-border">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-card-foreground mb-4" data-testid="text-glossary-title">
+              Crypto Glossary: 500+ Terms Explained
             </h2>
-            <p className="text-lg text-muted-foreground" data-testid="text-guides-description">
-              In-depth guides curated by our expert team
+            <p className="text-lg text-muted-foreground" data-testid="text-glossary-description">
+              Can't find a term? Search our comprehensive glossary for instant explanations
             </p>
           </div>
+          
+          <div className="relative mb-8">
+            <Input 
+              type="text"
+              placeholder="Search any crypto term... (e.g., 'What is DeFi?')"
+              className="h-14 pr-12 text-base"
+              data-testid="input-glossary-search"
+            />
+            <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredGuides.map((guide, index) => (
-              <Card 
-                key={index} 
-                className="p-6 hover-elevate active-elevate-2 transition-all cursor-pointer border-border"
-                data-testid={`card-guide-${index}`}
+          <div className="flex flex-wrap justify-center gap-3">
+            {popularTerms.map((term, index) => (
+              <Badge 
+                key={index}
+                variant="outline"
+                className="px-4 py-2 cursor-pointer hover-elevate"
+                data-testid={`badge-term-${index}`}
               >
-                <h3 className="text-xl font-bold text-card-foreground mb-3" data-testid={`text-guide-title-${index}`}>
-                  {guide.title}
+                {term}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4: Why Learn with Pyrax */}
+      <section className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4" data-testid="text-benefits-title">
+              Why Learn with Pyrax
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {benefits.map((benefit, index) => (
+              <Card 
+                key={index}
+                className="p-8 text-center hover-elevate"
+                data-testid={`card-benefit-${index}`}
+              >
+                <div className="text-primary mx-auto mb-6">
+                  {benefit.icon}
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-card-foreground mb-4">
+                  {benefit.title}
                 </h3>
-                <p className="text-muted-foreground mb-4" data-testid={`text-guide-description-${index}`}>
-                  {guide.description}
+                <p className="text-muted-foreground leading-relaxed">
+                  {benefit.description}
                 </p>
-                <div className="flex items-center justify-between text-sm">
-                  <Badge variant="outline" data-testid={`badge-level-${index}`}>
-                    {guide.level}
-                  </Badge>
-                  <span className="text-muted-foreground" data-testid={`text-duration-${index}`}>
-                    {guide.duration}
-                  </span>
-                </div>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-card-foreground mb-4" data-testid="text-cta-title">
-            Ready to Start Learning?
+      {/* Section 5: Newsletter Signup */}
+      <section className="py-20 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border-y border-border">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4" data-testid="text-newsletter-title">
+            Get Weekly Crypto Education in Your Inbox
           </h2>
-          <p className="text-lg text-muted-foreground mb-8" data-testid="text-cta-description">
-            Join thousands of crypto enthusiasts expanding their knowledge every day
+          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto" data-testid="text-newsletter-description">
+            Join 50,000+ subscribers getting our Sunday Crypto Digest—curated learning 
+            resources, market insights, and beginner tips delivered every week.
+          </p>
+          
+          <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto mb-4">
+            <Input 
+              type="email"
+              placeholder="Enter your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="h-14 flex-1"
+              required
+              data-testid="input-newsletter-email"
+            />
+            <Button type="submit" size="lg" className="h-14 px-8" data-testid="button-newsletter-submit">
+              Subscribe
+            </Button>
+          </form>
+          <p className="text-sm text-muted-foreground">
+            ✓ No spam. Unsubscribe anytime. We respect your privacy.
+          </p>
+        </div>
+      </section>
+
+      {/* Section 6: FAQ Accordion */}
+      <section className="py-20 bg-background">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4" data-testid="text-faq-title">
+              Frequently Asked Questions
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <Card 
+                key={index}
+                className="overflow-hidden"
+                data-testid={`card-faq-${index}`}
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full p-6 text-left flex items-center justify-between hover-elevate"
+                  data-testid={`button-faq-${index}`}
+                >
+                  <span className="text-lg md:text-xl font-semibold text-card-foreground pr-4">
+                    {faq.question}
+                  </span>
+                  <ChevronDown 
+                    className={`h-5 w-5 text-muted-foreground flex-shrink-0 transition-transform ${
+                      openFaq === index ? 'transform rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {openFaq === index && (
+                  <div className="px-6 pb-6 text-muted-foreground leading-relaxed" data-testid={`text-faq-answer-${index}`}>
+                    {faq.answer}
+                  </div>
+                )}
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 7: Final CTA */}
+      <section className="py-20 bg-card border-t border-border">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold text-card-foreground mb-4" data-testid="text-final-cta-title">
+            Ready to Start Your Crypto Education?
+          </h2>
+          <p className="text-lg md:text-xl text-muted-foreground mb-10" data-testid="text-final-cta-description">
+            Join thousands learning to navigate cryptocurrency with confidence
           </p>
           <Button 
-            size="lg" 
-            className="bg-gradient-to-r from-primary to-accent text-black font-semibold hover:from-primary/90 hover:to-accent/90"
-            data-testid="button-get-started"
+            size="lg"
+            onClick={scrollToTopics}
+            className="px-12 h-14 text-lg"
+            data-testid="button-explore-all-topics"
           >
-            Get Started
+            Explore All Topics
           </Button>
+          <p className="mt-6 text-muted-foreground">
+            <a href="#" className="text-primary hover:underline" data-testid="link-download-roadmap">
+              Or download our Learning Roadmap (PDF) →
+            </a>
+          </p>
         </div>
       </section>
 
