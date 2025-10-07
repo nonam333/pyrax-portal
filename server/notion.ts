@@ -24,8 +24,8 @@ export interface NotionPage {
 export async function listNotionPages(databaseId: string): Promise<NotionPage[]> {
   const notion = await getUncachableNotionClient();
   
-  const response = await (notion as any).databases.query({
-    database_id: databaseId,
+  const response = await (notion as any).dataSources.query({
+    data_source_id: databaseId,
     sorts: [
       {
         timestamp: 'last_edited_time',
