@@ -16,7 +16,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       let posts;
       if (contentType && typeof contentType === 'string') {
-        const validTypes = ['News', 'Learn', 'Analysis', 'Regulation'];
+        const validTypes = ['News', 'Learn', 'Markets', 'Analysis', 'Regulation'];
         if (!validTypes.includes(contentType)) {
           return res.status(400).json({ error: 'Invalid content type' });
         }

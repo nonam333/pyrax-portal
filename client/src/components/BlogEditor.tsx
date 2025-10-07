@@ -88,6 +88,7 @@ export default function BlogEditor({
 }: BlogEditorProps) {
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [formData, setFormData] = useState<BlogPostData>({
     title: initialData.title || "",
     slug: initialData.slug || "",
@@ -100,15 +101,19 @@ export default function BlogEditor({
     status: initialData.status || "draft",
   });
 
-  useEffect(() => {
-    if (formData.title && !formData.slug) {
-      const generatedSlug = formData.title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+  };
+
+  const handleTitleBlur = () => {
+    if (formData.title && !slugManuallyEdited) {
+      const generatedSlug = generateSlug(formData.title);
       setFormData((prev) => ({ ...prev, slug: generatedSlug }));
     }
-  }, [formData.title]);
+  };
 
   useEffect(() => {
     if (formData.content) {
@@ -194,6 +199,7 @@ export default function BlogEditor({
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
+              onBlur={handleTitleBlur}
               data-testid="input-title"
             />
           </div>
@@ -204,9 +210,10 @@ export default function BlogEditor({
               id="slug"
               placeholder="article-slug"
               value={formData.slug}
-              onChange={(e) =>
-                setFormData({ ...formData, slug: e.target.value })
-              }
+              onChange={(e) => {
+                setFormData({ ...formData, slug: e.target.value });
+                setSlugManuallyEdited(true);
+              }}
               data-testid="input-slug"
             />
           </div>

@@ -25,28 +25,34 @@ export type Status = z.infer<typeof statusEnum>;
 
 export const blogPosts = pgTable("blog_posts", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  notionPageId: text("notion_page_id"), // Keep for compatibility
   title: text("title").notNull(),
-  slug: text("slug").unique(),
+  slug: text("slug").unique().notNull().default(''),
   excerpt: text("excerpt"),
   content: text("content"), // Stores rich HTML content
   category: text("category"),
   contentType: text("content_type").notNull().default('News'),
   coverImage: text("cover_image"),
-  images: text("images").array(), // Stores array of image URLs used in article
+  images: text("images").array().default(sql`'{}'::text[]`), // Stores array of image URLs used in article
   author: text("author").notNull().default('Pyrax Editorial'),
   readTime: text("read_time").default('5 min read'),
   status: text("status").notNull().default('draft'), // draft, published, unpublished
   publishedAt: timestamp("published_at").notNull().defaultNow(),
+  lastSyncedAt: timestamp("last_synced_at").notNull().defaultNow(), // Keep for compatibility
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
+  notionPageId: true,
   publishedAt: true,
+  lastSyncedAt: true,
   updatedAt: true,
 }).extend({
   contentType: contentTypeEnum.default('News'),
   status: statusEnum.default('draft'),
+  slug: z.string().min(1),
+  images: z.array(z.string()).optional(),
 });
 
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
