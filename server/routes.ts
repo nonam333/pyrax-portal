@@ -70,7 +70,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Database ID is required' });
       }
 
+      console.log('Syncing Notion database:', databaseId);
+
       const notionPages = await listNotionPages(databaseId);
+      console.log(`Found ${notionPages.length} pages in database`);
       const synced = [];
 
       for (const page of notionPages) {
@@ -115,9 +118,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
+      console.log(`Successfully synced ${synced.length} posts`);
       res.json({ success: true, synced: synced.length, posts: synced });
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      console.error('Notion sync error:', error);
+      const errorMessage = error.message || 'Unknown error occurred';
+      
+      if (errorMessage.includes('Could not find database')) {
+        return res.status(404).json({ 
+          error: 'Database not found. Make sure the database is shared with your Notion integration.' 
+        });
+      }
+      
+      if (errorMessage.includes('API token is invalid')) {
+        return res.status(401).json({ 
+          error: 'Invalid Notion API token. Please check your NOTION_API_KEY.' 
+        });
+      }
+      
+      res.status(500).json({ error: errorMessage });
     }
   });
 
