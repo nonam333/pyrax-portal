@@ -42,6 +42,7 @@ function Router() {
         <Route path="/analysis" component={AnalysisPage} />
         <Route path="/regulation" component={RegulationPage} />
         <Route path="/cms" component={BlogCMSPage} />
+        <Route path="/blog-cms" component={BlogCMSPage} />
         <Route path="/coin/:id" component={CoinDetailPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/article/:id" component={ArticlePage} />

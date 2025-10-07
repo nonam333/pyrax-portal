@@ -118,11 +118,16 @@ export async function searchNotionDatabases() {
   const response = await (notion as any).search({
     filter: {
       property: 'object',
-      value: 'database',
+      value: 'page',
     },
+    page_size: 100,
   });
 
-  return response.results.map((db: any) => ({
+  const databases = response.results.filter((item: any) => {
+    return item.object === 'database';
+  });
+
+  return databases.map((db: any) => ({
     id: db.id,
     title: db.title?.[0]?.plain_text || 'Untitled Database',
     url: db.url,
