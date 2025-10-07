@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
+import { Link } from 'wouter';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -132,9 +133,11 @@ function ContentTypeTab({ contentType, onEdit }: { contentType: ContentType; onE
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h4 className="text-lg font-semibold text-card-foreground" data-testid={`text-post-title-${post.id}`}>
-                      {post.title}
-                    </h4>
+                    <Link href={`/article/${post.id}`}>
+                      <h4 className="text-lg font-semibold text-card-foreground hover:text-primary transition-colors cursor-pointer" data-testid={`text-post-title-${post.id}`}>
+                        {post.title}
+                      </h4>
+                    </Link>
                     <Badge 
                       variant={
                         post.status === 'published' ? 'default' : 

@@ -1,34 +1,61 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useRoute, Link } from 'wouter';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
-import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Clock, User, Share2, Bookmark, ChevronLeft, Twitter, Facebook, Linkedin } from 'lucide-react';
-import { Link } from 'wouter';
-import heroImage from '@assets/stock_images/cryptocurrency_bitco_dc2a9a3e.jpg';
-import cryptoImage1 from '@assets/stock_images/cryptocurrency_bitco_501fe450.jpg';
-import cryptoImage2 from '@assets/stock_images/cryptocurrency_bitco_a2d83bee.jpg';
+import { Clock, User, Share2, Bookmark, ChevronLeft, Twitter, Facebook, Linkedin, Loader2 } from 'lucide-react';
 
-interface Article {
+interface BlogPost {
   id: string;
   title: string;
-  excerpt: string;
-  content: string;
-  image: string;
-  category: string;
+  slug: string;
+  excerpt?: string;
+  content?: string;
+  category?: string;
+  contentType: string;
+  coverImage?: string;
   author: string;
-  publishedAt: string;
   readTime: string;
+  status: string;
+  publishedAt: string;
+  updatedAt: string;
 }
 
 export default function ArticlePage() {
-  const [article] = useState<Article | null>(null);
+  const [, params] = useRoute('/article/:id');
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  if (!article) {
+  const { data: article, isLoading, error } = useQuery<BlogPost>({
+    queryKey: ['/api/blog-posts', params?.id],
+    queryFn: async () => {
+      const res = await fetch(`/api/blog-posts/${params?.id}`);
+      if (!res.ok) throw new Error('Article not found');
+      return res.json();
+    },
+    enabled: !!params?.id,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background" data-testid="page-article">
+        <PriceTicker />
+        <Navbar />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="flex items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <span className="ml-2 text-muted-foreground">Loading article...</span>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !article) {
     return (
       <div className="min-h-screen bg-background" data-testid="page-article">
         <PriceTicker />
@@ -40,7 +67,7 @@ export default function ArticlePage() {
               Article Not Found
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
-              This article is not available. Please sync content from your Notion CMS to see articles.
+              This article is not available or may have been removed.
             </p>
             <Link href="/">
               <Button>
@@ -135,84 +162,74 @@ export default function ArticlePage() {
               </div>
             </div>
             
-            <div className="lg:col-span-1">
-              <img 
-                src={article.image} 
-                alt={article.title}
-                className="w-full h-64 lg:h-80 object-cover rounded-lg"
-                data-testid="img-article-hero"
-              />
-            </div>
+            {article.coverImage && (
+              <div className="lg:col-span-1">
+                <img 
+                  src={article.coverImage} 
+                  alt={article.title}
+                  className="w-full h-64 lg:h-80 object-cover rounded-lg"
+                  data-testid="img-article-hero"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
       
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Article Content */}
-          <div className="lg:col-span-3">
-            <div className="max-w-4xl">
-              {/* Article Body */}
-              <div 
-                className="prose prose-lg prose-invert max-w-none mb-12"
-                style={{
-                  color: 'hsl(var(--card-foreground))',
-                }}
-                data-testid="article-content"
-                dangerouslySetInnerHTML={{ __html: article.content }}
-              />
-              
-              {/* Social Sharing */}
-              <Card className="p-6 mb-12">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-card-foreground mb-2" data-testid="text-share-title">
-                      Share this article
-                    </h3>
-                    <p className="text-sm text-muted-foreground" data-testid="text-share-subtitle">
-                      Help spread important crypto news
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleShare('twitter')}
-                      data-testid="button-share-twitter"
-                    >
-                      <Twitter className="h-4 w-4 mr-2" />
-                      Twitter
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleShare('facebook')}
-                      data-testid="button-share-facebook"
-                    >
-                      <Facebook className="h-4 w-4 mr-2" />
-                      Facebook
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleShare('linkedin')}
-                      data-testid="button-share-linkedin"
-                    >
-                      <Linkedin className="h-4 w-4 mr-2" />
-                      LinkedIn
-                    </Button>
-                  </div>
-                </div>
-              </Card>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Article Body */}
+        <div 
+          className="prose prose-lg prose-invert max-w-none mb-12"
+          style={{
+            color: 'hsl(var(--card-foreground))',
+          }}
+          data-testid="article-content"
+          dangerouslySetInnerHTML={{ __html: article.content || '' }}
+        />
+        
+        {/* Social Sharing */}
+        <Card className="p-6 mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h3 className="text-lg font-semibold text-card-foreground mb-2" data-testid="text-share-title">
+                Share this article
+              </h3>
+              <p className="text-sm text-muted-foreground" data-testid="text-share-subtitle">
+                Help spread important crypto news
+              </p>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => handleShare('twitter')}
+                data-testid="button-share-twitter"
+              >
+                <Twitter className="h-4 w-4 mr-2" />
+                Twitter
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => handleShare('facebook')}
+                data-testid="button-share-facebook"
+              >
+                <Facebook className="h-4 w-4 mr-2" />
+                Facebook
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => handleShare('linkedin')}
+                data-testid="button-share-linkedin"
+              >
+                <Linkedin className="h-4 w-4 mr-2" />
+                LinkedIn
+              </Button>
             </div>
           </div>
-          
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <Sidebar />
-          </div>
-        </div>
+        </Card>
       </div>
       
       <Footer />
