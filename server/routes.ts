@@ -77,7 +77,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const synced = [];
 
       for (const page of notionPages) {
-        const existingPost = await storage.getBlogPostByNotionId(page.id);
+        // Skip checking for existing post since we're no longer syncing from Notion
+        const existingPost = null;
         const content = await getNotionPageContent(page.id);
 
         // Map category to content type with normalization
@@ -98,8 +99,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
 
         const blogPostData = {
-          notionPageId: page.id,
           title: page.title,
+          slug: page.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
           excerpt: page.excerpt || content.substring(0, 200) + '...',
           content,
           category,
@@ -107,15 +108,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           coverImage: page.coverImage,
           author: 'Pyrax Editorial',
           readTime: Math.ceil(content.split(' ').length / 200) + ' min read',
+          status: 'published' as const,
         };
 
-        if (existingPost) {
-          const updated = await storage.updateBlogPost(existingPost.id, blogPostData);
-          synced.push(updated);
-        } else {
-          const created = await storage.createBlogPost(blogPostData);
-          synced.push(created);
-        }
+        // Always create new post when syncing from Notion
+        const created = await storage.createBlogPost(blogPostData);
+        synced.push(created);
       }
 
       console.log(`Successfully synced ${synced.length} posts`);
@@ -147,6 +145,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(post);
     } catch (error: any) {
       res.status(400).json({ error: error.message });
+    }
+  });
+
+  app.patch('/api/blog-posts/:id', async (req, res) => {
+    try {
+      const updates = req.body;
+      const post = await storage.updateBlogPost(req.params.id, updates);
+      if (!post) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+      res.json(post);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
     }
   });
 
@@ -204,7 +215,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         url: `/article/${post.id}`,
         priority: '0.6',
         changefreq: 'weekly',
-        lastmod: post.lastSyncedAt || post.publishedAt || currentDate
+        lastmod: post.updatedAt || post.publishedAt || currentDate
       }));
 
       const allPages = [...staticPages, ...coinPages, ...blogPages];

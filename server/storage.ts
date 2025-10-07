@@ -8,8 +8,9 @@ export interface IStorage {
   
   getBlogPosts(): Promise<BlogPost[]>;
   getBlogPostsByContentType(contentType: string): Promise<BlogPost[]>;
+  getBlogPostsByStatus(status: string): Promise<BlogPost[]>;
   getBlogPost(id: string): Promise<BlogPost | undefined>;
-  getBlogPostByNotionId(notionPageId: string): Promise<BlogPost | undefined>;
+  getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: string, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: string): Promise<boolean>;
@@ -49,7 +50,13 @@ export class MemStorage implements IStorage {
 
   async getBlogPostsByContentType(contentType: string): Promise<BlogPost[]> {
     return Array.from(this.blogPosts.values())
-      .filter(post => post.contentType === contentType)
+      .filter(post => post.contentType === contentType && post.status === 'published')
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  }
+
+  async getBlogPostsByStatus(status: string): Promise<BlogPost[]> {
+    return Array.from(this.blogPosts.values())
+      .filter(post => post.status === status)
       .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
   }
 
@@ -57,9 +64,9 @@ export class MemStorage implements IStorage {
     return this.blogPosts.get(id);
   }
 
-  async getBlogPostByNotionId(notionPageId: string): Promise<BlogPost | undefined> {
+  async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
     return Array.from(this.blogPosts.values()).find(
-      (post) => post.notionPageId === notionPageId,
+      (post) => post.slug === slug,
     );
   }
 
@@ -69,16 +76,18 @@ export class MemStorage implements IStorage {
     const post: BlogPost = {
       id,
       title: insertPost.title,
-      notionPageId: insertPost.notionPageId ?? null,
+      slug: insertPost.slug ?? insertPost.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
       excerpt: insertPost.excerpt ?? null,
       content: insertPost.content ?? null,
       category: insertPost.category ?? null,
       contentType: insertPost.contentType || 'News',
       coverImage: insertPost.coverImage ?? null,
+      images: insertPost.images ?? null,
       author: insertPost.author ?? 'Pyrax Editorial',
       readTime: insertPost.readTime ?? '5 min read',
-      publishedAt: insertPost.publishedAt instanceof Date ? insertPost.publishedAt : now,
-      lastSyncedAt: insertPost.lastSyncedAt instanceof Date ? insertPost.lastSyncedAt : now,
+      status: insertPost.status || 'draft',
+      publishedAt: now,
+      updatedAt: now,
     };
     this.blogPosts.set(id, post);
     return post;
@@ -91,7 +100,7 @@ export class MemStorage implements IStorage {
     const updated: BlogPost = {
       ...post,
       ...updates,
-      lastSyncedAt: new Date(),
+      updatedAt: new Date(),
     };
     this.blogPosts.set(id, updated);
     return updated;
