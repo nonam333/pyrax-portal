@@ -127,8 +127,7 @@ export default function PrivacyPage() {
             If you have any questions about this Privacy Policy, please contact us at:
           </p>
           <p className="text-primary mt-2">
-            Email: privacy@pyrax.com<br />
-            Address: 123 Crypto Street, San Francisco, CA 94102
+            Email: privacy@pyrax.io
           </p>
         </section>
       </div>

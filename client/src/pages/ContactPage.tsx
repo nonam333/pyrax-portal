@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Mail, MapPin, Phone, MessageSquare, Send } from 'lucide-react';
+import { Mail, Phone, MessageSquare, Send } from 'lucide-react';
 
 export default function ContactPage() {
   return (
@@ -97,12 +97,12 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-card-foreground mb-1">Email</h3>
-                  <p className="text-sm text-muted-foreground" data-testid="text-email-contact">contact@pyrax.com</p>
-                  <p className="text-sm text-muted-foreground" data-testid="text-email-support">support@pyrax.com</p>
+                  <p className="text-sm text-muted-foreground" data-testid="text-email-contact">contact@pyrax.io</p>
+                  <p className="text-sm text-muted-foreground" data-testid="text-email-support">support@pyrax.io</p>
                 </div>
               </div>
 
-              <div className="flex items-start space-x-4 mb-6">
+              <div className="flex items-start space-x-4">
                 <div className="p-3 bg-primary/10 rounded-lg">
                   <Phone className="h-6 w-6 text-primary" />
                 </div>
@@ -110,20 +110,6 @@ export default function ContactPage() {
                   <h3 className="font-semibold text-card-foreground mb-1">Phone</h3>
                   <p className="text-sm text-muted-foreground" data-testid="text-phone">+1 (415) 555-0123</p>
                   <p className="text-xs text-muted-foreground mt-1" data-testid="text-phone-hours">Mon-Fri, 9AM-5PM PST</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="p-3 bg-primary/10 rounded-lg">
-                  <MapPin className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-card-foreground mb-1">Address</h3>
-                  <p className="text-sm text-muted-foreground" data-testid="text-address">
-                    123 Crypto Street<br />
-                    San Francisco, CA 94102<br />
-                    United States
-                  </p>
                 </div>
               </div>
             </Card>
@@ -150,7 +136,7 @@ export default function ContactPage() {
               <p className="text-sm text-muted-foreground mb-3">
                 For press and media inquiries, please contact our media relations team:
               </p>
-              <p className="text-sm text-primary" data-testid="text-email-media">media@pyrax.com</p>
+              <p className="text-sm text-primary" data-testid="text-email-media">media@pyrax.io</p>
             </Card>
           </div>
         </div>

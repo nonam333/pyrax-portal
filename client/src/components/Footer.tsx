@@ -45,7 +45,7 @@ export default function Footer() {
     },
     { 
       icon: <Mail className="h-5 w-5" />, 
-      href: 'mailto:contact@pyrax.com', 
+      href: 'mailto:contact@pyrax.io', 
       label: 'Email',
       testId: 'link-email'
     }

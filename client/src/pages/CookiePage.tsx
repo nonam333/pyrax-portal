@@ -139,8 +139,7 @@ export default function CookiePage() {
             If you have questions about our use of cookies, please contact us at:
           </p>
           <p className="text-primary mt-2">
-            Email: privacy@pyrax.com<br />
-            Address: 123 Crypto Street, San Francisco, CA 94102
+            Email: privacy@pyrax.io
           </p>
         </section>
       </div>

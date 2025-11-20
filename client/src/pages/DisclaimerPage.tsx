@@ -136,8 +136,7 @@ export default function DisclaimerPage() {
             If you have questions about this disclaimer, please contact us at:
           </p>
           <p className="text-primary mt-2">
-            Email: legal@pyrax.com<br />
-            Address: 123 Crypto Street, San Francisco, CA 94102
+            Email: legal@pyrax.io
           </p>
         </section>
       </div>
