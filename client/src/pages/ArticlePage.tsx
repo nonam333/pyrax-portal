@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Clock, User, Share2, Bookmark, ChevronLeft, Twitter, Facebook, Linkedin, Loader2 } from 'lucide-react';
+import { Clock, User, Share2, Bookmark, ChevronLeft, Facebook, Linkedin, Loader2 } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -90,7 +90,7 @@ export default function ArticlePage() {
     const url = shareUrl;
     
     const urls = {
-      twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+      twitter: `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`
     };
@@ -200,14 +200,16 @@ export default function ArticlePage() {
               </p>
             </div>
             <div className="flex items-center space-x-3">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={() => handleShare('twitter')}
-                data-testid="button-share-twitter"
+                data-testid="button-share-x"
               >
-                <Twitter className="h-4 w-4 mr-2" />
-                Twitter
+                <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                X
               </Button>
               <Button 
                 variant="outline" 

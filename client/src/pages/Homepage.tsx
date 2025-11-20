@@ -134,7 +134,7 @@ export default function Homepage() {
           name: 'Pyrax',
           description: 'Leading cryptocurrency news and markets portal providing real-time data, expert analysis, and educational resources',
           sameAs: [
-            'https://twitter.com/pyrax',
+            'https://x.com/pyrax',
             'https://linkedin.com/company/pyrax'
           ]
         }}

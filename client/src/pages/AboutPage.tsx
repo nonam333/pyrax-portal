@@ -51,7 +51,7 @@ export default function AboutPage() {
   ];
 
   const socialLinks = [
-    { platform: 'X', icon: <SiX className="h-5 w-5" />, link: 'https://twitter.com/pyrax' },
+    { platform: 'X', icon: <SiX className="h-5 w-5" />, link: 'https://x.com/pyrax' },
     { platform: 'Discord', icon: <MessageCircle className="h-5 w-5" />, link: 'https://discord.gg/pyrax' },
     { platform: 'YouTube', icon: <Youtube className="h-5 w-5" />, link: 'https://youtube.com/pyrax' },
     { platform: 'Telegram', icon: <Send className="h-5 w-5" />, link: 'https://t.me/pyrax' },
@@ -82,7 +82,7 @@ export default function AboutPage() {
           name: 'Pyrax',
           description: "Global cryptocurrency news and markets portal illuminating the world of blockchain and digital assets",
           sameAs: [
-            'https://twitter.com/pyrax',
+            'https://x.com/pyrax',
             'https://linkedin.com/company/pyrax'
           ]
         }}
