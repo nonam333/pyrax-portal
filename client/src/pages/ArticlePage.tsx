@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRoute, Link } from 'wouter';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { RichArticleContent } from '@/components/RichArticleContent';
+import AdSlot from '@/components/AdSlot';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Clock, User, Share2, Bookmark, ChevronLeft, Facebook, Linkedin, Loader2 } from 'lucide-react';
+import { Clock, User, Share2, Bookmark, ChevronLeft, Facebook, Linkedin, Loader2, ArrowUp } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -28,6 +31,22 @@ interface BlogPost {
 export default function ArticlePage() {
   const [, params] = useRoute('/article/:id');
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 500);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const { data: article, isLoading, error } = useQuery<BlogPost>({
     queryKey: ['/api/blog-posts', params?.id],
@@ -100,11 +119,22 @@ export default function ArticlePage() {
 
   return (
     <div className="min-h-screen bg-background" data-testid="page-article">
+      {/* Progress bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent origin-left z-50"
+        style={{ scaleX }}
+      />
+
       <PriceTicker />
       <Navbar />
-      
+
       {/* Article Header */}
-      <div className="bg-card border-b border-border">
+      <motion.div
+        className="bg-card border-b border-border"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
             <Link href="/">
@@ -174,22 +204,36 @@ export default function ArticlePage() {
             )}
           </div>
         </div>
-      </div>
-      
+      </motion.div>
+
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Article Body */}
-        <div 
-          className="prose prose-lg prose-invert max-w-none mb-12"
-          style={{
-            color: 'hsl(var(--card-foreground))',
-          }}
-          data-testid="article-content"
-          dangerouslySetInnerHTML={{ __html: article.content || '' }}
-        />
-        
-        {/* Social Sharing */}
-        <Card className="p-6 mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Main Article Content */}
+          <div className="lg:col-span-8">
+            {/* Top Banner Ad - Above the fold */}
+            <div className="mb-8">
+              <div className="text-xs text-gray-500 mb-2 text-center">Advertisement</div>
+              <div className="flex justify-center">
+                <AdSlot size="banner" position="article-top" />
+              </div>
+            </div>
+
+            {/* Article Body */}
+            <div data-testid="article-content">
+              <RichArticleContent content={article.content || ''} />
+            </div>
+
+            {/* Bottom Banner Ad - Before social sharing */}
+            <div className="my-12">
+              <div className="text-xs text-gray-500 mb-2 text-center">Advertisement</div>
+              <div className="flex justify-center">
+                <AdSlot size="banner" position="article-bottom" />
+              </div>
+            </div>
+
+            {/* Social Sharing */}
+            <Card className="p-6 mb-12">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h3 className="text-lg font-semibold text-card-foreground mb-2" data-testid="text-share-title">
@@ -232,8 +276,44 @@ export default function ArticlePage() {
             </div>
           </div>
         </Card>
+          </div>
+
+          {/* Sidebar with sticky ad - Desktop only */}
+          <aside className="hidden lg:block lg:col-span-4">
+            <div className="sticky top-24 space-y-6">
+              <div>
+                <div className="text-xs text-gray-500 mb-2">Advertisement</div>
+                <AdSlot size="square" position="article-sidebar" />
+              </div>
+
+              {/* Additional sidebar ad space */}
+              <div className="mt-8">
+                <div className="text-xs text-gray-500 mb-2">Advertisement</div>
+                <AdSlot size="square" position="article-sidebar-2" />
+              </div>
+            </div>
+          </aside>
+        </div>
       </div>
-      
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0 }}
+          className="fixed bottom-8 right-8 z-40"
+        >
+          <Button
+            size="icon"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="h-12 w-12 rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 shadow-lg"
+          >
+            <ArrowUp className="h-6 w-6 text-black" />
+          </Button>
+        </motion.div>
+      )}
+
       <Footer />
     </div>
   );

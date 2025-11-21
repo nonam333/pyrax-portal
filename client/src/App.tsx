@@ -20,6 +20,7 @@ import CookiePage from "@/pages/CookiePage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
 import ContactPage from "@/pages/ContactPage";
 import LearnTopicPage from "@/pages/LearnTopicPage";
+import LearnCategoryPage from "@/pages/LearnCategoryPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -28,6 +29,8 @@ function Router() {
       <Switch>
         <Route path="/" component={Homepage} />
         <Route path="/learn" component={ComprehensiveLearnPage} />
+        {/* Learn Category Pages */}
+        <Route path="/learn/category/:category" component={LearnCategoryPage} />
         {/* Learn Topic Pages */}
         <Route path="/learn/bitcoin">{() => <LearnTopicPage topic="bitcoin" />}</Route>
         <Route path="/learn/ethereum">{() => <LearnTopicPage topic="ethereum" />}</Route>

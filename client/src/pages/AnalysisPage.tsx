@@ -73,34 +73,35 @@ export default function AnalysisPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {analysisPosts.slice(0, 6).map((post) => (
-                <Card 
-                  key={post.id} 
-                  className="p-6 hover-elevate active-elevate-2 transition-all cursor-pointer" 
-                  data-testid={`card-analysis-post-${post.id}`}
-                >
-                  {post.category && (
-                    <Badge className="mb-3" data-testid={`badge-category-${post.id}`}>
-                      {post.category}
-                    </Badge>
-                  )}
-                  <h3 className="text-xl font-bold text-card-foreground mb-3" data-testid={`text-post-title-${post.id}`}>
-                    {post.title}
-                  </h3>
-                  {post.excerpt && (
-                    <p className="text-muted-foreground mb-4 line-clamp-2" data-testid={`text-post-excerpt-${post.id}`}>
-                      {post.excerpt}
-                    </p>
-                  )}
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <span data-testid={`text-author-${post.id}`}>{post.author}</span>
-                    <span>•</span>
-                    <span data-testid={`text-read-time-${post.id}`}>{post.readTime}</span>
-                    <span>•</span>
-                    <span data-testid={`text-published-${post.id}`}>
-                      {new Date(post.publishedAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </Card>
+                <Link key={post.id} href={`/article/${post.id}`}>
+                  <Card
+                    className="p-6 hover-elevate active-elevate-2 transition-all cursor-pointer"
+                    data-testid={`card-analysis-post-${post.id}`}
+                  >
+                    {post.category && (
+                      <Badge className="mb-3" data-testid={`badge-category-${post.id}`}>
+                        {post.category}
+                      </Badge>
+                    )}
+                    <h3 className="text-xl font-bold text-card-foreground mb-3" data-testid={`text-post-title-${post.id}`}>
+                      {post.title}
+                    </h3>
+                    {post.excerpt && (
+                      <p className="text-muted-foreground mb-4 line-clamp-2" data-testid={`text-post-excerpt-${post.id}`}>
+                        {post.excerpt}
+                      </p>
+                    )}
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                      <span data-testid={`text-author-${post.id}`}>{post.author}</span>
+                      <span>•</span>
+                      <span data-testid={`text-read-time-${post.id}`}>{post.readTime}</span>
+                      <span>•</span>
+                      <span data-testid={`text-published-${post.id}`}>
+                        {new Date(post.publishedAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </Card>
+                </Link>
               ))}
             </div>
           )}

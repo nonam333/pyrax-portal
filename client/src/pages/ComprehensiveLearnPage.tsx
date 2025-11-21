@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'wouter';
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import SEO from '@/components/SEO';
@@ -6,8 +7,8 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { 
-  Wallet, TrendingUp, Code, BookOpen, Shield, RefreshCw, 
+import {
+  Wallet, TrendingUp, Code, BookOpen, Shield, RefreshCw,
   MapPin, Search, ChevronRight, Coins, Image, FileText, Newspaper, Gavel
 } from 'lucide-react';
 
@@ -21,46 +22,55 @@ export default function ComprehensiveLearnPage() {
       icon: <BookOpen className="h-8 w-8" />,
       title: 'Crypto Basics',
       description: 'Start your journey with fundamental crypto concepts and blockchain technology',
+      slug: 'crypto-basics',
     },
     {
       icon: <Wallet className="h-8 w-8" />,
       title: 'Wallets',
       description: 'Learn to secure and manage your digital assets with confidence',
+      slug: 'wallets',
     },
     {
       icon: <TrendingUp className="h-8 w-8" />,
       title: 'Trading',
       description: 'Master trading strategies and technical analysis fundamentals',
+      slug: 'trading',
     },
     {
       icon: <Coins className="h-8 w-8" />,
       title: 'DeFi & Staking',
       description: 'Explore decentralized finance protocols and earn passive income',
+      slug: 'defi',
     },
     {
       icon: <Image className="h-8 w-8" />,
       title: 'NFTs & Collectibles',
       description: 'Discover the world of digital art and non-fungible tokens',
+      slug: 'nfts',
     },
     {
       icon: <Shield className="h-8 w-8" />,
       title: 'Security',
       description: 'Protect your investments with best security practices',
+      slug: 'security',
     },
     {
       icon: <Gavel className="h-8 w-8" />,
       title: 'Taxes & Regulation',
       description: 'Navigate crypto tax laws and regulatory requirements',
+      slug: 'taxes',
     },
     {
       icon: <Code className="h-8 w-8" />,
       title: 'Developers',
       description: 'Build on blockchain with smart contracts and Web3 tools',
+      slug: 'developers',
     },
     {
       icon: <Newspaper className="h-8 w-8" />,
       title: 'News Explained',
       description: 'Understand the latest crypto news and market developments',
+      slug: 'news-explained',
     },
   ];
 
@@ -126,29 +136,30 @@ export default function ComprehensiveLearnPage() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {topicWidgets.map((widget, index) => (
-              <Card 
-                key={index}
-                className="p-8 hover-elevate active-elevate-2 transition-all cursor-pointer"
-                data-testid={`card-topic-${index}`}
-              >
-                <div className="text-primary mb-4">
-                  {widget.icon}
-                </div>
-                <h3 className="text-xl font-bold text-card-foreground mb-3" data-testid={`text-topic-title-${index}`}>
-                  {widget.title}
-                </h3>
-                <p className="text-muted-foreground mb-6 line-clamp-2" data-testid={`text-topic-desc-${index}`}>
-                  {widget.description}
-                </p>
-                <Button 
-                  variant="outline" 
-                  className="w-full group"
-                  data-testid={`button-view-guides-${index}`}
+              <Link key={index} href={`/learn/category/${widget.slug}`}>
+                <Card
+                  className="p-8 hover-elevate active-elevate-2 transition-all cursor-pointer"
+                  data-testid={`card-topic-${index}`}
                 >
-                  View Guides
-                  <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Card>
+                  <div className="text-primary mb-4">
+                    {widget.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-card-foreground mb-3" data-testid={`text-topic-title-${index}`}>
+                    {widget.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-6 line-clamp-2" data-testid={`text-topic-desc-${index}`}>
+                    {widget.description}
+                  </p>
+                  <Button
+                    variant="outline"
+                    className="w-full group"
+                    data-testid={`button-view-guides-${index}`}
+                  >
+                    View Guides
+                    <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
