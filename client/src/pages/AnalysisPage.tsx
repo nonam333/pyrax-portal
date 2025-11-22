@@ -75,30 +75,45 @@ export default function AnalysisPage() {
               {analysisPosts.slice(0, 6).map((post) => (
                 <Link key={post.id} href={`/article/${post.id}`}>
                   <Card
-                    className="p-6 hover-elevate active-elevate-2 transition-all cursor-pointer"
+                    className="overflow-hidden hover-elevate active-elevate-2 transition-all cursor-pointer"
                     data-testid={`card-analysis-post-${post.id}`}
                   >
-                    {post.category && (
-                      <Badge className="mb-3" data-testid={`badge-category-${post.id}`}>
-                        {post.category}
-                      </Badge>
+                    {/* Image */}
+                    {post.coverImage && (
+                      <div className="relative h-48 w-full overflow-hidden">
+                        <img
+                          src={post.coverImage}
+                          alt={post.title}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                          data-testid={`img-post-${post.id}`}
+                        />
+                      </div>
                     )}
-                    <h3 className="text-xl font-bold text-card-foreground mb-3" data-testid={`text-post-title-${post.id}`}>
-                      {post.title}
-                    </h3>
-                    {post.excerpt && (
-                      <p className="text-muted-foreground mb-4 line-clamp-2" data-testid={`text-post-excerpt-${post.id}`}>
-                        {post.excerpt}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span data-testid={`text-author-${post.id}`}>{post.author}</span>
-                      <span>•</span>
-                      <span data-testid={`text-read-time-${post.id}`}>{post.readTime}</span>
-                      <span>•</span>
-                      <span data-testid={`text-published-${post.id}`}>
-                        {new Date(post.publishedAt).toLocaleDateString()}
-                      </span>
+
+                    {/* Content */}
+                    <div className="p-6">
+                      {post.category && (
+                        <Badge className="mb-3" data-testid={`badge-category-${post.id}`}>
+                          {post.category}
+                        </Badge>
+                      )}
+                      <h3 className="text-xl font-bold text-card-foreground mb-3" data-testid={`text-post-title-${post.id}`}>
+                        {post.title}
+                      </h3>
+                      {post.excerpt && (
+                        <p className="text-muted-foreground mb-4 line-clamp-2" data-testid={`text-post-excerpt-${post.id}`}>
+                          {post.excerpt}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <span data-testid={`text-author-${post.id}`}>{post.author}</span>
+                        <span>•</span>
+                        <span data-testid={`text-read-time-${post.id}`}>{post.readTime}</span>
+                        <span>•</span>
+                        <span data-testid={`text-published-${post.id}`}>
+                          {new Date(post.publishedAt).toLocaleDateString()}
+                        </span>
+                      </div>
                     </div>
                   </Card>
                 </Link>

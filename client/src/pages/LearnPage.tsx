@@ -151,8 +151,8 @@ export default function LearnPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredTopics.map((topic, index) => (
                 <Link key={index} href={topic.link} data-testid={`link-topic-${index}`}>
-                  <Card 
-                    className="p-8 hover-elevate active-elevate-2 cursor-pointer h-full transition-all group"
+                  <Card
+                    className="p-8 hover-elevate active-elevate-2 cursor-pointer h-full transition-all group bg-gradient-to-br from-primary/10 to-accent/10 hover:from-primary/15 hover:to-accent/15"
                     data-testid={`card-topic-${index}`}
                   >
                     <div className="flex items-start justify-between mb-6">
