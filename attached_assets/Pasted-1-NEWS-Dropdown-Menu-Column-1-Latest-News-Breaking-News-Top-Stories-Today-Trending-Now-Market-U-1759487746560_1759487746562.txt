@@ -1,0 +1,150 @@
+1. NEWS (Dropdown Menu)
+Column 1: Latest News
+
+Breaking News
+Top Stories Today
+Trending Now
+Market Updates
+Exchange News
+Technology Updates
+
+Column 2: By Category
+
+Bitcoin News
+Ethereum & Altcoins
+DeFi News
+NFT & Web3
+Blockchain Technology
+Industry Events
+
+Column 3: Regional Focus
+
+US Crypto News
+Global Markets
+Regulatory Updates
+Institutional Moves
+[Featured: Latest Article with thumbnail]
+
+
+2. MARKETS (Dropdown Menu)
+Column 1: Market Data
+
+Live Price Tracker
+Market Overview
+Top Gainers
+Top Losers
+Market Cap Rankings
+Trading Volume Leaders
+
+Column 2: Analysis
+
+Price Predictions
+Technical Analysis
+Market Sentiment
+On-Chain Analytics
+Token Metrics
+Exchange Flow Data
+
+Column 3: Tools
+
+Portfolio Tracker
+Price Alerts
+Converter Calculator
+Historical Charts
+Compare Cryptocurrencies
+[Widget: Top 5 Coins Mini-Tracker]
+
+
+3. LEARN (Dropdown Menu) ← YOUR FOCUS
+Column 1: Getting Started
+
+What is Cryptocurrency?
+How Does Blockchain Work?
+Your First Bitcoin Purchase
+Wallet Basics
+Security Essentials
+Common Mistakes to Avoid
+
+Column 2: Intermediate
+
+Trading Fundamentals
+DeFi Explained
+NFT Guide
+Staking & Yield Farming
+Technical Analysis Basics
+Tax Implications (US)
+
+Column 3: Advanced
+
+Smart Contracts Deep Dive
+On-Chain Analysis
+Advanced Trading Strategies
+Building on Blockchain
+Crypto Portfolio Management
+[CTA Button: "Start Learning Path"]
+
+Column 4: Resources
+
+Glossary
+Video Tutorials
+Crypto Courses
+Beginner's Checklist
+Recommended Reading
+Learning Roadmap
+
+
+4. ANALYSIS (Dropdown Menu)
+Column 1: Market Analysis
+
+Weekly Market Wrap
+Technical Analysis
+On-Chain Insights
+Sentiment Analysis
+Expert Predictions
+Long-form Reports
+
+Column 2: Research
+
+Pyrax Research Reports
+Industry Surveys
+Market Studies
+Trend Analysis
+Token Deep Dives
+Protocol Analysis
+
+Column 3: Opinion
+
+Expert Commentary
+Editorial Pieces
+Guest Perspectives
+Debate & Discussion
+Industry Insights
+[Featured: Latest Analysis with author photo]
+
+
+5. REGULATION (Dropdown Menu)
+Column 1: US Regulatory
+
+SEC Updates
+Congressional Actions
+State-by-State Guide
+Regulatory Calendar
+Court Cases
+Policy Changes
+
+Column 2: Compliance
+
+Tax Guide (US)
+KYC/AML Requirements
+Legal Framework
+Reporting Obligations
+Regulatory Best Practices
+Compliance Checklist
+
+Column 3: Global
+
+International Regulations
+Country Comparisons
+Global Regulatory Trends
+Cross-Border Issues
+[Alert Box: Latest Regulatory Action]

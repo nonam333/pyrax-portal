@@ -1,0 +1,665 @@
+# PYRAX LEARN PAGE - COMPLETE REPLIT PROMPT
+
+**Copy this entire prompt into Replit AI to create the Learn page:**
+
+---
+
+Create a modern, interactive Learn hub page for Pyrax.io - a cryptocurrency education platform. The page features 9 clickable topic widgets that link to individual learning pages, with a clean orange and black design.
+
+---
+
+## DESIGN REQUIREMENTS
+
+### Color Scheme (Orange & Black)
+- Background: #000000 (pure black)
+- Card Background: #1a1a1a (charcoal)
+- Primary Orange: #FF6B00
+- Bright Orange (hover): #FF8533
+- White Text: #FFFFFF
+- Gray Text: #B0B0B0
+- Borders: rgba(255, 107, 0, 0.2)
+
+### Typography
+- Primary Font: 'Inter', sans-serif
+- Heading Font: 'Space Grotesk', sans-serif
+- H1: 64px (desktop), 36px (mobile)
+- H2: 42px (desktop), 28px (mobile)
+- Body: 18px (desktop), 16px (mobile)
+
+### Design Style
+- Modern tech aesthetic (Stripe/Linear inspired)
+- Smooth animations and transitions
+- Card hover effects (lift + orange glow)
+- No USA flags or badges
+- Mobile-first responsive
+- Clean, minimal, professional
+
+---
+
+## PAGE STRUCTURE
+
+### SECTION 1: HERO
+**Layout:** Full-width, centered content, 70vh height
+
+**Background:** 
+- Pure black (#000000)
+- Animated floating orange gradient orbs (CSS animation)
+- Subtle grid pattern overlay (10% opacity)
+
+**Content:**
+
+**Pre-headline (animated fade in first):**
+```
+CRYPTO EDUCATION HUB
+```
+Style: 12px, uppercase, letter-spacing 3px, orange (#FF6B00), margin-bottom 16px
+
+**Main Headline (H1, animated fade in second):**
+```
+Master Cryptocurrency
+From First Bitcoin to Advanced DeFi
+```
+Style: 64px bold (36px mobile), white, text-align center, max-width 900px, line-height 1.2
+
+**Subheadline (animated fade in third):**
+```
+Your comprehensive learning hub for navigating the crypto revolution. 
+No jargon. No fluff. Just clear, actionable education.
+```
+Style: 22px (18px mobile), gray (#B0B0B0), text-align center, max-width 700px, line-height 1.6
+
+**CTA Buttons (animated fade in fourth):**
+```
+[Start Learning] [Browse All Guides]
+```
+Button Styles:
+- Primary (Start Learning): Orange background, white text, hover: bright orange, lift effect
+- Secondary (Browse): White outline, white text, hover: fill orange
+- Both: 16px text, 16px padding vertical, 32px padding horizontal, border-radius 8px
+
+**Scroll Indicator (continuously animated):**
+```
+↓ Explore Topics
+```
+Bouncing animation, orange, 14px, positioned bottom center
+
+---
+
+### SECTION 2: LEARNING TOPICS GRID
+**Layout:** Container max-width 1400px, padding 100px vertical
+
+**Section Header:**
+
+**Headline (H2):**
+```
+Choose Your Learning Path
+```
+Style: 42px bold, white, text-align center, margin-bottom 16px
+
+**Subheadline:**
+```
+Select a topic to explore comprehensive guides, tutorials, and analysis
+```
+Style: 20px, gray, text-align center, margin-bottom 80px
+
+**Topics Grid:**
+Layout: 3 columns (desktop), 2 columns (tablet), 1 column (mobile)
+Gap: 32px between cards
+
+---
+
+### TOPIC CARD DESIGN SPECIFICATION
+
+**Card Structure (All 9 Cards Follow This):**
+
+**Container:**
+- Background: #1a1a1a (charcoal)
+- Border: 1px solid rgba(255, 107, 0, 0.2)
+- Border-radius: 16px
+- Padding: 40px
+- Cursor: pointer
+- Transition: all 0.3s ease
+
+**Hover State:**
+- Transform: translateY(-10px)
+- Box-shadow: 0 20px 50px rgba(255, 107, 0, 0.3)
+- Border: 1px solid rgba(255, 107, 0, 0.6)
+- Background: slightly lighter (#1f1f1f)
+
+**Card Content:**
+
+1. **Icon Container:**
+   - Size: 64px
+   - Color: Orange (#FF6B00)
+   - Margin-bottom: 24px
+   - Subtle animation on card hover (gentle rotation or pulse)
+
+2. **Article Count Badge:**
+   - Position: Top right of card
+   - Background: rgba(255, 107, 0, 0.1)
+   - Border: 1px solid rgba(255, 107, 0, 0.3)
+   - Padding: 8px 16px
+   - Border-radius: 20px
+   - Font: 14px, orange
+   - Text: "47 Articles" (example)
+
+3. **Title:**
+   - Font: 24px bold, white
+   - Margin-bottom: 16px
+   - Font-family: 'Space Grotesk'
+
+4. **Description:**
+   - Font: 16px, gray (#B0B0B0)
+   - Line-height: 1.6
+   - 2-3 lines maximum
+   - Margin-bottom: 24px
+
+5. **CTA Footer:**
+   - Display: flex, justify-content: space-between, align-items: center
+   
+   **Left side - "Explore Topic" text:**
+   - Font: 16px, orange
+   - Font-weight: 600
+   
+   **Right side - Arrow:**
+   - Orange arrow icon →
+   - Animated slide right on card hover
+
+**Click Behavior:**
+- Each card is a clickable link to individual topic page
+- Smooth transition animation on click
+- URL changes to /learn/[topic-slug]
+
+---
+
+### THE 9 TOPIC CARDS (Exact Content)
+
+**CARD 1: CRYPTOCURRENCY BASICS**
+Icon: Coin/Bitcoin symbol
+Badge: "52 Articles"
+Title: "Cryptocurrency Basics"
+Description: "Introductory content covering what crypto is, how it works, and fundamental concepts for complete beginners."
+Link: /learn/cryptocurrency-basics
+
+**CARD 2: BLOCKCHAIN TECHNOLOGY**
+Icon: Connected blocks/chain
+Badge: "38 Articles"
+Title: "Blockchain Technology"
+Description: "Deep dives into blockchain mechanics, consensus algorithms, smart contracts, and technical innovations."
+Link: /learn/blockchain-technology
+
+**CARD 3: CRYPTO TRADING & INVESTMENT**
+Icon: Chart with upward trend
+Badge: "64 Articles"
+Title: "Crypto Trading & Investment"
+Description: "Everything about buying, selling, trading strategies, market analysis, portfolio management, and risk assessment."
+Link: /learn/trading-investment
+
+**CARD 4: DECENTRALIZED FINANCE (DeFi)**
+Icon: Network nodes connected
+Badge: "45 Articles"
+Title: "Decentralized Finance (DeFi)"
+Description: "Exploring DeFi protocols, lending, borrowing, yield farming, staking, and decentralized exchanges."
+Link: /learn/defi
+
+**CARD 5: CRYPTO SECURITY & WALLETS**
+Icon: Shield
+Badge: "41 Articles"
+Title: "Crypto Security & Wallets"
+Description: "Best practices for securing crypto assets, wallet types, hardware wallets, and scam prevention strategies."
+Link: /learn/security-wallets
+
+**CARD 6: NON-FUNGIBLE TOKENS (NFTs)**
+Icon: Image/Art frame
+Badge: "29 Articles"
+Title: "Non-Fungible Tokens (NFTs)"
+Description: "NFT basics, creation process, marketplaces, use cases beyond art, and cultural impact of digital ownership."
+Link: /learn/nfts
+
+**CARD 7: CRYPTO MINING & STAKING**
+Icon: Pickaxe or server rack
+Badge: "33 Articles"
+Title: "Crypto Mining & Staking"
+Description: "Mining principles, proof of work vs proof of stake, energy considerations, rewards mechanisms, and setup guides."
+Link: /learn/mining-staking
+
+**CARD 8: REGULATION & LEGAL ISSUES**
+Icon: Gavel or legal document
+Badge: "56 Articles"
+Title: "Regulation & Legal Issues"
+Description: "Crypto laws worldwide, US tax implications, compliance requirements, and future regulatory trends affecting investors."
+Link: /learn/regulation-legal
+
+**CARD 9: EMERGING TRENDS & INNOVATIONS**
+Icon: Rocket or lightning bolt
+Badge: "37 Articles"
+Title: "Emerging Trends & Innovations"
+Description: "Latest developments, Layer 2 solutions, blockchain interoperability, Web3 applications, and upcoming groundbreaking projects."
+Link: /learn/emerging-trends
+
+**Animation:** Cards appear with stagger effect on page load (0.1s delay between each)
+
+---
+
+### SECTION 3: GLOSSARY SEARCH
+**Layout:** Full-width section, centered content, dark gray background (#0a0a0a)
+**Padding:** 80px vertical
+
+**Content:**
+
+**Headline (H3):**
+```
+Crypto Glossary: 500+ Terms Explained
+```
+Style: 36px bold, white, text-align center, margin-bottom 16px
+
+**Subheadline:**
+```
+Can't find a term? Search our comprehensive glossary for instant explanations
+```
+Style: 18px, gray, text-align center, margin-bottom 40px
+
+**Search Bar:**
+- Width: 100%, max-width 600px, centered
+- Height: 60px
+- Background: #1a1a1a
+- Border: 2px solid rgba(255, 107, 0, 0.3)
+- Border-radius: 12px
+- Padding: 0 24px
+- Placeholder: "Search any crypto term... (e.g., 'What is DeFi?')"
+- Focus state: Border orange, glow effect
+- Search icon on right side (orange)
+
+**Popular Terms Pills (below search):**
+Display 10 popular terms as clickable pills:
+```
+"Blockchain" | "DeFi" | "Smart Contract" | "Gas Fees" | "Staking" | 
+"NFT" | "Cold Wallet" | "Altcoin" | "HODL" | "Satoshi"
+```
+
+Pill Style:
+- Background: rgba(255, 107, 0, 0.1)
+- Border: 1px solid rgba(255, 107, 0, 0.3)
+- Padding: 10px 20px
+- Border-radius: 20px
+- Font: 14px, orange
+- Hover: Background brighter, lift effect
+- Clicking opens glossary definition (modal or inline)
+
+---
+
+### SECTION 4: WHY LEARN WITH PYRAX
+**Layout:** 3-column grid (1 column mobile)
+**Background:** Pure black
+**Padding:** 100px vertical
+
+**Section Headline:**
+```
+Why Learn with Pyrax
+```
+Style: 42px bold, white, text-align center, margin-bottom 60px
+
+**3 Benefit Cards:**
+
+**Card Design:**
+- Background: #1a1a1a
+- Padding: 40px
+- Border-radius: 12px
+- Text-align: center
+- Border: 1px solid transparent
+- Hover: Border orange, subtle lift
+
+**CARD 1:**
+Icon: Lightbulb (64px, orange, centered)
+Title: "No Jargon, Just Clarity"
+Description: "We explain complex crypto concepts in plain English. If a 12-year-old can't understand it, we rewrite it. Accessible knowledge for everyone."
+Style: Icon 64px top, Title 22px bold, Description 16px gray
+
+**CARD 2:**
+Icon: Refresh/Update symbol
+Title: "Always Current"
+Description: "Crypto moves fast. Our content is updated weekly to reflect the latest developments, regulations, and best practices. Never outdated information."
+
+**CARD 3:**
+Icon: Target/Focus symbol
+Title: "US-Focused Guidance"
+Description: "Specific advice for American investors—from IRS tax rules to SEC regulations. Learn what matters for YOUR situation, not generic global advice."
+
+---
+
+### SECTION 5: NEWSLETTER SIGNUP
+**Layout:** Full-width, centered content
+**Background:** Orange to black gradient (left to right)
+**Padding:** 100px vertical
+
+**Content:**
+
+**Headline:**
+```
+Get Weekly Crypto Education in Your Inbox
+```
+Style: 48px bold, white, text-align center, margin-bottom 16px
+
+**Subheadline:**
+```
+Join 50,000+ subscribers getting our Sunday Crypto Digest—curated learning 
+resources, market insights, and beginner tips delivered every week.
+```
+Style: 20px, rgba(255,255,255,0.9), text-align center, max-width 700px, margin-bottom 40px
+
+**Email Signup Form:**
+- Display: flex, centered
+- Max-width: 500px
+- Gap: 16px
+
+**Email Input:**
+- Flex: 1
+- Height: 56px
+- Background: white
+- Border: none
+- Border-radius: 8px
+- Padding: 0 24px
+- Placeholder: "Enter your email address"
+- Font: 16px
+
+**Submit Button:**
+- Background: black
+- Color: white
+- Padding: 0 40px
+- Height: 56px
+- Border: none
+- Border-radius: 8px
+- Font: 16px bold
+- Cursor: pointer
+- Hover: Background #1a1a1a, transform scale(1.05)
+
+**Privacy Text (below form):**
+```
+✓ No spam. Unsubscribe anytime. We respect your privacy.
+```
+Style: 14px, rgba(255,255,255,0.7), text-align center, margin-top 16px
+
+---
+
+### SECTION 6: FAQ ACCORDION
+**Layout:** Single column, max-width 900px, centered
+**Background:** Dark gray (#0a0a0a)
+**Padding:** 100px vertical
+
+**Section Headline:**
+```
+Frequently Asked Questions
+```
+Style: 42px bold, white, text-align center, margin-bottom 60px
+
+**Accordion Questions (6-8 questions):**
+
+**Accordion Item Design:**
+- Background: #1a1a1a
+- Border: 1px solid rgba(255, 107, 0, 0.2)
+- Border-radius: 12px
+- Margin-bottom: 16px
+- Overflow: hidden
+
+**Question Header (clickable):**
+- Padding: 24px
+- Font: 20px bold, white
+- Cursor: pointer
+- Display: flex, justify-content: space-between
+- Arrow indicator (rotates when open)
+- Hover: Background slightly lighter
+
+**Answer Content (expandable):**
+- Padding: 0 24px 24px 24px
+- Font: 16px, gray
+- Line-height: 1.6
+- Max-height: 0 when closed
+- Smooth transition: max-height 0.3s ease
+
+**Questions:**
+
+**Q1: "Is learning content on Pyrax completely free?"**
+A: "Yes. All learning content, guides, and tutorials are 100% free and always will be. Our mission is educating crypto investors, not gatekeeping knowledge."
+
+**Q2: "Do I need prior knowledge to start learning?"**
+A: "No. Our Cryptocurrency Basics section starts from absolute zero. We explain everything from 'what is blockchain' to advanced trading strategies."
+
+**Q3: "How often is learning content updated?"**
+A: "Educational guides are updated quarterly or whenever significant changes occur. Breaking developments get immediate coverage in our news section."
+
+**Q4: "Can I download guides for offline reading?"**
+A: "Coming soon. We're developing PDF versions of major guides for premium subscribers. Core content remains free online."
+
+**Q5: "Do you offer certificates?"**
+A: "Not currently. We focus on practical knowledge over credentials. However, completion tracking and learning paths are in development."
+
+**Q6: "Is the content suitable for US investors specifically?"**
+A: "Yes. While blockchain technology is universal, we emphasize US regulations, IRS tax implications, and SEC compliance throughout our content."
+
+**Q7: "How do I suggest topics to cover?"**
+A: "Email editorial@pyrax.io with your suggestions. Reader requests directly influence our content priorities."
+
+**Q8: "Can I contribute articles?"**
+A: "We accept pitches from qualified contributors. Review guidelines at pyrax.io/contribute or email editorial@pyrax.io with samples."
+
+---
+
+### SECTION 7: FINAL CTA
+**Layout:** Full-width, centered content
+**Background:** Pure black with orange accent line at top
+**Padding:** 80px vertical
+
+**Content:**
+
+**Headline:**
+```
+Ready to Start Your Crypto Education?
+```
+Style: 48px bold, white, text-align center, margin-bottom 16px
+
+**Subheadline:**
+```
+Join thousands learning to navigate cryptocurrency with confidence
+```
+Style: 20px, gray, text-align center, margin-bottom 40px
+
+**CTA Button:**
+```
+[Explore All Topics]
+```
+Style: Large orange button, white text, 20px padding vertical, 48px padding horizontal, hover lift + glow, scroll to topics grid
+
+**Secondary Link:**
+```
+Or download our Learning Roadmap (PDF) →
+```
+Style: 16px, orange, underline on hover
+
+---
+
+## TECHNICAL IMPLEMENTATION
+
+### HTML Structure
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Crypto | Free Cryptocurrency Education | Pyrax</title>
+    <meta name="description" content="Master cryptocurrency with Pyrax's free learning hub. Comprehensive guides on blockchain, DeFi, trading, NFTs, and more. Start from basics to advanced.">
+    <meta name="keywords" content="learn cryptocurrency, crypto education, blockchain tutorial, bitcoin guide, defi explained, crypto for beginners">
+    <link rel="canonical" href="https://pyrax.io/learn">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Learn Cryptocurrency - Free Education Hub | Pyrax">
+    <meta property="og:description" content="Comprehensive crypto education from beginner to advanced. 400+ guides covering blockchain, trading, DeFi, and more.">
+    <meta property="og:image" content="https://pyrax.io/images/learn-og.jpg">
+    <meta property="og:url" content="https://pyrax.io/learn">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+</head>
+```
+
+### CSS Animations
+```css
+/* Floating orbs animation */
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(30px, -30px); }
+    66% { transform: translate(-20px, 20px); }
+}
+
+/* Fade up animation */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Card hover glow */
+@keyframes glow {
+    0%, 100% { box-shadow: 0 20px 50px rgba(255, 107, 0, 0.3); }
+    50% { box-shadow: 0 20px 60px rgba(255, 107, 0, 0.5); }
+}
+
+/* Bounce animation for scroll indicator */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+/* Stagger animation for cards */
+.topic-card {
+    animation: fadeUp 0.6s ease forwards;
+    opacity: 0;
+}
+.topic-card:nth-child(1) { animation-delay: 0.1s; }
+.topic-card:nth-child(2) { animation-delay: 0.2s; }
+.topic-card:nth-child(3) { animation-delay: 0.3s; }
+.topic-card:nth-child(4) { animation-delay: 0.4s; }
+.topic-card:nth-child(5) { animation-delay: 0.5s; }
+.topic-card:nth-child(6) { animation-delay: 0.6s; }
+.topic-card:nth-child(7) { animation-delay: 0.7s; }
+.topic-card:nth-child(8) { animation-delay: 0.8s; }
+.topic-card:nth-child(9) { animation-delay: 0.9s; }
+```
+
+### JavaScript Functionality
+```javascript
+// Accordion functionality
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+        const item = question.parentElement;
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('active');
+        
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(faq => {
+            faq.classList.remove('active');
+            faq.querySelector('.faq-answer').style.maxHeight = null;
+        });
+        
+        // Open clicked if was closed
+        if (!isOpen) {
+            item.classList.add('active');
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+    });
+});
+
+// Newsletter form submission
+document.querySelector('.newsletter-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = e.target.querySelector('input[type="email"]').value;
+    
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        console.log('Subscribing:', email);
+        e.target.querySelector('button').textContent = 'Subscribed!';
+        e.target.querySelector('button').style.background = '#00C48C';
+    } else {
+        alert('Please enter a valid email');
+    }
+});
+
+// Smooth scroll to topics
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Search functionality (basic)
+document.querySelector('.glossary-search input').addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    // Add your search logic here
+    console.log('Searching for:', query);
+});
+```
+
+### Responsive Breakpoints
+```css
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+    h1 { font-size: 36px !important; }
+    h2 { font-size: 28px !important; }
+    .topics-grid { grid-template-columns: 1fr; }
+    .benefits-grid { grid-template-columns: 1fr; }
+    .hero { height: 90vh; padding: 0 20px; }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .topics-grid { grid-template-columns: repeat(2, 1fr); }
+    .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Desktop (> 1024px) */
+@media (min-width: 1025px) {
+    .topics-grid { grid-template-columns: repeat(3, 1fr); }
+    .benefits-grid { grid-template-columns: repeat(3, 1fr); }
+}
+```
+
+---
+
+## CRITICAL REQUIREMENTS
+
+### Must-Haves:
+- [ ] All 9 topic cards clickable and link to correct URLs
+- [ ] Orange and black theme consistent throughout
+- [ ] Smooth animations on scroll and hover
+- [ ] Mobile responsive (test on 375px width minimum)
+- [ ] No broken links
+- [ ] Fast loading (<3 seconds)
+- [ ] Accessible (proper contrast, alt text, ARIA labels)
+- [ ] SEO optimized (meta tags, semantic HTML)
+
+### Content Guidelines:
+- [ ] Natural, human voice (no AI clichés)
+- [ ] Clear, action-oriented copy
+- [ ] Specific numbers and details
+- [ ] Benefits clearly communicated
+- [ ] CTAs prominent and compelling
+
+### Design Guidelines:
+- [ ] Modern tech aesthetic (not flashy crypto style)
+- [ ] Consistent spacing and typography
+- [ ] Orange used for CTAs and accents only
+- [ ] Cards have subtle shadows and borders
+- [ ] Hover states on all interactive elements
+- [ ] Icons simple and consistent style
+
+---
+
+Create a complete, production-ready HTML page with inline CSS and JavaScript. Make it visually stunning, smooth, modern, and optimized for conversions. The page should make users excited to start learning about cryptocurrency while establishing Pyrax as a credible, professional education platform.

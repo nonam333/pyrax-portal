@@ -1,0 +1,158 @@
+LEARN PAGE - COMPLETE STRUCTURE
+Hero Section
+Headline: "Master Cryptocurrency - From First Bitcoin to Advanced DeFi"
+Subheadline: "Your comprehensive learning hub. No jargon. No fluff. Just clear, actionable education."
+CTAs: [Start Learning] [Browse All Guides]
+Background: Black with animated orange gradient orbs
+Main Learning Topics Grid (9 Topic Widgets)
+Layout: 3x3 grid (responsive: 2 cols tablet, 1 col mobile) | Each widget is clickable card linking to individual topic page
+Widget Design:
+
+Card: Charcoal background, orange border on hover, lift effect
+Icon: 64px, orange, subtle animation
+Title: 24px bold white
+Description: 16px gray, 2-3 lines
+Article Count: "47 Articles" badge
+Arrow/CTA: "Explore Topic" with orange arrow
+
+Topic 1: Cryptocurrency Basics
+Icon: Coin | Description: "Introductory content covering what crypto is, how it works, and fundamental concepts." | Link: /learn/cryptocurrency-basics
+Topic 2: Blockchain Technology
+Icon: Blocks/Chain | Description: "Deep dives into blockchain mechanics, consensus algorithms, smart contracts, and innovations." | Link: /learn/blockchain-technology
+Topic 3: Crypto Trading & Investment
+Icon: Chart | Description: "All about buying, selling, trading strategies, market analysis, portfolio management, and risk." | Link: /learn/trading-investment
+Topic 4: Decentralized Finance (DeFi)
+Icon: Network nodes | Description: "Exploring DeFi protocols, lending, borrowing, yield farming, staking, and decentralized exchanges." | Link: /learn/defi
+Topic 5: Crypto Security & Wallets
+Icon: Shield | Description: "Best practices for securing crypto, wallet types, hardware wallets, and scam prevention." | Link: /learn/security-wallets
+Topic 6: Non-Fungible Tokens (NFTs)
+Icon: Image/Art | Description: "NFT basics, creation, marketplaces, use cases, and cultural impact." | Link: /learn/nfts
+Topic 7: Crypto Mining & Staking
+Icon: Pickaxe/Server | Description: "Mining principles, proof of work vs proof of stake, energy considerations, and rewards." | Link: /learn/mining-staking
+Topic 8: Regulation & Legal Issues
+Icon: Gavel/Document | Description: "Crypto laws worldwide, tax implications, compliance, and future regulatory trends." | Link: /learn/regulation-legal
+Topic 9: Emerging Trends & Innovations
+Icon: Rocket/Lightning | Description: "Latest developments, Layer 2 solutions, interoperability, Web3, and upcoming projects." | Link: /learn/emerging-trends
+Supporting Sections (Keep Simple)
+
+Glossary Search Box: "Search 500+ crypto terms"
+Why Learn with Pyrax: 3 benefit cards (Clarity, US-Focused, Always Current)
+Newsletter Signup: "Get weekly crypto education"
+FAQ: 5-6 questions
+
+
+INDIVIDUAL TOPIC PAGES (9 Pages)
+URL Structure
+/learn/cryptocurrency-basics | /learn/blockchain-technology | /learn/trading-investment | /learn/defi | /learn/security-wallets | /learn/nfts | /learn/mining-staking | /learn/regulation-legal | /learn/emerging-trends
+Page Template (All 9 Pages Follow This)
+Breadcrumb: Home > Learn > [Topic Name]
+Hero Section:
+
+Topic title (48px)
+Short description (20px)
+Stats: "X Articles | Updated Weekly | Beginner to Advanced"
+Background: Black with orange accent
+
+Filter/Sort Bar:
+
+Difficulty: [All] [Beginner] [Intermediate] [Advanced]
+Sort by: [Latest] [Most Popular] [A-Z]
+Search within topic
+
+Articles Grid (3 columns, responsive):
+Each article card shows:
+
+Thumbnail image
+Title (20px bold)
+Excerpt (2 lines, 16px)
+Difficulty badge (colored)
+Read time ("12 min read")
+Published date
+[Read Article] button (orange on hover)
+
+Sidebar (Desktop only):
+
+Related Topics (links to other 8 topics)
+Popular Articles in This Topic (top 5)
+Download Topic PDF Guide
+Ask a Question form
+
+Pagination: Load more button or infinite scroll
+Example Content for /learn/cryptocurrency-basics:
+Articles: "What is Cryptocurrency?", "How Bitcoin Works", "Blockchain Explained", "Your First Bitcoin Purchase", "Crypto Wallets Guide", "Security Best Practices", etc.
+
+ABOUT PAGE - SIMPLIFIED STRUCTURE
+Section 1: Hero
+Headline: "America's Independent Voice in Cryptocurrency"
+Subheadline: "Verified news, analysis, and education. No sponsored content. No hidden agendas."
+Stats Row: 2.4M Readers | 250K Subscribers | 99.7% Accuracy
+CTA: [Our Mission] [Meet Team]
+Section 2: Mission (Single paragraph + visual)
+Text: "Pyrax delivers verified crypto intelligence for American investors. Every story requires triple-source verification. No pay-for-play. Complete editorial independence. Built on transparency, not hype."
+Visual: Animated timeline (2024-2026 milestones)
+Section 3: Core Values (6 cards grid)
+Accuracy | Independence | Transparency | Clarity | US-Focused | Community-Driven
+(Icon, title, 2-line description each)
+Section 4: Editorial Standards (Brief)
+
+Triple-source verification
+Transparent corrections
+Staff disclosure policy
+[Download Full Policy PDF]
+
+Section 5: The Team
+Founder card: Photo, name, title, 3-line bio, crypto holdings, social links (Twitter, LinkedIn, Email)
+"Join Us" card: Hiring message, careers@pyrax.io
+Section 6: By the Numbers (4 key stats only)
+2.4M Monthly Readers | 250K Newsletter | 99.7% Accuracy | $0 Sponsored Content
+Section 7: Social & Contact
+Social Grid: Twitter, Discord, YouTube, Telegram, LinkedIn (with real links, follower counts, [Follow] buttons)
+Contact: tips@pyrax.io, hello@pyrax.io, corrections@pyrax.io
+Section 8: Newsletter CTA
+Email signup form, benefits list, subscribe button
+NO: Excessive sections, long manifesto copy, repetitive content, USA flag badges
+
+FOOTER PAGES (Create All These Pages)
+Footer Structure (4 Columns)
+Column 1: Brand
+Pyrax logo, tagline, social icons
+Column 2: Content
+News | Markets | Analysis | Learn | Research | Newsletter Archive
+(All must link to working pages)
+Column 3: Company
+About | Mission | Editorial Standards | Team | Transparency Report | Careers | Contact
+(All must link to working pages)
+Column 4: Legal & Resources
+Privacy Policy | Terms of Service | Cookie Policy | Disclosure Policy | API Docs | Brand Assets | Media Kit
+(All must link to working pages)
+Bottom Bar: © 2025 Pyrax | Built in USA | Last Updated: [Date]
+Required Footer Page Templates
+1. Privacy Policy (/privacy-policy)
+Standard privacy policy with: Data collection, Cookie usage, Third-party services, User rights, Contact info
+2. Terms of Service (/terms-of-service)
+Standard terms: Acceptance, User conduct, Content license, Disclaimers, Limitation of liability, Governing law
+3. Cookie Policy (/cookie-policy)
+Cookie types used, Purpose, How to manage cookies, Third-party cookies
+4. Disclosure Policy (/disclosure-policy)
+Editorial independence statement, Advertising disclosure, Affiliate disclosure, Staff holdings policy, Correction policy
+5. Editorial Standards (/editorial-standards)
+Full editorial policy: Verification process, Correction procedure, Source protection, Independence principles, Fact-checking methodology
+6. Transparency Report (/transparency)
+Staff crypto holdings (updated quarterly), Ownership structure, Revenue sources, Editorial metrics
+7. Careers (/careers)
+Open positions, Company culture, Benefits, Application process, Contact: careers@pyrax.io
+8. Contact (/contact)
+Contact form, Email addresses (tips, hello, corrections, partnerships, ads, careers), Response times
+9. Media Kit (/media-kit)
+Pyrax description, Logo downloads (SVG, PNG), Brand colors, Usage guidelines, Press contact
+10. Brand Assets (/brand-assets)
+Downloadable logos, Color codes, Typography guidelines, Do's and Don'ts
+11. API Documentation (/api-docs)
+"Coming Soon" page or basic API endpoints if available
+12. Newsletter Archive (/newsletter)
+Past newsletters grid, Search, Subscribe form
+13. Mission (/mission)
+Detailed mission statement, Vision, Values, Goals for 2026
+14. Team (/team)
+Expanded team page with all staff, bios, holdings
+All pages must have: Consistent header/footer, Orange/black theme, Mobile responsive, SEO optimized
