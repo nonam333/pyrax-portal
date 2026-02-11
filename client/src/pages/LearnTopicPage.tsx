@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getBlogPostsByContentType } from "@/lib/blog-api";
+import { getBlogPosts } from "@/lib/blog-api";
 import PriceTicker from '@/components/PriceTicker';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -144,6 +144,11 @@ export default function LearnTopicPage({ topic }: LearnTopicPageProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const config = topicConfigs[topic];
 
+  const { data: allLearnPosts, isLoading } = useQuery({
+    queryKey: ['blog-posts'],
+    queryFn: getBlogPosts,
+  });
+
   if (!config) {
     return (
       <div className="min-h-screen bg-background">
@@ -160,183 +165,180 @@ export default function LearnTopicPage({ topic }: LearnTopicPageProps) {
     );
   }
 
-},
-  });
+  // Filter posts by topic keywords first
+  const topicPosts = allLearnPosts?.filter(post =>
+    config.keywords.some(keyword =>
+      (post.title || '').toLowerCase().includes(keyword.toLowerCase()) ||
+      (post.excerpt || '').toLowerCase().includes(keyword.toLowerCase()) ||
+      (post.category || '').toLowerCase().includes(keyword.toLowerCase())
+    )
+  );
 
-// Filter posts by topic keywords first
-const topicPosts = allLearnPosts?.filter(post =>
-  config.keywords.some(keyword =>
-    (post.title || '').toLowerCase().includes(keyword.toLowerCase()) ||
-    (post.excerpt || '').toLowerCase().includes(keyword.toLowerCase()) ||
-    (post.category || '').toLowerCase().includes(keyword.toLowerCase())
-  )
-);
+  const filteredArticles = topicPosts?.filter(article =>
+    searchTerm === '' ||
+    (article.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (article.excerpt || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-const filteredArticles = topicPosts?.filter(article =>
-  searchTerm === '' ||
-  (article.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-  (article.excerpt || '').toLowerCase().includes(searchTerm.toLowerCase())
-);
+  return (
+    <div className="min-h-screen bg-background" data-testid={`page-learn-${topic}`}>
+      <SEO
+        title={`${config.title} - Crypto Education`}
+        description={config.description}
+        keywords={config.keywords.join(', ')}
+      />
+      <PriceTicker />
+      <Navbar />
 
-return (
-  <div className="min-h-screen bg-background" data-testid={`page-learn-${topic}`}>
-    <SEO
-      title={`${config.title} - Crypto Education`}
-      description={config.description}
-      keywords={config.keywords.join(', ')}
-    />
-    <PriceTicker />
-    <Navbar />
+      {/* Hero Section */}
+      <section className={`relative bg-gradient-to-br ${config.gradient} py-20 border-b border-border`}>
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link href="/learn">
+            <Button
+              variant="outline"
+              className="mb-6 bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+              data-testid="button-back"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Learn Hub
+            </Button>
+          </Link>
 
-    {/* Hero Section */}
-    <section className={`relative bg-gradient-to-br ${config.gradient} py-20 border-b border-border`}>
-      <div className="absolute inset-0 bg-black/40"></div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/learn">
-          <Button
-            variant="outline"
-            className="mb-6 bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-            data-testid="button-back"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Learn Hub
-          </Button>
-        </Link>
-
-        <div className="flex items-center gap-6 mb-6">
-          <div className="p-4 bg-white/10 backdrop-blur-sm rounded-lg">
-            {config.icon}
-          </div>
-          <div>
-            <Badge className="mb-3 bg-white/20 text-white border-white/30" data-testid="badge-difficulty">
-              {config.difficulty}
-            </Badge>
-            <h1 className="text-5xl font-bold text-white mb-4" data-testid="text-page-title">
-              {config.title}
-            </h1>
-          </div>
-        </div>
-
-        <p className="text-xl text-white/90 max-w-3xl" data-testid="text-page-description">
-          {config.description}
-        </p>
-
-        {config.relatedTopics.length > 0 && (
-          <div className="mt-6 flex flex-wrap gap-2">
-            <span className="text-white/70 text-sm">Related Topics:</span>
-            {config.relatedTopics.map((relatedTopic) => (
-              <Link key={relatedTopic} href={`/learn/${relatedTopic.toLowerCase()}`}>
-                <Badge
-                  variant="outline"
-                  className="bg-white/10 border-white/30 text-white hover:bg-white/20 cursor-pointer"
-                  data-testid={`badge-related-${relatedTopic.toLowerCase()}`}
-                >
-                  {relatedTopic}
-                </Badge>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
-
-    {/* Search and Filter */}
-    <section className="py-8 bg-card/30 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="flex-1 max-w-2xl w-full">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
-                placeholder={`Search ${config.title} articles...`}
-                className="pl-10"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                data-testid="input-search"
-              />
+          <div className="flex items-center gap-6 mb-6">
+            <div className="p-4 bg-white/10 backdrop-blur-sm rounded-lg">
+              {config.icon}
+            </div>
+            <div>
+              <Badge className="mb-3 bg-white/20 text-white border-white/30" data-testid="badge-difficulty">
+                {config.difficulty}
+              </Badge>
+              <h1 className="text-5xl font-bold text-white mb-4" data-testid="text-page-title">
+                {config.title}
+              </h1>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-primary" />
-            <span className="text-sm text-muted-foreground" data-testid="text-article-count">
-              {filteredArticles?.length || 0} Articles Available
-            </span>
+
+          <p className="text-xl text-white/90 max-w-3xl" data-testid="text-page-description">
+            {config.description}
+          </p>
+
+          {config.relatedTopics.length > 0 && (
+            <div className="mt-6 flex flex-wrap gap-2">
+              <span className="text-white/70 text-sm">Related Topics:</span>
+              {config.relatedTopics.map((relatedTopic) => (
+                <Link key={relatedTopic} href={`/learn/${relatedTopic.toLowerCase()}`}>
+                  <Badge
+                    variant="outline"
+                    className="bg-white/10 border-white/30 text-white hover:bg-white/20 cursor-pointer"
+                    data-testid={`badge-related-${relatedTopic.toLowerCase()}`}
+                  >
+                    {relatedTopic}
+                  </Badge>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Search and Filter */}
+      <section className="py-8 bg-card/30 border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="flex-1 max-w-2xl w-full">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                  placeholder={`Search ${config.title} articles...`}
+                  className="pl-10"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  data-testid="input-search"
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-primary" />
+              <span className="text-sm text-muted-foreground" data-testid="text-article-count">
+                {filteredArticles?.length || 0} Articles Available
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    {/* Articles Grid */}
-    <section className="py-16 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {isLoading ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Loading articles...</p>
-          </div>
-        ) : !filteredArticles || filteredArticles.length === 0 ? (
-          <Card className="p-12 text-center" data-testid="card-empty-state">
-            <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-card-foreground mb-2">No Articles Available Yet</h3>
-            <p className="text-muted-foreground mb-6">
-              We're working on creating comprehensive {config.title.toLowerCase()} content. Check back soon!
-            </p>
-            <Link href="/learn">
-              <Button variant="outline" data-testid="button-browse-all">
-                Browse All Topics
-              </Button>
-            </Link>
-          </Card>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredArticles.map((article) => (
-              <Link key={article.id} href={`/article/${article.id}`}>
-                <Card
-                  className="h-full hover-elevate active-elevate-2 cursor-pointer transition-all duration-300"
-                  data-testid={`card-article-${article.id}`}
-                >
-                  {article.coverImage && (
-                    <div className="relative h-48 overflow-hidden rounded-t-lg">
-                      <img
-                        src={article.coverImage}
-                        alt={article.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
-                  <div className="p-6">
-                    {article.category && (
-                      <Badge className="mb-3" data-testid={`badge-category-${article.id}`}>
-                        {article.category}
-                      </Badge>
-                    )}
-                    <h3 className="text-xl font-bold text-card-foreground mb-3 line-clamp-2" data-testid={`text-title-${article.id}`}>
-                      {article.title}
-                    </h3>
-                    {article.excerpt && (
-                      <p className="text-muted-foreground mb-4 line-clamp-3" data-testid={`text-excerpt-${article.id}`}>
-                        {article.excerpt}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <User className="h-4 w-4" />
-                        <span data-testid={`text-author-${article.id}`}>{article.author}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        <span data-testid={`text-readtime-${article.id}`}>{article.readTime}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
+      {/* Articles Grid */}
+      <section className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Loading articles...</p>
+            </div>
+          ) : !filteredArticles || filteredArticles.length === 0 ? (
+            <Card className="p-12 text-center" data-testid="card-empty-state">
+              <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-card-foreground mb-2">No Articles Available Yet</h3>
+              <p className="text-muted-foreground mb-6">
+                We're working on creating comprehensive {config.title.toLowerCase()} content. Check back soon!
+              </p>
+              <Link href="/learn">
+                <Button variant="outline" data-testid="button-browse-all">
+                  Browse All Topics
+                </Button>
               </Link>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles.map((article) => (
+                <Link key={article.id} href={`/article/${article.id}`}>
+                  <Card
+                    className="h-full hover-elevate active-elevate-2 cursor-pointer transition-all duration-300"
+                    data-testid={`card-article-${article.id}`}
+                  >
+                    {article.coverImage && (
+                      <div className="relative h-48 overflow-hidden rounded-t-lg">
+                        <img
+                          src={article.coverImage}
+                          alt={article.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="p-6">
+                      {article.category && (
+                        <Badge className="mb-3" data-testid={`badge-category-${article.id}`}>
+                          {article.category}
+                        </Badge>
+                      )}
+                      <h3 className="text-xl font-bold text-card-foreground mb-3 line-clamp-2" data-testid={`text-title-${article.id}`}>
+                        {article.title}
+                      </h3>
+                      {article.excerpt && (
+                        <p className="text-muted-foreground mb-4 line-clamp-3" data-testid={`text-excerpt-${article.id}`}>
+                          {article.excerpt}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <User className="h-4 w-4" />
+                          <span data-testid={`text-author-${article.id}`}>{article.author}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-4 w-4" />
+                          <span data-testid={`text-readtime-${article.id}`}>{article.readTime}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
-    <Footer />
-  </div>
-);
+      <Footer />
+    </div>
+  );
 }
