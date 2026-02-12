@@ -1,0 +1,31 @@
+# Pyrax Cryptocurrency News & Markets Portal
+# Robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /cms
+
+# Sitemap
+Sitemap: https://pyrax.com/sitemap.xml
+
+# Allow all content pages
+Allow: /markets
+Allow: /learn
+Allow: /analysis
+Allow: /regulation
+Allow: /about
+Allow: /article/
+Allow: /coin/
+
+# Popular search engines - full speed crawling
+User-agent: Googlebot
+Allow: /
+Disallow: /cms
+
+User-agent: Bingbot
+Allow: /
+Disallow: /cms
+
+User-agent: Slurp
+Allow: /
+Disallow: /cms
