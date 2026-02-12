@@ -24,7 +24,7 @@ interface BlogPost {
 }
 
 export default function AnalysisPage() {
-  const { data: posts, isLoading } = useQuery<BlogPost[]>({
+  const { data: analysisPosts, isLoading: isLoadingPosts } = useQuery<BlogPost[]>({
     queryKey: ['blog-posts', 'Analysis'],
     queryFn: () => getBlogPostsByContentType('Analysis'),
   });

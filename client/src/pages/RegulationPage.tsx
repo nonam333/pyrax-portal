@@ -24,7 +24,7 @@ interface BlogPost {
 }
 
 export default function RegulationPage() {
-  const { data: posts, isLoading } = useQuery<BlogPost[]>({
+  const { data: regulationPosts, isLoading: isLoadingPosts } = useQuery<BlogPost[]>({
     queryKey: ['blog-posts', 'Regulation'],
     queryFn: () => getBlogPostsByContentType('Regulation'),
   });
