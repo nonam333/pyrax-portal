@@ -42,4 +42,7 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
+  preview: {
+    allowedHosts: ["pyrax.io", ".pyrax.io"],
+  },
 });
